@@ -42,7 +42,7 @@ var App = /** @class */ (function () {
         // 关键代码， 设置web文件路由
         app.use(ms.express.static(__dirname + "/public", {
             maxAge: "3600000",
-            index: "admin/index.html"
+            index: "index.html"
         }));
         /**业务路由 */
         /**业务路由 */

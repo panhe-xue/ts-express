@@ -10,8 +10,6 @@ class LoginCheck implements IMiddleware {
     handler(req: express.Request, res: express.Response, next: Function) {
         //处理登陆情况
         if(ms.loginIgnore) {
-            console.log('数据库测试', ms.mysql['Test'])
-            res.send('ok');
             next();
         }
     }
