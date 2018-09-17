@@ -19,7 +19,7 @@ class DB extends DbBase{
         super(options);
     }
     /**链接数据库 */
-    connectDB() {
+    private connectDB() {
         try {
             this.Pool = mysql.createPool(this.options);
         } catch (error) {
@@ -28,7 +28,7 @@ class DB extends DbBase{
     }
 
     /**执行sql */
-    execSql(sqlString: string, callback) {
+    public async execSql(sqlString: string) {
         var self = this;
         if(!self.Pool) {
             self.connectDB();
@@ -37,18 +37,12 @@ class DB extends DbBase{
             throw Error("db connection pool closed");
             return
         }
-        self.Pool.getConnection(function(err, con) {
-            if(err) {
-                throw new Error(err);
-                return
-            }
-            let sql = `use ${self.options.database};${sqlString}`;
-            con.query(sql, (err2, rows) => {
-
-            });
-        })
+        let conn = await self.Pool.getConnection()
+        let sql = `use ${self.options.database};${sqlString}`;
+        let rows = await conn.query(sql);
+        return this.convertRows(rows)
     }
-    convertRows(rows: any) {
+    private convertRows(rows: any) {
         if(!(rows instanceof Array)) {
             return [rows]
         }
