@@ -1,5 +1,5 @@
 import * as mysql from "mysql";
-
+import {RetCode, RetMsg} from "../util/RetStatus";
 abstract class DbBase {
     public options;
     public Pool;
@@ -11,6 +11,7 @@ abstract class DbBase {
     }
     abstract connectDB()
     abstract execSql(sql:string): any
+    abstract convertRows(sql: string): any
 }
 
 /**数据库类 */
@@ -19,17 +20,19 @@ class DB extends DbBase{
         super(options);
     }
     /**链接数据库 */
-    private connectDB() {
+    connectDB() {
         try {
             this.Pool = mysql.createPool(this.options);
         } catch (error) {
-            throw new Error("connect DB error!!")
+            console.error("connect DB error", error);
+            throw new Error("connect DB error!!");
         }
     }
 
     /**执行sql */
     public async execSql(sqlString: string) {
         var self = this;
+        let conn;
         if(!self.Pool) {
             self.connectDB();
         }
@@ -37,12 +40,25 @@ class DB extends DbBase{
             throw Error("db connection pool closed");
             return
         }
-        let conn = await self.Pool.getConnection()
+        try {
+            conn = await self.Pool.getConnection();
+        } catch (error) {
+            console.error("connect mysql err", error);
+            throw new Error("connect mysql err");
+            return error
+        }
+        
         let sql = `use ${self.options.database};${sqlString}`;
-        let rows = await conn.query(sql);
-        return this.convertRows(rows)
+        try {
+            let rows = await conn.query(sql);
+            return this.convertRows(rows);   
+        } catch (error) {
+            console.log("query sql err:", error);
+            throw new Error("sql err");
+            return error
+        }
     }
-    private convertRows(rows: any) {
+    convertRows(rows: any) {
         if(!(rows instanceof Array)) {
             return [rows]
         }
