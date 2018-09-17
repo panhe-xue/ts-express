@@ -1,3 +1,5 @@
+/// <reference path="./typings/index.d.ts" />
+
 import * as events from "events";
 import MS from "./util/ms";
 import InitDB from "./db/DB";
