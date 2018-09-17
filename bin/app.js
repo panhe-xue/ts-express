@@ -10,6 +10,9 @@ var cookieParser = require("cookie-parser");
 var Acao_1 = require("./util/Acao");
 var LoginCheck_1 = require("./util/LoginCheck");
 var errorHandler = require("errorhandler");
+var route_1 = require("./route");
+var path = require("path");
+var express = require("express");
 var ms_1 = require("./util/ms");
 var ms = ms_1.default;
 var App = /** @class */ (function () {
@@ -17,7 +20,7 @@ var App = /** @class */ (function () {
         this.init();
     }
     App.prototype.init = function () {
-        var app = ms.express();
+        var app = express();
         // 禁止在返回头里面返回 poweredBy 字段
         app.disable("x-powered-by");
         app.use(compression());
@@ -40,11 +43,12 @@ var App = /** @class */ (function () {
         //登陆校验
         app.use(new LoginCheck_1.default().handler);
         // 关键代码， 设置web文件路由
-        app.use(ms.express.static(__dirname + "/public", {
+        app.use(express.static(path.join(__dirname, "/public"), {
             maxAge: "3600000",
             index: "index.html"
         }));
         /**业务路由 */
+        new route_1.default(app);
         /**业务路由 */
         // catch 404 and forward to error handler
         if (app.get("env") === "development") {

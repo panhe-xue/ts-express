@@ -11,8 +11,14 @@ import ACAO from "./util/Acao";
 import LoginCheck from "./util/LoginCheck";
 import * as errorHandler from "errorhandler";
 import * as http from "http";
+import Routes from "./route";
+import * as path from "path";
+import * as express from "express";
 
 import MS from "./util/ms";
+
+import * as Test from "./router/Test";
+import * as  Test2 from "./router/Test2";
 let ms = MS;
 
 class App {
@@ -20,7 +26,7 @@ class App {
     this.init()
   }
   init() {
-      let app = ms.express();
+      let app: express.Express = express();
 
       // 禁止在返回头里面返回 poweredBy 字段
       app.disable("x-powered-by");
@@ -50,13 +56,13 @@ class App {
       app.use(new LoginCheck().handler);
 
       // 关键代码， 设置web文件路由
-      app.use(ms.express.static(__dirname + "/public", {
+      app.use(express.static(path.join(__dirname, "/public"), {
           maxAge: "3600000",
           index: "index.html"
         }));
 
       /**业务路由 */
-
+        new Routes(app);
       /**业务路由 */
 
       // catch 404 and forward to error handler
