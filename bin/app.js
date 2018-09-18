@@ -10,7 +10,7 @@ var Acao_1 = require("./util/Acao");
 var LoginCheck_1 = require("./util/LoginCheck");
 var errorHandler = require("errorhandler");
 //import * as favicon from "express-favicon";
-var route_1 = require("./route");
+var route_1 = require("./router/route");
 var path = require("path");
 var express = require("express");
 var ms_1 = require("./util/ms");

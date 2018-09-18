@@ -36,7 +36,7 @@ export class RetMsg {
    *
    * @static
    */
-  static SUC_OK = "ok";
+  static SUC_OK = "success";
 
   /**
    * 服务器执行异常

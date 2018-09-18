@@ -10,13 +10,12 @@ import LoginCheck from "./util/LoginCheck";
 import * as errorHandler from "errorhandler";
 import * as http from "http";
 //import * as favicon from "express-favicon";
-import Routes from "./route";
+import Routes from "./router/route";
 import * as path from "path";
 import * as express from "express";
 
 import MS from "./util/ms";
 
-import * as Test from "./router/Login";
 let ms = MS;
 
 class App {

@@ -33,19 +33,23 @@ class DB extends DbBase{
     public async execSql(sqlString: string) {
         var self = this;
         let conn;
+
         if(!self.Pool) {
             self.connectDB();
         }
         if(self.Pool._close) {
             throw Error("db connection pool closed");
-            return
         }
         try {
             conn = await self.Pool.getConnection();
         } catch (error) {
             console.error("connect mysql err", error);
             throw new Error("connect mysql err");
-            return error
+        }
+        
+        if(!conn) {
+            console.error("sorry connect database fail!!")
+            throw new Error("database connect error");
         }
         
         let sql = `use ${self.options.database};${sqlString}`;

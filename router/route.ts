@@ -1,7 +1,7 @@
 /**
  * 业务路由得所有集合地方 Routes类
  */
-import * as Login from "./router/Login";
+import * as Login from "./Login";
 
  class Routes {
     public app; 
@@ -13,7 +13,7 @@ import * as Login from "./router/Login";
         /**
          * 挂载路由
          */
-        this.app.use("/node", Login.route);
+        this.app.use(Login.route);
     }
  }
 
