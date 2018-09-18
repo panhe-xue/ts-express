@@ -1,5 +1,3 @@
-/// <reference path="./typings/index.d.ts" />
-
 "use strict"
 //设置默认环境
 !process.env.NODE_ENV && (process.env.NODE_ENV = 'development')
@@ -11,14 +9,14 @@ import ACAO from "./util/Acao";
 import LoginCheck from "./util/LoginCheck";
 import * as errorHandler from "errorhandler";
 import * as http from "http";
+//import * as favicon from "express-favicon";
 import Routes from "./route";
 import * as path from "path";
 import * as express from "express";
 
 import MS from "./util/ms";
 
-import * as Test from "./router/Test";
-import * as  Test2 from "./router/Test2";
+import * as Test from "./router/Login";
 let ms = MS;
 
 class App {
@@ -44,6 +42,7 @@ class App {
       app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
       app.use(cookieParser());
       //app.use(ms.express.methodOverride());
+      //app.use(favicon(path.join(__dirname, "./public/images/favicon.ico")));
 
       app.set("views", "./views");
       app.set("view engine", "jade");

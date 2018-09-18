@@ -9,7 +9,7 @@ class ACAO implements IMiddleware {
     const clientIp = req.headers["x-forwarded-for-pound"] || req.headers["x-forwarded-for"] || (req.connection && req.connection.remoteAddress) || (req.socket && req.socket.remoteAddress);
     console.log(`request ${req.url} origin: ${origin} ip: ${clientIp}`);
     // 如果是白名单里面的host, 则返回acao等头
-    if (origin) {
+    if (origin) { ///^(?:http:\/\/)?([A-Za-z0-9][A-Za-z0-9_]*\.)*(qq|pengyou|qzone|3gqq)\.com$/.test(origin)
       res.header("Access-Control-Allow-Origin", origin);
       res.header("Access-Control-Allow-Credentials", "true");
       res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");

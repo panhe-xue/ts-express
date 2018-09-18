@@ -1,4 +1,3 @@
-/// <reference path="./typings/index.d.ts" />
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 //设置默认环境
@@ -10,6 +9,7 @@ var cookieParser = require("cookie-parser");
 var Acao_1 = require("./util/Acao");
 var LoginCheck_1 = require("./util/LoginCheck");
 var errorHandler = require("errorhandler");
+//import * as favicon from "express-favicon";
 var route_1 = require("./route");
 var path = require("path");
 var express = require("express");
@@ -35,6 +35,7 @@ var App = /** @class */ (function () {
         app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
         app.use(cookieParser());
         //app.use(ms.express.methodOverride());
+        //app.use(favicon(path.join(__dirname, "./public/images/favicon.ico")));
         app.set("views", "./views");
         app.set("view engine", "jade");
         app.set("view options", { layout: false });

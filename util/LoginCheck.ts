@@ -1,5 +1,3 @@
-/// <reference path="../typings/index.d.ts" />
-
 import {RetCode, RetMsg} from "./RetStatus";
 import ms from './ms';
 
