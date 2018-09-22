@@ -13,6 +13,7 @@ route.post('/login', (req: express.Request, res: express.Response, next: express
 
         let username = req.body.username;
         let password = req.body.password;
+        console.log('测试1', username, password);
         do {
             var LoginInstance = new LoginDao(username, password);
             //参数校验
@@ -35,7 +36,15 @@ route.post('/login', (req: express.Request, res: express.Response, next: express
                     if(dataRows.length == 0) {
                         ret = -1;
                         msg = "用户名不存在"
-                      
+                        let result = {
+                            status: ret,
+                            msg   : msg,
+                            user_info  : user_info
+                        }
+                        //返回操作
+                        res.json(result);
+                        next();
+                        return
                     }
                     console.log("user have one more in db!!");
         
