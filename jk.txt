@@ -1,0 +1,45 @@
+{
+    "status": 0, 
+    "msg": "登录成功" ,
+    "user_info": 
+    { 
+        "name": "小李", // 姓名 
+        "sex": "男", // 性别 
+        "id_number": "220323196208060440", // 身份证号 
+        "date_birth": "1962-08-06", // 出生日期 
+        "date_participation": "1979-05-01", // 参加工作日期 
+        "date_public_work": "1979-05-01", // 加公安工作日期 
+        "nation": "满族", // 民族	
+        "police_number": "100057", // 警号 
+        "state_personnel": "在职非领导", // 人员状态 
+        "blood_type": "AB", // 血型	
+        "police_library_logo": "是", // 警员库标志	
+        "category_personnel": "综合管理类公务员", // 人员类别	
+        "native_place": "吉林伊通满族自治县", // 籍贯	
+        "native_heath": "吉林伊通满族自治县", // 出生地 
+        "in_long_way": "吉林伊通满族自治县", // 成长地
+        "nature_household_registration": "非农业户口", // 户口性质	
+        "location_residence_registration": "吉林伊通满族自治县", // 户籍所在地名称	
+        "identity": "人民警察", // 个人身份	
+        "marital_status": "初婚", // 婚姻状况	
+        "secret_marking": "否", // 涉密标志	
+        "health": "健康", // 健康状况	
+        "address_residence_registration": "吉林伊通满族自治县", // 户籍所在地详址	
+        "grass_roots_work_experience_time": "450", // 基层工作经历时间 
+        "correction_value_service_age": "0", // 工龄计算校正值 
+        "length_schooling_should_of_police": "0", // 警衔应加学制年限	
+        "political_outlook": "中共党员", // 政治面貌	
+        "date_organization": "1984-11-1", // 参加组织日期	
+        "compile_unit_code": "220323070300", // 编制单位代码 
+        "unit_compilation": "吉林省伊通满族自治县公安局", // 编制所在单位	
+        "personnel_departments_and_police_categories": "经济犯罪侦查", // 人员所属部门和警种	
+        "management_category": "其他", // 管理类别	
+        "expertise": "无", // 专长	
+        "summary_rewards": "2003年04月被四平市公安局给予其他荣誉称号；1996年04月被四平市公安局给予先进工作者；1994年04月被四平市公安局给予先进工作者；1985年04月被四平市公安局给予先进工作者；1984年04月被伊通满族自治县人民政府给予其他荣誉称号；1983年04月被伊通满族自治县人民政府给予先进工作者；", // 奖励综述	
+        "annual_review": "", // 年度考核综述	
+        "remarks": "2018年称职；2017年称职；2016年称职；", // 备注	
+        "personnel_post": "内勤民警", // 人员工作岗位	
+        "logo_management_cadres": "否", // 协管干部标识	
+        "is_management_cadre": "是",// 是否是协管干部 
+        } 
+    }

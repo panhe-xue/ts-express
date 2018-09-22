@@ -18,6 +18,7 @@ abstract class DbBase {
 class DB extends DbBase{
     constructor (options) {
         super(options);
+        this.connectDB();
     }
     /**链接数据库 */
     connectDB() {
@@ -30,7 +31,7 @@ class DB extends DbBase{
     }
 
     /**执行sql */
-    public async execSql(sqlString: string) {
+    public execSql(sqlString: string) {
         var self = this;
         let conn;
 
@@ -40,27 +41,30 @@ class DB extends DbBase{
         if(self.Pool._close) {
             throw Error("db connection pool closed");
         }
-        try {
-            conn = await self.Pool.getConnection();
-        } catch (error) {
-            console.error("connect mysql err", error);
-            throw new Error("connect mysql err");
-        }
-        
-        if(!conn) {
-            console.error("sorry connect database fail!!")
-            throw new Error("database connect error");
-        }
-        
-        let sql = `use ${self.options.database};${sqlString}`;
-        try {
-            let rows = await conn.query(sql);
-            return this.convertRows(rows);   
-        } catch (error) {
-            console.log("query sql err:", error);
-            throw new Error("sql err");
-            return error
-        }
+
+        self.Pool.getConnection(function(err, conn) {
+            if(err) {
+                throw new Error( err);
+            }
+            if(!conn) {
+                console.error("sorry connect database fail!!")
+                throw new Error("database connect error");
+            }
+            
+            let sql = `${sqlString}`;
+            try {
+                conn.query(sql, (err, rows) => {
+                    if(err) {
+                        throw new Error( err);
+                        return
+                    }
+                    return self.convertRows(rows);
+                });    
+            } catch (error) {
+                console.log("query sql err:", error);
+                throw new Error("sql err");
+            }
+        })
     }
     convertRows(rows: any) {
         if(!(rows instanceof Array)) {

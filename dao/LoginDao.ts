@@ -39,9 +39,29 @@ class LoginDao{
     async getUserFromDB() {
         let result: any[] = [];
 
-        let sql = `select username, password from ${LoginDao.TABLE_NAME} where username = ?`;
+        let sql = `select account, password, id_card from ${LoginDao.TABLE_NAME} where account = ?`;
         sql = mysql.format(sql, [this.username]);
         console.info("get user from db sql:", sql);
+
+        try {
+            result = await ms.mysql["siping_public_security"].execSql(sql);
+        } catch (error) {
+            console.log(sql , "error: ", error);
+            throw new Error(error);
+        }
+        console.log(result, "结果");
+        return result
+    }
+    /**
+     * 从数据库获取该个人信息
+     * @return Array 数据
+     */
+    async getUserInfo(id_card: string) {
+        let result: any[] = [];
+
+        let sql = `select * from ${LoginDao.TABLE_NAME_MSG} where id_card = ?`;
+        sql = mysql.format(sql, [id_card]);
+        console.info("get user_info from db sql:", sql);
 
         try {
             result = await ms.mysql["siping_public_security"].execSql(sql);
