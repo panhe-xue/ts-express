@@ -54,7 +54,7 @@ class App {
       app.use(new LoginCheck().handler);
 
       // 关键代码， 设置web文件路由
-      app.use(express.static(path.join(__dirname, "/public"), {
+      app.use(express.static(path.join(__dirname, "/public/dist"), {
           maxAge: "3600000",
           index: "index.html"
         }));
