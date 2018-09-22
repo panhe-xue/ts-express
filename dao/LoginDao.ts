@@ -36,7 +36,7 @@ class LoginDao{
      * 从数据库获取该用户信息
      * @return Array 数据
      */
-    async getUserFromDB() {
+    async getUserFromDB(cb) {
         let result: any[] = [];
 
         let sql = `select account, password, id_card from ${LoginDao.TABLE_NAME} where account = ?`;
@@ -44,32 +44,36 @@ class LoginDao{
         console.info("get user from db sql:", sql);
 
         try {
-            result = await ms.mysql["siping_public_security"].execSql(sql);
+            ms.mysql["siping_public_security"].execSql(sql, function(rows) {
+                cb(rows);
+            });
         } catch (error) {
             console.log(sql , "error: ", error);
             throw new Error(error);
         }
-        console.log(result, "结果");
-        return result
     }
     /**
      * 从数据库获取该个人信息
      * @return Array 数据
      */
-    async getUserInfo(id_card: string) {
-        let result: any[] = [];
+    getUserInfo(id_card: string, cb) {
+        (async () => {
+            let result: any[] = [];
 
-        let sql = `select * from ${LoginDao.TABLE_NAME_MSG} where id_card = ?`;
-        sql = mysql.format(sql, [id_card]);
-        console.info("get user_info from db sql:", sql);
+            let sql = `select * from ${LoginDao.TABLE_NAME_MSG} where id_card = ?`;
+            sql = mysql.format(sql, [id_card]);
+            console.info("get user_info from db sql:", sql);
 
-        try {
-            result = await ms.mysql["siping_public_security"].execSql(sql);
-        } catch (error) {
-            console.log(sql , "error: ", error);
-            throw new Error(error);
-        }
-        return result
+            try {
+                result = await ms.mysql["siping_public_security"].execSql(sql, (rows)=> {
+                    cb(rows);
+                });
+            } catch (error) {
+                console.log(sql , "error: ", error);
+                throw new Error(error);
+            }
+        })()
+        
     }
 }
 

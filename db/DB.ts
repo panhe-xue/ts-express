@@ -10,7 +10,7 @@ abstract class DbBase {
         this.options.queueLimit      = options.queueLimit || 10000;
     }
     abstract connectDB()
-    abstract execSql(sql:string): any
+    abstract execSql(sql:string, cb:any)
     abstract convertRows(sql: string): any
 }
 
@@ -30,8 +30,11 @@ class DB extends DbBase{
         }
     }
 
-    /**执行sql */
-    public execSql(sqlString: string) {
+    /**
+     * 执行sql
+     * @return
+     */
+    public async execSql(sqlString: string, cb:any) {
         var self = this;
         let conn;
 
@@ -41,7 +44,7 @@ class DB extends DbBase{
         if(self.Pool._close) {
             throw Error("db connection pool closed");
         }
-
+        
         self.Pool.getConnection(function(err, conn) {
             if(err) {
                 throw new Error( err);
@@ -58,7 +61,7 @@ class DB extends DbBase{
                         throw new Error( err);
                         return
                     }
-                    return self.convertRows(rows);
+                    cb(self.convertRows(rows));
                 });    
             } catch (error) {
                 console.log("query sql err:", error);
