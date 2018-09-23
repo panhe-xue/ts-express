@@ -9,5 +9,5 @@ export default {
   express    : express,
   http       : http,
   fs         : fs,
-  loginIgnore: false, //设置是否忽略校验登陆
+  loginIgnore: true, //设置是否忽略校验登陆
 };
