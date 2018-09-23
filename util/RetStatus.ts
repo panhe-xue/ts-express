@@ -68,7 +68,7 @@ export class RetMsg {
   static ERR_DATA_WMUTEX = "数据在白名单中已存在,请先删除！";
 
   /**
-   * Tof验证失败
+   * 验证失败
    *
    * @static
    */

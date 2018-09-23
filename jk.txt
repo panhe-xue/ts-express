@@ -17,7 +17,7 @@
         "category_personnel": "综合管理类公务员", // 人员类别	
         "native_place": "吉林伊通满族自治县", // 籍贯	
         "native_heath": "吉林伊通满族自治县", // 出生地 
-        "in_long_way": "吉林伊通满族自治县", // 成长地
+        "birthplace": "吉林伊通满族自治县", // 成长地
         "nature_household_registration": "非农业户口", // 户口性质	
         "location_residence_registration": "吉林伊通满族自治县", // 户籍所在地名称	
         "identity": "人民警察", // 个人身份	

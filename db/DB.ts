@@ -34,7 +34,7 @@ class DB extends DbBase{
      * 执行sql
      * @return
      */
-    public async execSql(sqlString: string, cb:any) {
+    public execSql(sqlString: string) {
         var self = this;
         let conn;
 
@@ -44,29 +44,29 @@ class DB extends DbBase{
         if(self.Pool._close) {
             throw Error("db connection pool closed");
         }
-        
-        self.Pool.getConnection(function(err, conn) {
-            if(err) {
-                throw new Error( err);
-            }
-            if(!conn) {
-                console.error("sorry connect database fail!!")
-                throw new Error("database connect error");
-            }
-            
-            let sql = `${sqlString}`;
-            try {
-                conn.query(sql, (err, rows) => {
+        return new Promise((resolve, reject) => {
+            self.Pool.getConnection(function(err, conn) {
+                if(err) {
+                    console.log("这里十八");
+                    reject(err);
+                    return
+                }
+                if(!conn) {
+                    console.error("sorry connect database fail!!");
+                    reject(err);
+                    return
+                }
+
+                conn.query(sqlString, (err, rows) => {
                     if(err) {
-                        throw new Error( err);
+                        console.error(`${sqlString} err:`,err);
+                        reject(err);
                         return
                     }
-                    cb(self.convertRows(rows));
-                });    
-            } catch (error) {
-                console.log("query sql err:", error);
-                throw new Error("sql err");
-            }
+                    conn.release();
+                    resolve(self.convertRows(rows));
+                }); 
+            })
         })
     }
     convertRows(rows: any) {

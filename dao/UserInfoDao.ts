@@ -3,14 +3,13 @@ import * as mysql from "mysql";
 /**
  * 登陆类
  */
-class LoginDao{
+class UserInfoDao{
     public username: string;
     public password: number;
     /**
      * 表名
      */
-    static TABLE_NAME = "account";
-    static TABLE_NAME_MSG = "user_info";
+    static TABLE_NAME = "user_info";
 
     constructor(user: string, pass: number) {
         this.username = user;
@@ -39,7 +38,7 @@ class LoginDao{
     async getUserFromDB() {
         let result: any[] = [];
 
-        let sql = `select account, password, id_card from ${LoginDao.TABLE_NAME} where account = ?`;
+        let sql = `select account, password, id_card from ${UserInfoDao.TABLE_NAME} where account = ?`;
         sql = mysql.format(sql, [this.username]);
         console.info("get user from db sql:", sql);
 
@@ -51,25 +50,6 @@ class LoginDao{
             throw new Error(error);
         }
     }
-    /**
-     * 从数据库获取该个人信息
-     * @return Array 数据
-     */
-    public async getUserInfo(id_card: string) {
-        let result: any[] = [];
-
-        let sql = `select * from ${LoginDao.TABLE_NAME_MSG} where id_card = ?`;
-        sql = mysql.format(sql, [id_card]);
-        console.info("get user_info from db sql:", sql);
-
-        try {
-            let rows = await ms.mysql["siping_public_security"].execSql(sql);
-            return rows;
-        } catch (error) {
-            console.log(sql , "error: ", error);
-            throw new Error(error);
-        } 
-    }
 }
 
-export default LoginDao;
+export default UserInfoDao;
