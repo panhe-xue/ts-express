@@ -11,15 +11,15 @@ route.post('/useradmin/userlist', (req: express.Request, res: express.Response, 
         let msg: string = RetMsg.SUC_OK;
         let subMsg: string = RetMsg.SUC_OK;
 
-        let type = req.body.type; //筛选条件
-        let type_content = req.body.type_content; //刷选内容
+        let type = req.query.type; //筛选条件
+        let type_content = req.query.type_content; //刷选内容
 
         //分页参数
-        let page_size = req.body.page_size; 
-        let page_now = req.body.page_now;
+        let page_size = req.query.page_size;
+        let page_now = req.query.page_now;
         let limitBegin = (page_now-1)*page_size; //分页的开始
 
-        console.log('user login params:', type, type_content, page_size, page_now);
+        console.log('user info params:', req.query, req.query, type, type_content, page_size, page_now);
         do {
             var UserInfoInstance = new UserInfoDao(type, type_content, limitBegin, page_size);
             //参数校验

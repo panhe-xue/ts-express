@@ -24,6 +24,8 @@ route.post('/login', (req: express.Request, res: express.Response, next: express
                 break;
             }
             console.log("checkData success!!");
+            user_info = [{id_card: 341234234}];
+            break;
             //数据库获取数据
             try {
                 dataRows = await LoginInstance.getUserFromDB()
