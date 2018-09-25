@@ -47,7 +47,6 @@ export class UserInfoDao{
      * @return Array 数据
      */
     async getUserInfoFromDB() {
-        let result: any[] = [];
 
         let whereSqlString: string = '';
         whereSqlString = this.getWhereSqlStr();
@@ -70,7 +69,8 @@ export class UserInfoDao{
                 break
             }
             if(this.type == "name" || this.type == "id_card") {
-                resultString += `where ${this.type} = ${mysql.escape(this.type_content)}`;
+                let content = `%${this.type_content}%`;
+                resultString += `where ${this.type} LIKE ${mysql.escape(content)}`;
                 break
             }
             if(this.type == 'age') {
@@ -83,14 +83,34 @@ export class UserInfoDao{
                 let content = `%${this.type_content}%`;
 
                 resultString += 
-                `where job_simple_name LIKE ${mysql.escape(content)} 
+                `where work_unit_code LIKE ${mysql.escape(content)} 
                 or
-                job_full_name LIKE ${mysql.escape(content)} 
+                work_unit_code LIKE ${mysql.escape(content)} 
                 `;
                 break;  
             }
         }while(false)
         return resultString
+    }
+    
+    /**
+     * 从数据库获取总条数
+     * @return Array 数据
+     */
+    async getAllNumFromDB() {
+        let whereSqlString: string = '';
+        whereSqlString = this.getWhereSqlStr();
+        let sql = `select count(*) as c from ${UserInfoDao.TABLE_NAME} ${whereSqlString};`;
+        sql = mysql.format(sql, [this.pageBegin, this.pageSize]);
+        console.info("get user info from db sql:", sql);
+
+        try {
+            let rows = await ms.mysql["siping_public_security"].execSql(sql);
+            return rows[0].c;
+        } catch (error) {
+            console.log(sql , "error: ", error);
+            throw new Error(error);
+        }
     }
 }
 
