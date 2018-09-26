@@ -1,7 +1,7 @@
 import * as express from "express";
 
 import {RetCode, RetMsg} from "../../util/RetStatus";
-import {UserInfoDao, UserInfoDeleteDao} from "../../dao/UserInfoDao";
+import {UserInfoDao, UserInfoDeleteDao} from "../../dao/userinfo/UserInfoDao";
 export  const route = express.Router();
 
 route.post('/useradmin/userlist', (req: express.Request, res: express.Response, next: express.NextFunction) => {

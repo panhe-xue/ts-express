@@ -1,4 +1,4 @@
-import ms from "../util/ms";
+import ms from "../../util/ms";
 import * as mysql from "mysql";
 /**
  * 人员信息类
@@ -163,3 +163,7 @@ export class UserInfoDeleteDao{
         }
     }
 }
+
+
+
+
