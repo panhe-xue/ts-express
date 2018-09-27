@@ -1,5 +1,6 @@
 import * as mysql from "mysql";
 import {RetCode, RetMsg} from "../util/RetStatus";
+import { isArray } from "util";
 abstract class DbBase {
     public options;
     public Pool;
@@ -34,7 +35,7 @@ class DB extends DbBase{
      * 执行sql
      * @return
      */
-    public execSql(sqlString: string) {
+    public execSql(sqlString: string, values: any[]) {
         var self = this;
         let conn;
 
@@ -47,7 +48,6 @@ class DB extends DbBase{
         return new Promise((resolve, reject) => {
             self.Pool.getConnection(function(err, conn) {
                 if(err) {
-                    console.log("这里十八");
                     reject(err);
                     return
                 }
@@ -57,15 +57,27 @@ class DB extends DbBase{
                     return
                 }
 
-                conn.query(sqlString, (err, rows) => {
-                    if(err) {
-                        console.error(`${sqlString} err:`,err);
-                        reject(err);
-                        return
-                    }
-                    conn.release();
-                    resolve(self.convertRows(rows));
-                }); 
+                if(values && Array.isArray(values)) {
+                    conn.query(sqlString, [values], (err, rows) => {
+                        if(err) {
+                            console.error(`${sqlString} err:`,err);
+                            reject(err);
+                            return
+                        }
+                        conn.release();
+                        resolve(self.convertRows(rows));
+                    });
+                }else{
+                    conn.query(sqlString, (err, rows) => {
+                        if(err) {
+                            console.error(`${sqlString} err:`,err);
+                            reject(err);
+                            return
+                        }
+                        conn.release();
+                        resolve(self.convertRows(rows));
+                    });
+                } 
             })
         })
     }

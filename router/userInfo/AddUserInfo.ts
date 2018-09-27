@@ -17,10 +17,11 @@ route.post('/useradmin/addByForm', (req: express.Request, res: express.Response,
         do {
             var UserInfoInstance = new AddUserInfoDao(params);
             //参数校验
-            if(!UserInfoInstance.checkData()) {
+            let checkDataRes:any = UserInfoInstance.checkData()
+            if(!checkDataRes.status) {
                 ret = RetCode.ERR_CLIENT_PARAMS_ERR;
                 msg = RetMsg.ERR_CLIENT_PARAMS_ERR;
-                subMsg = "参数出错";
+                subMsg = checkDataRes.msg;
                 break;
             }
             console.log("checkData success!!");
