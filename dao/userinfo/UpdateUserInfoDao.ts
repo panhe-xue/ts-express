@@ -3,7 +3,7 @@ import * as mysql from "mysql";
 /**
  * 人员增加类
  */
-export class AddUserInfoDao{
+export class UpdateUserInfoDao{
     public params: any;
     /**
      * 表名
@@ -84,9 +84,9 @@ export class AddUserInfoDao{
         let result: any[] = [];
 
         let whereSqlString: string = '';
-        let sql = `insert into ${AddUserInfoDao.TABLE_NAME} (${AddUserInfoDao.INSERT_FEILD.join(',')}) values (?)`;
+        let sql = `insert into ${UpdateUserInfoDao.TABLE_NAME} (${UpdateUserInfoDao.INSERT_FEILD.join(',')}) values (?)`;
         console.info("get user info from db sql:", sql);
-        let values: any[] = AddUserInfoDao.INSERT_FEILD.map(item => (this.params[item] || '0'));
+        let values: any[] = UpdateUserInfoDao.INSERT_FEILD.map(item => (this.params[item] || '0'));
         try {
             let rows = await ms.mysql["siping_public_security"].execSql(sql, values);
             return rows;
