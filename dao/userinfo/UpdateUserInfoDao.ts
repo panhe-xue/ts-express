@@ -80,11 +80,11 @@ export class UpdateUserInfoDao{
      * 从数据库获取该用户信息
      * @return Array 数据
      */
-    async doAdd() {
+    async doUpdate() {
         let result: any[] = [];
 
         let whereSqlString: string = '';
-        let sql = `insert into ${UpdateUserInfoDao.TABLE_NAME} (${UpdateUserInfoDao.INSERT_FEILD.join(',')}) values (?)`;
+        let sql = `replace into ${UpdateUserInfoDao.TABLE_NAME} (${UpdateUserInfoDao.INSERT_FEILD.join(',')}) values (?)`;
         console.info("get user info from db sql:", sql);
         let values: any[] = UpdateUserInfoDao.INSERT_FEILD.map(item => (this.params[item] || '0'));
         try {

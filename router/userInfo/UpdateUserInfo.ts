@@ -10,7 +10,7 @@ route.post('/useradmin/addByForm', (req: express.Request, res: express.Response,
         let ret:number = RetCode.SUC_OK;
         let msg: string = RetMsg.SUC_OK;
         let subMsg: string;
-        
+
         let params = req.body;
 
         console.log('user info params:', req.body.id_card);
@@ -27,17 +27,17 @@ route.post('/useradmin/addByForm', (req: express.Request, res: express.Response,
                 break;
             }
             console.log("checkData success!!");
-            
+
             //数据插入数据库
             try {
-                msg = await UserInfoInstance.doAdd();
+                msg = await UserInfoInstance.doUpdate();
             } catch (error) {
                 ret = RetCode.ERR_SERVER_EXCEPTION;
                 msg = RetMsg.ERR_SERVER_EXCEPTION;
                 subMsg = error.message;
                 break;
             }
-            console.log("add data to user_info success!!");    
+            console.log("add data to user_info success!!");
         } while (false)
 
         let result = {

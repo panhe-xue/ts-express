@@ -10,11 +10,10 @@ route.post('/useradmin/addByForm', (req: express.Request, res: express.Response,
         let ret:number = RetCode.SUC_OK;
         let msg: string = RetMsg.SUC_OK;
         let subMsg: string;
-        
         let params = req.body;
 
         console.log('user info params:', req.body.id_card);
-        console.log('数据....')
+        console.log('数据....');
         do {
             var UserInfoInstance = new AddUserInfoDao(params);
             //参数校验
@@ -27,7 +26,6 @@ route.post('/useradmin/addByForm', (req: express.Request, res: express.Response,
                 break;
             }
             console.log("checkData success!!");
-            
             //数据插入数据库
             try {
                 msg = await UserInfoInstance.doAdd();
