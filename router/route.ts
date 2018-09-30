@@ -3,7 +3,7 @@
  */
 import * as Login from "./login/Login";
 import * as GetUserInfo from "./userInfo/GetUserInfo";
-import * as AddUserInfo from "./userInfo/AddUserInfo";
+import * as AddUserInfo from "./userInfo/AddUpdateUserInfo";
 
  class Routes {
     public app; 

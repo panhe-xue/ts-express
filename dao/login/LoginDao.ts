@@ -1,4 +1,4 @@
-import ms from "../util/ms";
+import ms from "../../util/ms";
 import * as mysql from "mysql";
 /**
  * 登陆类
