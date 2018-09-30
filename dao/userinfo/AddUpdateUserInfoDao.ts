@@ -84,7 +84,7 @@ export class AddUserInfoDao{
         let result: any[] = [];
 
         let whereSqlString: string = '';
-        let sql = `insert into ${AddUserInfoDao.TABLE_NAME} (${AddUserInfoDao.INSERT_FEILD.join(',')}) values (?)`;
+        let sql = `repalce into ${AddUserInfoDao.TABLE_NAME} (${AddUserInfoDao.INSERT_FEILD.join(',')}) values (?)`;
         console.info("get user info from db sql:", sql);
         let values: any[] = AddUserInfoDao.INSERT_FEILD.map(item => (this.params[item] || '0'));
         try {

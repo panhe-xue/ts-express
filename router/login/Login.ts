@@ -1,6 +1,6 @@
 import * as express from "express";
 import {RetCode, RetMsg} from "../../util/RetStatus";
-import LoginDao from "../../dao/LoginDao";
+import LoginDao from "../../dao/login/LoginDao";
 export  const route = express.Router();
 
 route.post('/login', (req: express.Request, res: express.Response, next: express.NextFunction) => {
