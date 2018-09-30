@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2018-09-22 22:34:10
+Date: 2018-09-30 20:43:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,4 +33,9 @@ CREATE TABLE `account` (
   KEY `account` (`account`),
   KEY `id_card` (`id_card`),
   KEY `user_name` (`user_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of account
+-- ----------------------------
+INSERT INTO `account` VALUES ('8', '220302197205020219', '220302197205020219', '220302197205020219', '6228655500014284754', '白慧馨', '0', '0');
