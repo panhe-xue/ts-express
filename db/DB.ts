@@ -77,7 +77,7 @@ class DB extends DbBase{
                         conn.release();
                         resolve(self.convertRows(rows));
                     });
-                } 
+                }
             })
         })
     }

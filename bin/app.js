@@ -13,6 +13,7 @@ var errorHandler = require("errorhandler");
 var route_1 = require("./router/route");
 var path = require("path");
 var express = require("express");
+var FileUpload = require("express-fileupload");
 var ms_1 = require("./util/ms");
 var ms = ms_1.default;
 var App = /** @class */ (function () {
@@ -34,10 +35,11 @@ var App = /** @class */ (function () {
         app.use(bodyParser.json({ limit: "100mb" }));
         app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
         app.use(cookieParser());
+        app.use(FileUpload());
         //app.use(ms.express.methodOverride());
         //app.use(favicon(path.join(__dirname, "./public/images/favicon.ico")));
-        app.set("views", "./views");
         app.set("view engine", "jade");
+        app.set("views", "./views");
         app.set("view options", { layout: false });
         //返回ACAO的头
         app.use(new Acao_1.default().handler);

@@ -13,7 +13,7 @@ import * as http from "http";
 import Routes from "./router/route";
 import * as path from "path";
 import * as express from "express";
-
+import * as FileUpload from "express-fileupload";
 import MS from "./util/ms";
 
 let ms = MS;
@@ -40,11 +40,12 @@ class App {
       app.use(bodyParser.json({ limit: "100mb" }));
       app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
       app.use(cookieParser());
+      app.use(FileUpload());
       //app.use(ms.express.methodOverride());
       //app.use(favicon(path.join(__dirname, "./public/images/favicon.ico")));
 
-      app.set("views", "./views");
       app.set("view engine", "jade");
+      app.set("views", "./views");
       app.set("view options", { layout: false });
 
       //返回ACAO的头

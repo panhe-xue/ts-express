@@ -1,0 +1,11 @@
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title 文件上传
+    body
+        form.file_box(method="post", action="/useradmin/upload", enctype="multipart/form-data")
+            input(type="file", name='usernames')
+            input.file_btn(type="submit" value="上传用户信息")
+    //script

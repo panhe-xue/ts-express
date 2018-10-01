@@ -14,7 +14,7 @@ route.post('/useradmin/userlist', (req: express.Request, res: express.Response, 
         let page_info = {
             page_size: 0,
             page_now: 0,
-            page_total: 0 
+            page_total: 0
         };
         let type = req.query.type; //筛选条件
         let type_content = req.query.type_content; //刷选内容

@@ -1,8 +1,11 @@
-import * as express from "express";
+/// <reference path="../../typings/index.d.ts" />
 
+import * as express from "express";
+import * as path from "path";
 import {RetCode, RetMsg} from "../../util/RetStatus";
 import {AddUpdateUserInfoDao} from "../../dao/userinfo/AddUpdateUserInfoDao";
-export  const route = express.Router();
+import * as XLSX from 'xlsx';
+export const route = express.Router();
 
 route.post('/useradmin/:doType', (req: express.Request, res: express.Response, next: express.NextFunction) => {
     (async () => {
@@ -16,11 +19,17 @@ route.post('/useradmin/:doType', (req: express.Request, res: express.Response, n
             params = req.body;
         }
         else {
-            //let filename = req.files;
-            //console.log("测试", filename);
+            let fileData = req.files.usernames["data"];
+            let workbook =  XLSX.read(fileData);
+            // 获取 Excel 中所有表名
+            const sheetNames = workbook.SheetNames;
+            // 根据表名获取对应某张表
+            const worksheet = workbook.Sheets[sheetNames[0]];
+            let data = XLSX.utils.sheet_to_json(worksheet)
+            console.log(data, 'aaaa');
         }
 
-        console.log('user info params:', req.body.id_card);
+        console.log('user info params:', req.body);
         console.log('数据....');
         do {
             var UserInfoInstance = new AddUpdateUserInfoDao(params);
@@ -56,3 +65,6 @@ route.post('/useradmin/:doType', (req: express.Request, res: express.Response, n
         next();
     })()
 });
+route.get('/a', (req, res, next) => {
+    res.render('upload')
+})
