@@ -94,6 +94,7 @@ export class AddUpdateUserInfoDao{
  * 数据转换工具
  */
 export class TurnTool{
+    static TABLE_NAME = "user_info";
     static INSERT_FEILD_MAP = {
         "id_card":"居民身份号码" ,
         "name": "姓名",
@@ -176,11 +177,11 @@ export class TurnTool{
 
         let whereSqlString: string = '';
 
-        let sql = `insert into ${AddUpdateUserInfoDao.TABLE_NAME} (${AddUpdateUserInfoDao.INSERT_FEILD.join(',')}) values (?)`;
+        let sql = `insert into ${TurnTool.TABLE_NAME} (${TurnTool.INSERT_FEILD.join(',')}) values ?`;
 
         //console.info("get user info from db sql:", sql);
         try {
-            let rows = await ms.mysql["siping_public_security"].execSql(sql, [params]);
+            let rows = await ms.mysql["siping_public_security"].execSql(sql, params);
             return rows;
         } catch (error) {
             //console.log(sql , "error: ", error);
