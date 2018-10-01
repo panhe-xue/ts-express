@@ -5,7 +5,7 @@ html(lang="en")
         meta(http-equiv="X-UA-Compatible", content="ie=edge")
         title 文件上传
     body
-        form.file_box(method="post", action="/useradmin/upload", enctype="multipart/form-data")
+        form.file_box(method="post", action="/useradminUpload/addByFile", enctype="multipart/form-data")
             input(type="file", name='usernames')
             input.file_btn(type="submit" value="上传用户信息")
     //script
