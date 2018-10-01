@@ -1,7 +1,7 @@
 import * as express from "express";
 
 import {RetCode, RetMsg} from "../../util/RetStatus";
-import {AddUserInfoDao} from "../../dao/userinfo/AddUpdateUserInfoDao";
+import {AddUpdateUserInfoDao} from "../../dao/userinfo/AddUpdateUserInfoDao";
 export  const route = express.Router();
 
 route.post('/useradmin/:doType', (req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -23,10 +23,10 @@ route.post('/useradmin/:doType', (req: express.Request, res: express.Response, n
         console.log('user info params:', req.body.id_card);
         console.log('数据....');
         do {
-            var UserInfoInstance = new AddUserInfoDao(params);
+            var UserInfoInstance = new AddUpdateUserInfoDao(params);
             //参数校验
-            let checkDataRes:any = UserInfoInstance.checkData()
-            console.log(checkDataRes, '数据....')
+            let checkDataRes:any = UserInfoInstance.checkData();
+            console.log(checkDataRes, '数据....');
             if(!checkDataRes.status) {
                 ret = RetCode.ERR_CLIENT_PARAMS_ERR;
                 msg = RetMsg.ERR_CLIENT_PARAMS_ERR;
