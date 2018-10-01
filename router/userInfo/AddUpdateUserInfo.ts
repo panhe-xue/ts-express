@@ -11,13 +11,13 @@ route.post('/useradmin/:doType', (req: express.Request, res: express.Response, n
         let msg: string = RetMsg.SUC_OK;
         let subMsg: string;
         let doType = req.params.doType;
-        let params = {};        
+        let params = {};
         if (doType == "addByForm" || doType == "edit") {
             params = req.body;
-        } 
+        }
         else {
-            let filename = req.files.file.
-            params    
+            //let filename = req.files;
+            //console.log("测试", filename);
         }
 
         console.log('user info params:', req.body.id_card);
@@ -43,7 +43,7 @@ route.post('/useradmin/:doType', (req: express.Request, res: express.Response, n
                 subMsg = error.message;
                 break;
             }
-            console.log("add data to user_info success!!");    
+            console.log("add data to user_info success!!");
         } while (false)
 
         let result = {

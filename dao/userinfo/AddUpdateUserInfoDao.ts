@@ -35,8 +35,6 @@ export class AddUserInfoDao{
         do {
             //身份证号码
             let id_card = self.params.id_card;
-            //姓名
-            let username = self.params.username;
             //性别
             let sex = self.params.sex;
 
@@ -50,11 +48,6 @@ export class AddUserInfoDao{
                 break;
             }
             if(!name) {
-                status = false;
-                msg = "姓名必填";
-                break;
-            }
-            if(!username) {
                 status = false;
                 msg = "姓名必填";
                 break;
