@@ -135,7 +135,8 @@ export class TurnTool{
         "remarks":"备注" ,
         "personnel_post":"人员工作岗位" ,
         "logo_management_cadres":"协管干部标识" ,
-        "is_management_cadre":"是否是协管干部"
+        "is_management_cadre":"是否是协管干部",
+        "img_url":"人员照片",
     }
     static INSERT_FEILD: any[] = [
         `id_card` , `name`, `sex`, `work_unit_code`, `job_simple_name`, `job_full_name`, 
