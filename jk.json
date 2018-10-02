@@ -79,5 +79,5 @@
     job_range: "",//业务范围
     fund_sources: "" ,//经费来源
     establish_approval_name: "",//单位成立批准机关名称
-    uodate_time_authority: "1993-04-05" //机构更新时间
+    update_time_authority: "1993-04-05" //机构更新时间
 }
