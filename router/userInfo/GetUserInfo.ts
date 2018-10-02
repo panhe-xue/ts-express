@@ -59,7 +59,7 @@ route.post('/useradmin/userlist', (req: express.Request, res: express.Response, 
                 subMsg = error.message;
                 break;
             }
-            console.log("getUserFromDB success!!");    
+            console.log("get User list FromDB success!!");    
         } while (false)
 
         let result = {
@@ -106,7 +106,7 @@ route.get('/useradmin/delete', (req: express.Request, res: express.Response, nex
                 subMsg = error.message;
                 break;
             }
-            console.log("getUserFromDB success!!");    
+            console.log("delete User FromDB success!!");    
         } while (false)
 
         let result = {
