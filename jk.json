@@ -55,7 +55,7 @@
     unit_level: "副县、副处级",//单位级别,
     uint_administrative_divsion:"吉林四平市辖区", //单位所在政区,
     unit_location_level: "地（市、州、盟）公安局", //单位所在层级,
-    nme_of_superior_unit: "内设机构", //上级单位名称,
+    name_of_superior_unit: "内设机构", //上级单位名称,
     superior_unit_code: "220300000001", //上级单位代码,
     head_of_unit: " ",//单位负责人,
     unit_establishment_approval_time: "2009-10-13", //单位成立批准时间,
