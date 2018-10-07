@@ -32,33 +32,33 @@ export class AddUpdateDao{
         let status = true; //默认为正确的数据
         let msg;
         do {
-            //身份证号码
-            let id_card = self.params.id_card;
-            //性别
-            let sex = self.params.sex;
+            //单位名称
+            let unit_name = self.params.unit_name;
+            //单位序号
+            let unit_serial_number = self.params.unit_serial_number;
+            //单位编码
+            let unit_encode = self.params.unit_encode;
+            //单位级别
+            let unit_level = self.params.unit_level;
 
-            //姓名
-            let name = self.params.name;
-            //出身日期
-            let date_birth = self.params.date_birth;
-            if(!id_card) {
+            if(!unit_serial_number) {
                 status = false;
-                msg = "身份证号码必填";
+                msg = "单位序号必填";
                 break;
             }
-            if(!name) {
+            if(!unit_name) {
                 status = false;
-                msg = "姓名必填";
+                msg = "单位名称必填";
                 break;
             }
-            if(!sex) {
+            if(!unit_encode) {
                 status = false;
-                msg = "性别必填";
+                msg = "单位编码必填";
                 break;
             }
-            if(!date_birth) {
+            if(!unit_level) {
                 status = false;
-                msg = "出生日期必填";
+                msg = "单位级别必填";
                 break;
             }
         } while (false)
