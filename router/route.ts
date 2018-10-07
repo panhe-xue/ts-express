@@ -6,7 +6,7 @@ import * as GetUserInfo from "./userInfo/GetUserInfo";
 import * as AddUserInfo from "./userInfo/AddUpdateUserInfo";
 
  class Routes {
-    public app; 
+    public app;
     constructor(app) {
         this.app = app;
         this.init()

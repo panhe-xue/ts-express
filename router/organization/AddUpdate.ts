@@ -98,6 +98,3 @@ route.post('/organization/addByFile', (req: express.Request, res: express.Respon
         next();
     })()
 });
-route.get('/a', (req, res, next) => {
-    res.render('upload')
-})

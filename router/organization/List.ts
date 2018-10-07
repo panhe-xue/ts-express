@@ -58,7 +58,7 @@ route.get('/organization/list', (req: express.Request, res: express.Response, ne
                 subMsg = error.message;
                 break;
             }
-            console.log("get User list FromDB success!!");    
+            console.log("get User list FromDB success!!");
         } while (false)
 
         let result = {
