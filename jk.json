@@ -74,10 +74,10 @@
     level_num: "",//单位层次
     police_number:123, //派出所人数
     civil_code: "",//公务员系统编码
-    Corporate identity: "内设机构", //法人单位标识
+    corporate_identity: "内设机构", //法人单位标识
     registration_authority: "",//登记管理机关
     job_range: "",//业务范围
     fund_sources: "" ,//经费来源
     establish_approval_name: "",//单位成立批准机关名称
-    update_time_authority: "1993-04-05" //机构更新时间
+    uodate_time_authority: "1993-04-05" //机构更新时间
 }
