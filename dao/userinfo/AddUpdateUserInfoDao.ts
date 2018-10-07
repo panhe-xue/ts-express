@@ -21,7 +21,7 @@ export class AddUpdateUserInfoDao{
         `management_category`, `expertise`, `summary_rewards`, `annual_review`, `remarks`, `personnel_post`, 
         `logo_management_cadres`, `is_management_cadre`, `img_url`
     ]
-    
+
     constructor(params: any) {
         this.params = params;
     }
