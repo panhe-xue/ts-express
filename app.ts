@@ -7,6 +7,7 @@ import * as bodyParser from "body-parser";
 import * as cookieParser from "cookie-parser";
 import ACAO from "./util/Acao";
 import LoginCheck from "./util/LoginCheck";
+import Privilege from "./util/Privilege";
 import * as errorHandler from "errorhandler";
 import * as http from "http";
 //import * as favicon from "express-favicon";
@@ -53,6 +54,9 @@ class App {
 
       //登陆校验
       app.use(new LoginCheck().handler);
+
+      //权限校验
+      app.use(new Privilege().handler);
 
       // 关键代码， 设置web文件路由
       app.use(express.static(path.join(__dirname, "/public/dist"), {

@@ -12,12 +12,15 @@ export enum RetCode {
    * 参数错误
    */
   ERR_CLIENT_PARAMS_ERR = -400,
-  
+
   /**
    * 数据重复
    */
   ERR_DATA_REPEAT = -401,
-
+  /**
+   * 数据重复
+   */
+  ERR_PRIVILEGE = -402,
   /**
    * 请求成功
    */
@@ -73,4 +76,10 @@ export class RetMsg {
    * @static
    */
   static ERR_FORBIDDEN = "获取身份信息失败，请重新登陆！";
+  /**
+   * 验证失败
+   *
+   * @static
+   */
+  static ERR_PRIVILEGE = "权限验证失败，请重新操作！";
 }
