@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2018-10-09 00:08:02
+Date: 2018-10-10 00:00:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -50,11 +50,13 @@ CREATE TABLE `police_duty_change_ information_set` (
   `introduce_of_annual_assessment` varchar(255) DEFAULT NULL COMMENT '年度考核说明',
   `participate_in_the_reform` varchar(255) DEFAULT NULL COMMENT '是否参加套改',
   `not_particepate_explain` varchar(255) DEFAULT NULL COMMENT '未套改说明',
+  `reason_of_stop_change` varchar(255) DEFAULT NULL COMMENT '暂缓套改原因',
   `cancel_promote_introduce` varchar(255) DEFAULT NULL COMMENT '取消晋升说明',
   `job_sequence` varchar(255) DEFAULT NULL COMMENT '职务序列',
   `job_after_change` varchar(255) DEFAULT NULL COMMENT '套改后职务',
   `time_ater_change` varchar(255) DEFAULT NULL COMMENT '套改后职务任职时间',
   `all_time_after_change` varchar(255) DEFAULT NULL COMMENT '套改后职务任职时间',
+  `continue_time_after_change` varchar(255) DEFAULT NULL COMMENT '套改后可连续计算任职时间',
   `is_promote` varchar(255) DEFAULT NULL COMMENT '是否晋升',
   `job_of_promote` varchar(255) DEFAULT NULL COMMENT '可晋升职务名称',
   `logo_of_change` varchar(255) DEFAULT NULL COMMENT '套改标识',

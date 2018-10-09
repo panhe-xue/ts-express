@@ -7,6 +7,7 @@ import * as express from "express";
 class Privilege implements IMiddleware {
     handler(req: express.Request, res: express.Response, next: Function) {
         let cookie = req.cookies.isLogin;
+        next();
         /* var userId = req.session.userId || "";
         let uri = req.url;
         

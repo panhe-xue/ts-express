@@ -1,10 +1,10 @@
 import * as express from "express";
 
 import {RetCode, RetMsg} from "../../util/RetStatus";
-import {ListDao} from "../../dao/organization/ListDao";
+import {ListDao} from "../../dao/policeDutyChange/ListDao";
 export  const route = express.Router();
 
-route.get('/organization/list', (req: express.Request, res: express.Response, next: express.NextFunction) => {
+route.get('/policeDutyChange/list', (req: express.Request, res: express.Response, next: express.NextFunction) => {
     (async () => {
         let dataRows; //数据库用户情况
         let ret:number = RetCode.SUC_OK;
@@ -16,8 +16,7 @@ route.get('/organization/list', (req: express.Request, res: express.Response, ne
             page_now: 0,
             page_total: 0
         };
-
-        let type_content = req.query.type_content; //刷选内容
+        let content = req.query.content; //刷选内容
 
         //分页参数
         let page_size = +req.query.page_size;
@@ -27,10 +26,10 @@ route.get('/organization/list', (req: express.Request, res: express.Response, ne
         page_info.page_size = page_size;
         page_info.page_now = page_now;
 
-        console.log('user info params:', type_content, page_size, page_now);
+        console.log('user info params:', content, page_size, page_now);
         do {
-            var UserInfoInstance = new ListDao(type_content, limitBegin, page_size);
-            let result = UserInfoInstance.checkData();
+            var PoliceDutyChangeInstance = new ListDao(content, limitBegin, page_size);
+            let result = PoliceDutyChangeInstance.checkData();
             //参数校验
             if(!result.status) {
                 ret = RetCode.ERR_CLIENT_PARAMS_ERR;
@@ -41,7 +40,7 @@ route.get('/organization/list', (req: express.Request, res: express.Response, ne
             console.log("checkData success!!");
             //数据库获取总条数
             try {
-                let allNum = await UserInfoInstance.getAllNumFromDB();
+                let allNum = await PoliceDutyChangeInstance.getAllNumFromDB();
                 page_info.page_total = allNum;
             } catch (error) {
                 ret = RetCode.ERR_SERVER_EXCEPTION;
@@ -52,7 +51,7 @@ route.get('/organization/list', (req: express.Request, res: express.Response, ne
 
             //数据库获取数据
             try {
-                dataRows = await UserInfoInstance.getUserInfoFromDB()
+                dataRows = await PoliceDutyChangeInstance.getUserInfoFromDB()
             } catch (error) {
                 ret = RetCode.ERR_SERVER_EXCEPTION;
                 msg = RetMsg.ERR_SERVER_EXCEPTION;

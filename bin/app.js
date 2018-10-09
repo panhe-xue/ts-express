@@ -8,6 +8,7 @@ var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 var Acao_1 = require("./util/Acao");
 var LoginCheck_1 = require("./util/LoginCheck");
+var Privilege_1 = require("./util/Privilege");
 var errorHandler = require("errorhandler");
 //import * as favicon from "express-favicon";
 var route_1 = require("./router/route");
@@ -45,6 +46,8 @@ var App = /** @class */ (function () {
         app.use(new Acao_1.default().handler);
         //登陆校验
         app.use(new LoginCheck_1.default().handler);
+        //权限校验
+        app.use(new Privilege_1.default().handler);
         // 关键代码， 设置web文件路由
         app.use(express.static(path.join(__dirname, "/public/dist"), {
             maxAge: "3600000",
