@@ -8,9 +8,12 @@ export class ListDao{
     public pageBegin: number;
     public pageSize:number;
 
-    public unit_name ;//单位名称 
-    public unit_nature_type; //单位性质类别 
-    public unit_include; //是否包含下级机构（true & false）
+    public name ;//姓名 
+    public unit; //单位名称 
+    public job; //职务 
+    public marking; //套改标识 
+    public degree; //学位
+    public education; //学历
     /**
      * 表名
      */
@@ -21,9 +24,12 @@ export class ListDao{
         this.pageBegin = +pageBegin;
         this.pageSize = +pageSize;
 
-        this.unit_name = this.content.unit_name;  
-        this.unit_nature_type = this.content.unit_type;
-        this.unit_include = this.content.unit_include;
+        this.name = this.content.name;  
+        this.unit = this.content.unit;
+        this.job = this.content.job;
+        this.marking = this.content.marking;
+        this.degree = this.content.degree;
+        this.education = this.content.education;
     }
     /**
      * 检查数据的正确性
@@ -34,17 +40,17 @@ export class ListDao{
         let msg = '';
 
         do {
-            if(!this.unit_name) {
+            if(!this.name) {
                 status = false;
                 msg = "单位名称不能为空"
                 break;
             }
-            if(!this.unit_nature_type) {
+            if(!this.unit) {
                 status = false;
                 msg = "单位性质类别不能为空"
                 break;
             }
-            if(this.unit_include == undefined) {
+            if(this.job == undefined) {
                 status = false
                 msg = "是否包含下级机构不能为空"
                 break;
@@ -78,9 +84,9 @@ export class ListDao{
     }
     getWhereSqlStr() {
         let resultString:string = "";
-        let unit_name = `%${this.unit_name}%`;
-        let unit_nature_type = `%${this.unit_nature_type}%`;
-        let unit_include = `${this.unit_include}`;
+        let unit_name = `%${this.name}%`;
+        let unit_nature_type = `%${this.job}%`;
+        let unit_include = `${this.name}`;
         
         resultString += `where unit_name LIKE ${mysql.escape(unit_name)} 
         and unit_nature_type LIKE ${mysql.escape(unit_nature_type)}
