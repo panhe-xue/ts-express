@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2018-10-10 23:45:22
+Date: 2018-10-10 23:50:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -61,8 +61,11 @@ CREATE TABLE `police_duty_change_information_set` (
   `job_of_promote` varchar(255) DEFAULT NULL COMMENT '可晋升职务名称',
   `logo_of_change` varchar(255) DEFAULT NULL COMMENT '套改标识',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `id_card` (`id_card`) USING BTREE,
   KEY `name` (`name`),
-  KEY `id_card` (`id_card`)
+  KEY `unit` (`current_word_uint`) USING BTREE,
+  KEY `present_post` (`present_post`),
+  KEY `education` (`education`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
