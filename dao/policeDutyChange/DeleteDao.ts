@@ -4,12 +4,12 @@ import * as mysql from "mysql";
 /**
  * 人员删除类
  */
-export class OrganizationDeleteDao{
+export class policeDutyChangeDeleteDao{
     public id: number;
     /**
      * 表名
      */
-    static TABLE_NAME = "account";
+    static TABLE_NAME = "police_duty_change_information_set";
 
     constructor(id: number) {
         this.id = id;
@@ -37,7 +37,7 @@ export class OrganizationDeleteDao{
         let result: any[] = [];
 
         let whereSqlString: string = '';
-        let sql = `delete from ${OrganizationDeleteDao.TABLE_NAME} where id = ?`;
+        let sql = `delete from ${policeDutyChangeDeleteDao.TABLE_NAME} where id = ?`;
         sql = mysql.format(sql, [this.id]);
         console.info("get user info from db sql:", sql);
 

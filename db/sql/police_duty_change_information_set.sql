@@ -10,16 +10,16 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2018-10-10 00:00:48
+Date: 2018-10-10 23:45:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for police_duty_change_ information_set
+-- Table structure for police_duty_change_information_set
 -- ----------------------------
-DROP TABLE IF EXISTS `police_duty_change_ information_set`;
-CREATE TABLE `police_duty_change_ information_set` (
+DROP TABLE IF EXISTS `police_duty_change_information_set`;
+CREATE TABLE `police_duty_change_information_set` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL COMMENT '姓名',
   `sex` varchar(255) DEFAULT NULL COMMENT '性别',
@@ -64,3 +64,7 @@ CREATE TABLE `police_duty_change_ information_set` (
   KEY `name` (`name`),
   KEY `id_card` (`id_card`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of police_duty_change_information_set
+-- ----------------------------

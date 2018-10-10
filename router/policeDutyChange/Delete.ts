@@ -1,10 +1,10 @@
 import * as express from "express";
 
 import {RetCode, RetMsg} from "../../util/RetStatus";
-import {OrganizationDeleteDao} from "../../dao/organization/DeleteDao";
+import {policeDutyChangeDeleteDao} from "../../dao/policeDutyChange/DeleteDao";
 export  const route = express.Router();
 
-route.get('/organization/delete', (req: express.Request, res: express.Response, next: express.NextFunction) => {
+route.get('/policeDutyChange/delete', (req: express.Request, res: express.Response, next: express.NextFunction) => {
     (async () => {
         let dataRows; //数据库用户情况
         let ret:number = RetCode.SUC_OK;
@@ -15,12 +15,12 @@ route.get('/organization/delete', (req: express.Request, res: express.Response, 
 
         console.log('user login params:', id);
         do {
-            var DelInstance = new OrganizationDeleteDao(id);
+            var DelInstance = new policeDutyChangeDeleteDao(id);
             //参数校验
             if(!DelInstance.checkData()) {
                 ret = RetCode.ERR_CLIENT_PARAMS_ERR;
                 msg = RetMsg.ERR_CLIENT_PARAMS_ERR;
-                subMsg = "参数出错";
+                subMsg = "id不能为空或者不能<1";
                 break;
             }
             console.log("checkData success!!");
