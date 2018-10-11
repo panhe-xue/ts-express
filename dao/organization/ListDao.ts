@@ -20,8 +20,8 @@ export class ListDao{
         this.pageBegin = +pageBegin;
         this.pageSize = +pageSize;
 
-        this.unit_name = content.unit_name;  
-        this.unit_nature_type = content.unit_type;
+        this.unit_name = content.unit_name || '';  
+        this.unit_nature_type = content.unit_type || '';
         //this.unit_include = this.content.unit_include;
     }
     /**
