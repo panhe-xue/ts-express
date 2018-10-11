@@ -8,21 +8,28 @@ export class ListDao{
     public pageBegin: number;
     public pageSize:number;
 
-    public unit_name ;//单位名称 
-    public unit_nature_type; //单位性质类别 
-    //public unit_include; //是否包含下级机构（true & false）
+    public name ;//姓名 
+    public current_word_uint; //单位名称 
+    public present_post; //职务 
+    public logo_of_change; //套改标识 
+    public the_highest_degree; //学位
+    public education; //学历
     /**
      * 表名
      */
-    static TABLE_NAME = "origanization";
+    static TABLE_NAME = "police_duty_change_information_set";
 
     constructor(content: any, pageBegin:number, pageSize:number) {
+        this.content = content;
         this.pageBegin = +pageBegin;
         this.pageSize = +pageSize;
 
-        this.unit_name = content.unit_name || '';  
-        this.unit_nature_type = content.unit_type || '';
-        //this.unit_include = this.content.unit_include;
+        this.name               = this.content.name;  
+        this.current_word_uint  = this.content.unit;
+        this.present_post       = this.content.job;
+        this.logo_of_change     = this.content.marking;
+        this.the_highest_degree = this.content.degree;
+        this.education          = this.content.education;
     }
     /**
      * 检查数据的正确性
@@ -33,21 +40,21 @@ export class ListDao{
         let msg = '';
 
         do {
-            if(!this.unit_name) {
+            if(!this.name) {
+                status = false;
+                msg = "姓名不能为空"
+                break;
+            }
+            if(!this.current_word_uint) {
                 status = false;
                 msg = "单位名称不能为空"
                 break;
             }
-            if(!this.unit_nature_type) {
-                status = false;
-                msg = "单位性质类别不能为空"
+            if(this.present_post == undefined) {
+                status = false
+                msg = "职务不能为空"
                 break;
             }
-            // if(this.unit_include == undefined) {
-            //     status = false
-            //     msg = "是否包含下级机构不能为空"
-            //     break;
-            // }
         } while (false)
 
         return {
@@ -77,16 +84,20 @@ export class ListDao{
     }
     getWhereSqlStr() {
         let resultString:string = "";
-        let unit_name = `%${this.unit_name}%`;
-        let unit_nature_type = `%${this.unit_nature_type}%`;
-        //let unit_include = `${this.unit_include}`;
+
+        let name = `%${this.name}%`;
+        let current_word_uint = `%${this.current_word_uint}%`;
+        let present_post = `%${this.present_post}%`;
+        let logo_of_change = `%${this.logo_of_change}%`;
+        let the_highest_degree = `%${this.the_highest_degree}%`;
+        let education = `%${this.education}%`;
         
-        // resultString += `where unit_name LIKE ${mysql.escape(unit_name)} 
-        // and unit_nature_type LIKE ${mysql.escape(unit_nature_type)}
-        // and unit_include = ${mysql.escape(unit_nature_type)}
-        // `;
-        resultString += `where unit_name LIKE ${mysql.escape(unit_name)} 
-        and unit_nature_type LIKE ${mysql.escape(unit_nature_type)}
+        resultString += `where name LIKE ${mysql.escape(name)} 
+        and current_word_uint LIKE ${mysql.escape(current_word_uint)}
+        and present_post LIKE ${mysql.escape(present_post)}
+        and logo_of_change LIKE ${mysql.escape(logo_of_change)}
+        and the_highest_degree LIKE ${mysql.escape(the_highest_degree)}
+        and education LIKE ${mysql.escape(education)}
         `;
         return resultString
     }
