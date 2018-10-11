@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2018-10-10 23:50:59
+Date: 2018-10-11 22:40:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -67,7 +67,3 @@ CREATE TABLE `police_duty_change_information_set` (
   KEY `present_post` (`present_post`),
   KEY `education` (`education`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of police_duty_change_information_set
--- ----------------------------

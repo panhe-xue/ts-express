@@ -10,7 +10,7 @@ export class ListDao{
 
     public unit_name ;//单位名称 
     public unit_nature_type; //单位性质类别 
-    public unit_include; //是否包含下级机构（true & false）
+    //public unit_include; //是否包含下级机构（true & false）
     /**
      * 表名
      */
@@ -23,7 +23,7 @@ export class ListDao{
 
         this.unit_name = this.content.unit_name;  
         this.unit_nature_type = this.content.unit_type;
-        this.unit_include = this.content.unit_include;
+        //this.unit_include = this.content.unit_include;
     }
     /**
      * 检查数据的正确性
@@ -44,11 +44,11 @@ export class ListDao{
                 msg = "单位性质类别不能为空"
                 break;
             }
-            if(this.unit_include == undefined) {
-                status = false
-                msg = "是否包含下级机构不能为空"
-                break;
-            }
+            // if(this.unit_include == undefined) {
+            //     status = false
+            //     msg = "是否包含下级机构不能为空"
+            //     break;
+            // }
         } while (false)
 
         return {
@@ -80,11 +80,14 @@ export class ListDao{
         let resultString:string = "";
         let unit_name = `%${this.unit_name}%`;
         let unit_nature_type = `%${this.unit_nature_type}%`;
-        let unit_include = `${this.unit_include}`;
+        //let unit_include = `${this.unit_include}`;
         
+        // resultString += `where unit_name LIKE ${mysql.escape(unit_name)} 
+        // and unit_nature_type LIKE ${mysql.escape(unit_nature_type)}
+        // and unit_include = ${mysql.escape(unit_nature_type)}
+        // `;
         resultString += `where unit_name LIKE ${mysql.escape(unit_name)} 
         and unit_nature_type LIKE ${mysql.escape(unit_nature_type)}
-        and unit_include = ${mysql.escape(unit_nature_type)}
         `;
         return resultString
     }

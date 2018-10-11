@@ -7,13 +7,12 @@ import {AddUpdateDao, TurnTool} from "../../dao/organization/AddUpdateDao";
 import * as XLSX from 'xlsx';
 export const route = express.Router();
 
-route.post('/organization/:doType', (req: express.Request, res: express.Response, next: express.NextFunction) => {
+route.post('/policeDutyChange/:doType', (req: express.Request, res: express.Response, next: express.NextFunction) => {
     (async () => {
         let dataRows; //数据库用户情况
         let ret:number = RetCode.SUC_OK;
         let msg: string = RetMsg.SUC_OK;
         let subMsg: string;
-        let doType = req.params.doType;
         let params = {};
         params = req.body;
 
