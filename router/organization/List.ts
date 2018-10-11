@@ -30,14 +30,14 @@ route.get('/organization/list', (req: express.Request, res: express.Response, ne
         console.log('user info params:', page_size, page_now);
         do {
             var UserInfoInstance = new ListDao(type_content, limitBegin, page_size);
-            let result = UserInfoInstance.checkData();
-            //参数校验
-            if(!result.status) {
-                ret = RetCode.ERR_CLIENT_PARAMS_ERR;
-                msg = RetMsg.ERR_CLIENT_PARAMS_ERR;
-                subMsg = result.msg;
-                break;
-            }
+            // let result = UserInfoInstance.checkData();
+            // //参数校验
+            // if(!result.status) {
+            //     ret = RetCode.ERR_CLIENT_PARAMS_ERR;
+            //     msg = RetMsg.ERR_CLIENT_PARAMS_ERR;
+            //     subMsg = result.msg;
+            //     break;
+            // }
             console.log("checkData success!!");
             //数据库获取总条数
             try {
