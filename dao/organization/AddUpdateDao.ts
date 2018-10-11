@@ -8,7 +8,7 @@ export class AddUpdateDao{
     /**
      * 表名
      */
-    static TABLE_NAME = "user_info";
+    static TABLE_NAME = "origanization";
     static INSERT_FEILD: any[] = [
         "unit_serial_number", "unit_full_name", "unit_simple_name", "unit_name",
         "unit_affiliation", "unit_nature_type", "unit_level", "uint_administrative_divsion", 

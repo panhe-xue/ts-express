@@ -9,7 +9,7 @@ export class OrganizationDeleteDao{
     /**
      * 表名
      */
-    static TABLE_NAME = "account";
+    static TABLE_NAME = "origanization";
 
     constructor(id: number) {
         this.id = id;

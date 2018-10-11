@@ -17,7 +17,7 @@ route.get('/organization/list', (req: express.Request, res: express.Response, ne
             page_total: 0
         };
 
-        let type_content = req.query.type_content; //刷选内容
+        let type_content = req.query; //刷选内容
 
         //分页参数
         let page_size = +req.query.page_size;
@@ -27,7 +27,7 @@ route.get('/organization/list', (req: express.Request, res: express.Response, ne
         page_info.page_size = page_size;
         page_info.page_now = page_now;
 
-        console.log('user info params:', type_content, page_size, page_now);
+        console.log('user info params:', page_size, page_now);
         do {
             var UserInfoInstance = new ListDao(type_content, limitBegin, page_size);
             let result = UserInfoInstance.checkData();

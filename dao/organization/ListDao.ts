@@ -14,15 +14,14 @@ export class ListDao{
     /**
      * 表名
      */
-    static TABLE_NAME = "organization";
+    static TABLE_NAME = "origanization";
 
     constructor(content: any, pageBegin:number, pageSize:number) {
-        this.content = content;
         this.pageBegin = +pageBegin;
         this.pageSize = +pageSize;
 
-        this.unit_name = this.content.unit_name;  
-        this.unit_nature_type = this.content.unit_type;
+        this.unit_name = content.unit_name;  
+        this.unit_nature_type = content.unit_type;
         //this.unit_include = this.content.unit_include;
     }
     /**
