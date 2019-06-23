@@ -30,7 +30,7 @@ class Main {
             let options = optionsArray[i];
             ms.mysql[options.database] = await new InitDB(options);
         }
-        
+
         console.log("init database end!!!!");
         emitter.emit("initServer");
     }

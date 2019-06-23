@@ -27,13 +27,13 @@ import * as policeDutyChangeDelete from "./policeDutyChange/Delete";
          */
         this.app.use(Login.route);
         this.app.use(GetUserInfo.route);
-        this.app.use(AddUserInfo.route);
-        this.app.use(OrganizationList.route);
-        this.app.use(OrganizationAddUpdate.route);
-        this.app.use(OrganizationDelete.route);
-        this.app.use(policeDutyChangeList.route);
-        this.app.use(policeDutyChangeAddUpdate.route);
-        this.app.use(policeDutyChangeDelete.route);
+        // this.app.use(AddUserInfo.route);
+        // this.app.use(OrganizationList.route);
+        // this.app.use(OrganizationAddUpdate.route);
+        // this.app.use(OrganizationDelete.route);
+        // this.app.use(policeDutyChangeList.route);
+        // this.app.use(policeDutyChangeAddUpdate.route);
+        // this.app.use(policeDutyChangeDelete.route);
     }
  }
 

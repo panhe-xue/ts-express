@@ -68,7 +68,7 @@ class LoginDao{
         } catch (error) {
             console.log(sql , "error: ", error);
             throw new Error(error);
-        } 
+        }
     }
 }
 

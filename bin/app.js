@@ -6,7 +6,6 @@ var compression = require("compression");
 var logger = require("morgan");
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
-var Acao_1 = require("./util/Acao");
 var LoginCheck_1 = require("./util/LoginCheck");
 var Privilege_1 = require("./util/Privilege");
 var errorHandler = require("errorhandler");
@@ -43,7 +42,7 @@ var App = /** @class */ (function () {
         app.set("views", "./views");
         app.set("view options", { layout: false });
         //返回ACAO的头
-        app.use(new Acao_1.default().handler);
+        // app.use(new ACAO().handler);
         //登陆校验
         app.use(new LoginCheck_1.default().handler);
         //权限校验

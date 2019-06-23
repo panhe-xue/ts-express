@@ -50,7 +50,7 @@ class App {
       app.set("view options", { layout: false });
 
       //返回ACAO的头
-      app.use(new ACAO().handler);
+      // app.use(new ACAO().handler);
 
       //登陆校验
       app.use(new LoginCheck().handler);
