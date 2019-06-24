@@ -5,9 +5,9 @@ import * as compression from "compression";
 import * as logger from "morgan";
 import * as bodyParser from "body-parser";
 import * as cookieParser from "cookie-parser";
-import ACAO from "./util/Acao";
-import LoginCheck from "./util/LoginCheck";
-import Privilege from "./util/Privilege";
+import ACAO from "./middleware/Acao";
+import LoginCheck from "./middleware/LoginCheck";
+import Privilege from "./middleware/Privilege";
 import * as errorHandler from "errorhandler";
 import * as http from "http";
 //import * as favicon from "express-favicon";
@@ -16,6 +16,9 @@ import * as path from "path";
 import * as express from "express";
 import * as FileUpload from "express-fileupload";
 import MS from "./util/ms";
+
+var log4js = require('log4js');
+var log = log4js.getLogger("app");
 
 let ms = MS;
 
@@ -36,7 +39,8 @@ class App {
       });
       app.use(logger("dev"));
       app.use(logger("combined", { stream: accessLog }));
-
+      // log4js 打印日志
+      app.use(log4js.connectLogger(log4js.getLogger("http"), { level: 'auto' }));
       //解析post请求
       app.use(bodyParser.json({ limit: "100mb" }));
       app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "supervisor main.js"
+    "dev": "supervisor main.js",
+    "serve": "node ./bin/main.js"
   },
   "author": "",
   "license": "ISC",
@@ -25,13 +26,16 @@
     "@types/express-fileupload": "^0.4.0",
     "@types/morgan": "^1.7.35",
     "@types/mysql": "^2.15.5",
+    "@types/request": "^2.48.1",
     "@types/xlsx": "0.0.36",
     "cookie-parser": "^1.4.3",
     "errorhandler": "^1.5.0",
     "express-favicon": "^2.0.1",
     "express-fileupload": "^1.0.0-alpha.1",
     "jade": "^1.11.0",
+    "log4js": "^4.3.2",
     "morgan": "^1.9.1",
+    "request": "^2.88.0",
     "ts-xlsx": "0.0.11"
   }
 }

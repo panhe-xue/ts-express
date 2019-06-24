@@ -3,5 +3,5 @@ export default [{
     "port": "3306",
     "user": "root",
     "password": "123456",
-    "database": "siping_public_security"
+    "database": "subscribe_to_new_thing" //新生事物订阅库
 }]

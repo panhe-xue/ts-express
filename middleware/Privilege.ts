@@ -1,5 +1,5 @@
-import {RetCode, RetMsg} from "./RetStatus";
-import ms from './ms';
+import {RetCode, RetMsg} from "../util/RetStatus";
+import ms from './../util/ms';
 
 import IMiddleware from "../interface/interface";
 import * as express from "express";

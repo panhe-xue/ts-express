@@ -12,9 +12,7 @@ class LoginDao{
     static TABLE_NAME = "account";
     static TABLE_NAME_MSG = "user_info";
 
-    constructor(user: string, pass: number) {
-        this.username = user;
-        this.password = pass;
+    constructor() {
     }
     /**
      * 检查数据的正确性

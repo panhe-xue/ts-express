@@ -3,17 +3,8 @@
  */
 import * as Login from "./login/Login";
 
-import * as GetUserInfo from "./userInfo/GetUserInfo";
-import * as AddUserInfo from "./userInfo/AddUpdateUserInfo";
-//机构
-import * as OrganizationList from "./organization/List";
-import * as OrganizationAddUpdate from "./organization/AddUpdate";
-import * as OrganizationDelete from "./organization/Delete";
-
-//警员职务信息
-import * as policeDutyChangeList from "./policeDutyChange/List";
-import * as policeDutyChangeAddUpdate from "./policeDutyChange/AddUpdate";
-import * as policeDutyChangeDelete from "./policeDutyChange/Delete";
+//路由引入文件
+// import * as policeDutyChangeList from "./policeDutyChange/List";
 
  class Routes {
     public app;
@@ -26,14 +17,6 @@ import * as policeDutyChangeDelete from "./policeDutyChange/Delete";
          * 挂载路由
          */
         this.app.use(Login.route);
-        this.app.use(GetUserInfo.route);
-        // this.app.use(AddUserInfo.route);
-        // this.app.use(OrganizationList.route);
-        // this.app.use(OrganizationAddUpdate.route);
-        // this.app.use(OrganizationDelete.route);
-        // this.app.use(policeDutyChangeList.route);
-        // this.app.use(policeDutyChangeAddUpdate.route);
-        // this.app.use(policeDutyChangeDelete.route);
     }
  }
 
