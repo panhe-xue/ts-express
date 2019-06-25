@@ -1,46 +1,52 @@
 import * as express from "express";
 
 import {RetCode, RetMsg} from "../../util/RetStatus";
-import {OrganizationDeleteDao} from "../../dao/organization/DeleteDao";
+import { GetBrandsDao } from "../../dao/getBrands/GetBrandsDao";
 export  const route = express.Router();
 
-route.get('/organization/delete', (req: express.Request, res: express.Response, next: express.NextFunction) => {
+import UserLog from "../../dao/User/user_log";
+// 登录日志
+const userLog = new UserLog();
+const getBrandsDao = new GetBrandsDao();
+route.get('/getAllBrands', (req: express.Request, res: express.Response, next: express.NextFunction) => {
     (async () => {
-        let dataRows; //数据库用户情况
         let ret:number = RetCode.SUC_OK;
         let msg: string = RetMsg.SUC_OK;
-        let subMsg: string = RetMsg.SUC_OK;
-
-        let id = req.query.id; //筛选条件
-
-        console.log('user login params:', id);
+        let subMsg: string;
+        let openid = req.query.openid;
+        let data = {};
         do {
-            var DelInstance = new OrganizationDeleteDao(id);
             //参数校验
-            if(!DelInstance.checkData()) {
+            if(!openid) {
                 ret = RetCode.ERR_CLIENT_PARAMS_ERR;
                 msg = RetMsg.ERR_CLIENT_PARAMS_ERR;
-                subMsg = "参数出错";
+                subMsg = '缺少openid';
                 break;
             }
             console.log("checkData success!!");
 
-            //数据库获取数据
+            // 插入数据库
+            userLog.insertLog(openid);
+
+            // 获取订阅和没有订阅brands数
             try {
-                dataRows = await DelInstance.doDel()
+                let allNum = await getBrandsDao.getAllNumFromDB(openid);
+                data = allNum;
             } catch (error) {
                 ret = RetCode.ERR_SERVER_EXCEPTION;
                 msg = RetMsg.ERR_SERVER_EXCEPTION;
                 subMsg = error.message;
                 break;
             }
-            console.log("delete User FromDB success!!");
+
+            console.log("get User list FromDB success!!");
         } while (false)
 
         let result = {
             status: ret,
             msg   : msg,
-            subMsg: subMsg
+            subMsg: subMsg,
+            data  : data
         }
         //返回操作
         res.json(result);

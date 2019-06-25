@@ -2,6 +2,7 @@
  * 业务路由得所有集合地方 Routes类
  */
 import * as Login from "./login/Login";
+import * as GetBrands from "./getBrands/GetBrands";
 
 //路由引入文件
 // import * as policeDutyChangeList from "./policeDutyChange/List";
@@ -17,6 +18,7 @@ import * as Login from "./login/Login";
          * 挂载路由
          */
         this.app.use(Login.route);
+        this.app.use(GetBrands.route);
     }
  }
 

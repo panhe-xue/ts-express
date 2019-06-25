@@ -1,11 +1,14 @@
 import * as express from "express";
 import {RetCode, RetMsg} from "../../util/RetStatus";
-// import LoginDao from "../../dao/login/LoginDao";
+import LoginDao from "../../dao/login/LoginDao";
+import UserSubscribe from "../../dao/User/user_subscribe";
 import { httpGet } from "../../util/request";
 import globalData from '../../lib/globalData';
 export  const route = express.Router();
-// var LoginInstance = new LoginDao();
-var log = require('log4js').getLogger("login");
+const LoginInstance = new LoginDao();
+
+// 用户订阅
+const userSubscribe = new UserSubscribe();
 
 route.post('/login', (req: express.Request, res: express.Response, next: express.NextFunction) => {
     (async () => {
@@ -14,8 +17,14 @@ route.post('/login', (req: express.Request, res: express.Response, next: express
         let subMsg: string = RetMsg.SUC_OK;
         let data;
         let code = req.body.code;
-        log.debug('user login request args.........:', code)
+        console.log('user login request args.........:', code)
         do {
+            if(!LoginInstance.checkData(code)) {
+                ret = RetCode.ERR_CLIENT_PARAMS_ERR;
+                msg = RetMsg.ERR_CLIENT_PARAMS_ERR;
+                subMsg = '缺少code'
+                break;
+            }
             const options: object = {
                 url: globalData.code2SessionUrl,
                 data: {
@@ -25,7 +34,25 @@ route.post('/login', (req: express.Request, res: express.Response, next: express
                 }
             }
             try {
+                //获取openid
                 data = await httpGet(options);
+                data = JSON.parse(data);
+                if(data.errcode) {
+                    ret = RetCode.ERR_SERVER_EXCEPTION;
+                    msg = RetMsg.ERR_SERVER_EXCEPTION;
+                    subMsg = data.errmsg;
+                    break;
+                }
+                // 查询user表
+                const user = await LoginInstance.getOpenid(data.openid);
+
+                //新用户
+                if(user.length === 0) {
+                    // 新用户插入用户表
+                    // 产生一条登录日志
+                    // 默认订阅--新生事物(默认id=1)
+                    await Promise.all([ LoginInstance.InsertOpenid(data.openid), userSubscribe.subscribeBrands(data.openid, 1)])
+                }
             } catch (error) {
                 ret = RetCode.ERR_SERVER_EXCEPTION;
                 msg = RetMsg.ERR_SERVER_EXCEPTION;
@@ -37,7 +64,7 @@ route.post('/login', (req: express.Request, res: express.Response, next: express
             status: ret,
             msg   : msg,
             subMsg: subMsg,
-            data  : data
+            openid  : data.openid
         }
         //返回操作
         res.json(result);

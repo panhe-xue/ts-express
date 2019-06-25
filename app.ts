@@ -17,9 +17,6 @@ import * as express from "express";
 import * as FileUpload from "express-fileupload";
 import MS from "./util/ms";
 
-var log4js = require('log4js');
-var log = log4js.getLogger("app");
-
 let ms = MS;
 
 class App {
@@ -39,8 +36,7 @@ class App {
       });
       app.use(logger("dev"));
       app.use(logger("combined", { stream: accessLog }));
-      // log4js 打印日志
-      app.use(log4js.connectLogger(log4js.getLogger("http"), { level: 'auto' }));
+
       //解析post请求
       app.use(bodyParser.json({ limit: "100mb" }));
       app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
