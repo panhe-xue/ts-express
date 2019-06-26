@@ -61,17 +61,27 @@ route.post('/index/load', (req: express.Request, res: express.Response, next: ex
                 msg = RetMsg.ERR_SERVER_EXCEPTION;
             }
 
-            console.log('哈哈哈哈.....', resData);
             // 订阅新品数
             data.brands_num = resData[0];
 
+            let temp = {
+                count: 0,
+                data: null
+            }
             // 新增卡片数
             data.add_brands_num = resData[1].length === 0 ? 0 : resData[1].length;
             if(resData[1].length !== 0) {
                 data.add_brands_res = resData[1].slice(0, 6);
             } else{
-                data.add_brands_res.count = await getBrandsDao.getNotSubscribeBrandsCount(openid);
-                data.add_brands_res.data = await getBrandsDao.getNotSubscribeBrands(openid, 0, 3);
+                try {
+                    temp.count = await getBrandsDao.getNotSubscribeBrandsCount(openid);
+                    temp.data = await getBrandsDao.getNotSubscribeBrands(openid, 0, 3);
+                    data.add_brands_res = temp;
+                } catch (error) {
+                    console.log(error);
+                    ret = RetCode.ERR_SERVER_EXCEPTION;
+                    msg = RetMsg.ERR_SERVER_EXCEPTION;
+                }
             }
 
             // //插入一条日志

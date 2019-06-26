@@ -1,5 +1,6 @@
 import ms from "../../util/ms";
 import * as mysql from "mysql";
+import { formatDate } from "../../util/util";
 /**
  * 登陆类
  */
@@ -36,7 +37,7 @@ class NewUser{
                 return true
             } else {
                 let rows1 = await ms.mysql["subscribe_to_new_thing"].execSql(mysql.format(sql1, [ openid ]));
-                return (rows1[0].login_time || null)
+                return (formatDate(rows1[0].login_time) || null)
             }
         } catch (error) {
             console.log(sql , "error: ", error);

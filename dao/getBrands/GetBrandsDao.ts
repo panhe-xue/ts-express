@@ -88,11 +88,11 @@ export class GetBrandsDao{
         let sql = `
         select count(*) as count from ${GetBrandsDao.TABLE_NAME_BRANDS}
         where status = 1 and id not in (
-            select brands_id as id from ${GetBrandsDao.TABLE_NAME} where openid = ?
+            select brands_id as id from ${GetBrandsDao.TABLE_NAME} where openid = ? and status = 1
         )
         order by create_time desc;`;
         sql = mysql.format(sql, [openid]);
-        console.info("getNotSubscribeBrands 获取没有订阅的brands总数数 from db sql:", sql);
+        console.info("getNotSubscribeBrands 获取没有订阅的brands总数 from db sql:", sql);
 
         try {
             let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
@@ -110,7 +110,7 @@ export class GetBrandsDao{
     async getNewAddBrands(data: any, lastTime: any) {
         let whereStr = ''
         if(data.new_user === 0 && lastTime !== null) {
-            whereStr += ' and create_time >= ' + lastTime
+            whereStr += ' and create_time >= "' + lastTime.toString() + '" ';
         }
         let sql = `
             select * from ${GetBrandsDao.TABLE_NAME_BRANDS} where 1=1 ${whereStr}

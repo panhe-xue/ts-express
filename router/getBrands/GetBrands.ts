@@ -58,8 +58,8 @@ route.post('/getNotSubscribeBrands', (req: express.Request, res: express.Respons
         let msg: string = RetMsg.SUC_OK;
         let subMsg: string;
         let openid = req.body.openid;
-        let pageBegin = req.body.pageBegin;
-        let pageNum = req.body.pageNum;
+        let pageBegin = req.body.pageBegin || 0;
+        let pageNum = req.body.pageNum || 18;
         let data = [];
         do {
             //参数校验
