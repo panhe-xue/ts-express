@@ -3,12 +3,12 @@ import * as express from "express";
 import {RetCode, RetMsg} from "../../util/RetStatus";
 import  NewUser from "../../dao/user/new_user";
 import  GetBrandsDao from "../../dao/getBrands/GetBrandsDao";
-// import  UserLog from "../../dao/user/user_log";
+import  UserLog from "../../dao/user/user_log";
 export  const route = express.Router();
 
 const newUser = new NewUser();
 const getBrandsDao = new GetBrandsDao();
-// const userLog = new UserLog();
+const userLog = new UserLog();
 
 route.post('/index/load', (req: express.Request, res: express.Response, next: express.NextFunction) => {
     (async () => {
@@ -21,7 +21,8 @@ route.post('/index/load', (req: express.Request, res: express.Response, next: ex
             add_brands_num: 0,   // 新增卡片数
             add_brands_res: null // 栏2  新增卡片为0 ？ 新增卡片数 ： 可订阅总数
         };
-        let lastLoginTime;  // 该用户最后一次登录标签订阅页时间
+        let lastLoginSubscribeTime;  // 该用户最后一次登录标签订阅页时间
+        let lastLoginIndexTime;  // 该用户最后一次登录首页时间
         let openid = req.body.openid;
         do {
             //参数校验
@@ -40,21 +41,25 @@ route.post('/index/load', (req: express.Request, res: express.Response, next: ex
                 ret = RetCode.ERR_SERVER_EXCEPTION;
                 msg = RetMsg.ERR_SERVER_EXCEPTION;
             }
-            console.log("是否是新用户。。。。。。。", result);
+
             if(result === true) { // 新用户
                 data.new_user = 1;
             } else { //老用户
                 data.new_user = 0;
-                lastLoginTime = result;
+                lastLoginSubscribeTime = result.subscribeTime;
+                lastLoginIndexTime = result.indexTime;
             }
 
             // 统计订阅新品总数
-            // data.brands_num = await getBrandsDao.getHasSubscribeBrandsCount(openid);
             // 统计新增卡片数
-            // data.add_brands_num = await getBrandsDao.getNewAddBrands(data, lastLoginTime);
+            // 获取更新feed总数
             let resData;
             try {
-                resData = await Promise.all([getBrandsDao.getHasSubscribeBrandsCount(openid), getBrandsDao.getNewAddBrands(data, lastLoginTime)]);
+                resData = await Promise.all([
+                    getBrandsDao.getHasSubscribeBrandsCount(openid),
+                    getBrandsDao.getNewAddBrands(data, lastLoginSubscribeTime),
+                    getBrandsDao.getSubscribeFeedsUpdateNum(data, openid, lastLoginIndexTime)
+                ]);
             } catch (error) {
                 console.log(error);
                 ret = RetCode.ERR_SERVER_EXCEPTION;
@@ -85,7 +90,7 @@ route.post('/index/load', (req: express.Request, res: express.Response, next: ex
             }
 
             // //插入一条日志
-            // await userLog.insertLog(openid);
+            await userLog.insertLog(openid, 0);
             console.log("index reload success!!");
         } while (false)
 

@@ -9,6 +9,7 @@ export class GetBrandsDao{
      */
     static TABLE_NAME = "user_brands";
     static TABLE_NAME_BRANDS = "brands";
+    static TABLE_NAME_FEEDS = "feeds";
 
     constructor() {
     }
@@ -121,6 +122,33 @@ export class GetBrandsDao{
         try {
             let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
             return rows;
+        } catch (error) {
+            console.log(sql , "error: ", error);
+            throw new Error(error);
+        }
+    }
+    /**
+     * 获取已经订阅的feeds更新总数
+     * @return Array 数据
+     */
+    async getSubscribeFeedsUpdateNum(data: any, openid: string, lastTime: any) {
+        let whereStr = ''
+        if(data.new_user === 0 && lastTime !== null) {
+            whereStr += ' and A.create_time >= "' + lastTime.toString() + '" ';
+        }
+        let sql = `
+        select count(*) as count from ${GetBrandsDao.TABLE_NAME_FEEDS} A
+        left join ${GetBrandsDao.TABLE_NAME} B
+        on A.brands_id = B.brands_id
+        where B.openid = ? and B.status = 1 ${whereStr} ;
+        `;
+        sql = mysql.format(sql, [openid]);
+        console.info("getHasSubscribeFeeds user from db sql:", sql);
+
+        
+        try {
+            let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
+            return rows[0].count;
         } catch (error) {
             console.log(sql , "error: ", error);
             throw new Error(error);
