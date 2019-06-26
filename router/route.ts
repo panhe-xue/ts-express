@@ -3,6 +3,8 @@
  */
 import * as Login from "./login/Login";
 import * as GetBrands from "./getBrands/GetBrands";
+import * as SetBrands from "./getBrands/SetBrands";
+import * as Index from "./index/index";
 
 //路由引入文件
 // import * as policeDutyChangeList from "./policeDutyChange/List";
@@ -19,6 +21,8 @@ import * as GetBrands from "./getBrands/GetBrands";
          */
         this.app.use(Login.route);
         this.app.use(GetBrands.route);
+        this.app.use(SetBrands.route);
+        this.app.use(Index.route);
     }
  }
 

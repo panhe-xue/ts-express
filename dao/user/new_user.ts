@@ -20,10 +20,12 @@ class NewUser{
     async is_new_user(openid: string) {
 
         let sql = `
-        select *  from ${NewUser.TABLE_NAME_LOG} A
-        left join ${NewUser.TABLE_NAME_USER} B
-        ON A.open_id = B.id
-        where B.openid = ? order by login_time desc
+        select *  from ${NewUser.TABLE_NAME_LOG}
+        where openid = ? and type = 0 order by login_time desc;
+        `;
+        let sql1 = `
+        select *  from ${NewUser.TABLE_NAME_LOG}
+        where openid = ? and type = 1 order by login_time desc;
         `;
         sql = mysql.format(sql, [openid]);
         console.info("is_new_user logs from db sql:", sql);
@@ -33,7 +35,8 @@ class NewUser{
             if(rows.length <= 1 ) {
                 return true
             } else {
-                return rows[0].login_time
+                let rows1 = await ms.mysql["subscribe_to_new_thing"].execSql(mysql.format(sql1, [ openid ]));
+                return (rows1[0].login_time || null)
             }
         } catch (error) {
             console.log(sql , "error: ", error);

@@ -1,35 +1,37 @@
 import * as express from "express";
 
 import {RetCode, RetMsg} from "../../util/RetStatus";
-import { GetBrandsDao } from "../../dao/getBrands/GetBrandsDao";
+import SetBrandsDao  from "../../dao/getBrands/SetBrandsDao";
 export  const route = express.Router();
-import  UserLog from "../../dao/user/user_log";
-import { isFalseExZero } from "../../util/util";
 
-//日志打印
-const userLog = new UserLog();
-const getBrandsDao = new GetBrandsDao();
-route.post('/getHasSubscribeBrands', (req: express.Request, res: express.Response, next: express.NextFunction) => {
+const setBrandsDao = new SetBrandsDao();
+
+// 订阅接口
+route.post('/setNewSubscribeBrands', (req: express.Request, res: express.Response, next: express.NextFunction) => {
     (async () => {
         let ret:number = RetCode.SUC_OK;
         let msg: string = RetMsg.SUC_OK;
         let subMsg: string;
         let openid = req.body.openid;
-        let data = {};
+        let brand_id = +req.body.brand_id;
         do {
             //参数校验
-            if(!openid) {
+            if(!openid || !brand_id) {
                 ret = RetCode.ERR_CLIENT_PARAMS_ERR;
                 msg = RetMsg.ERR_CLIENT_PARAMS_ERR;
-                subMsg = '缺少openid';
+                subMsg = '缺少openid或者brands_id';
                 break;
             }
             console.log("checkData success!!");
 
             // 获取订阅brands数
             try {
-                let allNum = await getBrandsDao.getHasSubscribeBrands(openid);
-                data = allNum;
+                let allNum = await setBrandsDao.getHasThisBrands(openid, brand_id);
+                if(allNum.length === 0) {
+                    await setBrandsDao.insertThisBrands(openid, brand_id);
+                } else {
+                    await setBrandsDao.updateThisBrands(openid, brand_id, 1);
+                }
             } catch (error) {
                 ret = RetCode.ERR_SERVER_EXCEPTION;
                 msg = RetMsg.ERR_SERVER_EXCEPTION;
@@ -37,14 +39,13 @@ route.post('/getHasSubscribeBrands', (req: express.Request, res: express.Respons
                 break;
             }
 
-            console.log("get User list FromDB success!!");
+            console.log("setNewSubscribeBrands 设置新标签品牌 success!!");
         } while (false)
 
         let result = {
             status: ret,
             msg   : msg,
-            subMsg: subMsg,
-            data  : data
+            subMsg: subMsg
         }
         //返回操作
         res.json(result);
@@ -52,32 +53,27 @@ route.post('/getHasSubscribeBrands', (req: express.Request, res: express.Respons
     })()
 });
 
-route.post('/getNotSubscribeBrands', (req: express.Request, res: express.Response, next: express.NextFunction) => {
+// 取消订阅接口
+route.post('/delThisBrands', (req: express.Request, res: express.Response, next: express.NextFunction) => {
     (async () => {
         let ret:number = RetCode.SUC_OK;
         let msg: string = RetMsg.SUC_OK;
         let subMsg: string;
         let openid = req.body.openid;
-        let pageBegin = req.body.pageBegin;
-        let pageNum = req.body.pageNum;
-        let data = [];
+        let brand_id = +req.body.brand_id;
         do {
             //参数校验
-            if(!openid  ||  isFalseExZero(pageBegin) || !pageNum) {
+            if(!openid || !brand_id) {
                 ret = RetCode.ERR_CLIENT_PARAMS_ERR;
                 msg = RetMsg.ERR_CLIENT_PARAMS_ERR;
-                subMsg = '缺少openid或者pageBegin或者pageNum';
+                subMsg = '缺少openid或者brands_id';
                 break;
             }
             console.log("checkData success!!");
 
-            // 获取订阅brands数
+            // 取消订阅brands
             try {
-                // 写日志
-                await userLog.insertLog(openid, 1);
-
-                // 查找没有订阅的标签 从0--18
-                data = await getBrandsDao.getNotSubscribeBrands(openid, pageBegin, pageNum);
+                let allNum = await setBrandsDao.updateThisBrands(openid, brand_id, 0);
             } catch (error) {
                 ret = RetCode.ERR_SERVER_EXCEPTION;
                 msg = RetMsg.ERR_SERVER_EXCEPTION;
@@ -85,14 +81,13 @@ route.post('/getNotSubscribeBrands', (req: express.Request, res: express.Respons
                 break;
             }
 
-            console.log("getNotSubscribeBrands 获取没有订阅数目 success!!");
+            console.log("setNewSubscribeBrands 设置新标签品牌 success!!");
         } while (false)
 
         let result = {
             status: ret,
             msg   : msg,
-            subMsg: subMsg,
-            data  : data
+            subMsg: subMsg
         }
         //返回操作
         res.json(result);

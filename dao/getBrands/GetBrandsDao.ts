@@ -13,13 +13,18 @@ export class GetBrandsDao{
     constructor() {
     }
     /**
-     * 从获取brands总数
+     * 获取已经订阅的brands总数
      * @return Array 数据
      */
-    async getAllBrands(openid: string) {
-        let sql = `select count(*) as count from ${GetBrandsDao.TABLE_NAME} where openid = ? and status = 1`;
+    async getHasSubscribeBrandsCount(openid: string) {
+        let sql = `
+        select count(*) as count from ${GetBrandsDao.TABLE_NAME} A
+        left join ${GetBrandsDao.TABLE_NAME_BRANDS} B
+        on A.brands_id = B.id
+        where A.openid = ? and A.status = 1 order by A.create_time desc;
+        `;
         sql = mysql.format(sql, [openid]);
-        console.info("getAllBrands user from db sql:", sql);
+        console.info("getHasSubscribeBrandsCount user from db sql:", sql);
 
         try {
             let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
@@ -34,33 +39,88 @@ export class GetBrandsDao{
      *
      * @return Array 数据
      */
-    async getAllNumFromDB(openid: string) {
-        let result = {
-            hasSubscribe: [],
-            toSubscribe: []
-        }
-        let sql = `select brands_id from ${GetBrandsDao.TABLE_NAME} where openid = ?;`;
-        let sql1 = `select * from ${GetBrandsDao.TABLE_NAME_BRANDS} order by create_time desc;`;
+    async getHasSubscribeBrands(openid: string) {
+        let sql = `
+        select B.* from ${GetBrandsDao.TABLE_NAME} A
+        left join ${GetBrandsDao.TABLE_NAME_BRANDS} B
+        on A.brands_id = B.id
+        where A.openid = ? and A.status = 1 order by A.create_time desc;`;
         sql = mysql.format(sql, [ openid ]);
-        console.info("get user info from db sql:", sql);
+        console.info("getHasSubscribeBrands 获取已经订阅brands数 from db sql:", sql);
 
         try {
             let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
-            let res = await Promise.all([ms.mysql["subscribe_to_new_thing"].execSql(sql1), ms.mysql["subscribe_to_new_thing"].execSql(sql)]);
-            let allBrands = res[0];
-            let doneBrands = res[1];
-            let doneArr = doneBrands.reduce((all, item, index) => {
-                all.push(item.brands_id)
-                return all
-            }, []);
-            allBrands.map((item) => {
-                if(doneArr.indexOf(item.id) > -1) {
-                    result.hasSubscribe.push(item)
-                } else {
-                    result.toSubscribe.push(item)
-                }
-            })
-            return result;
+            return rows;
+        } catch (error) {
+            console.log(sql , "error: ", error);
+            throw new Error(error);
+        }
+    }
+    /**
+     * 获取没有订阅数据
+     * @param openid
+     * @param pageNum
+     */
+    async getNotSubscribeBrands(openid: string, pageBegin: number, pageNum: number) {
+        let sql = `
+        select * from ${GetBrandsDao.TABLE_NAME_BRANDS}
+        where status = 1 and id not in (
+            select brands_id as id from ${GetBrandsDao.TABLE_NAME} where openid = ? and status = 1
+        )
+        order by create_time desc limit ?, ?;`;
+        sql = mysql.format(sql, [openid, +pageBegin, +pageNum]);
+        console.info("getNotSubscribeBrands 获取没有订阅的brands详情数据 from db sql:", sql);
+
+        try {
+            let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
+            return rows;
+        } catch (error) {
+            console.log(sql , "error: ", error);
+            throw new Error(error);
+        }
+    }
+    /**
+     * 获取没有订阅总数
+     * @param openid
+     * @param pageNum
+     */
+    async getNotSubscribeBrandsCount(openid: string) {
+        let sql = `
+        select count(*) as count from ${GetBrandsDao.TABLE_NAME_BRANDS}
+        where status = 1 and id not in (
+            select brands_id as id from ${GetBrandsDao.TABLE_NAME} where openid = ?
+        )
+        order by create_time desc;`;
+        sql = mysql.format(sql, [openid]);
+        console.info("getNotSubscribeBrands 获取没有订阅的brands总数数 from db sql:", sql);
+
+        try {
+            let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
+            return rows[0].count;
+        } catch (error) {
+            console.log(sql , "error: ", error);
+            throw new Error(error);
+        }
+    }
+    /**
+     * 统计新增卡片总数
+     * @param openid
+     * @param data
+     */
+    async getNewAddBrands(data: any, lastTime: any) {
+        let whereStr = ''
+        if(data.new_user === 0 && lastTime !== null) {
+            whereStr += ' and create_time >= ' + lastTime
+        }
+        let sql = `
+            select * from ${GetBrandsDao.TABLE_NAME_BRANDS} where 1=1 ${whereStr}
+            order by create_time desc;
+        `;
+        console.info("getNewAddBrands 获取新增标签数据 from db sql:", sql);
+
+        try {
+            let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
+            return rows;
         } catch (error) {
             console.log(sql , "error: ", error);
             throw new Error(error);

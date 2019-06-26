@@ -15,11 +15,11 @@ class UserLog{
      * 从数据库获取该用户信息
      * @return Array 数据
      */
-    async insertLog(openid: string) {
+    async insertLog(openid: string, type: number) {
         let result: any[] = [];
 
-        let sql = `insert into ${UserLog.TABLE_NAME} (openid, login_time) value (?, now())`;
-        sql = mysql.format(sql, [openid]);
+        let sql = `insert into ${UserLog.TABLE_NAME} (openid, type, login_time) value (?, ?, now())`;
+        sql = mysql.format(sql, [openid, type]);
         console.info("insertLog logs from db sql:", sql);
 
         try {
