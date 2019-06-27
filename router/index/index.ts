@@ -16,10 +16,11 @@ route.post('/index/load', (req: express.Request, res: express.Response, next: ex
         let msg: string = RetMsg.SUC_OK;
         let subMsg: string;
         let data = {
-            new_user: 0,         // 0是老用户  1是新用户
-            brands_num: 1,       // 栏1 订阅数
-            add_brands_num: 0,   // 新增卡片数
-            add_brands_res: null // 栏2  新增卡片为0 ？ 新增卡片数 ： 可订阅总数
+            new_user: 0,          // 0是老用户  1是新用户
+            brands_num: 1,        // 栏1 订阅数
+            add_brands_num: 0,    // 新增卡片数
+            add_brands_res: null, // 栏2  新增卡片为0 ？ 新增卡片数 ： 可订阅总数,
+            new_feed_res: null    // 新增feed结果--新用户和订阅数为0时没有数据
         };
         let lastLoginSubscribeTime;  // 该用户最后一次登录标签订阅页时间
         let lastLoginIndexTime;  // 该用户最后一次登录首页时间
@@ -33,7 +34,16 @@ route.post('/index/load', (req: express.Request, res: express.Response, next: ex
                 break;
             }
 
-            let result;
+            // 插入一条日志
+            try {
+                userLog.insertLog(openid, 0);
+            } catch (error) {
+                console.log(error);
+                ret = RetCode.ERR_SERVER_EXCEPTION;
+                msg = RetMsg.ERR_SERVER_EXCEPTION;
+            }
+
+            let result: any;
             try {
                 result = await newUser.is_new_user(openid);
             } catch (error) {
@@ -57,8 +67,7 @@ route.post('/index/load', (req: express.Request, res: express.Response, next: ex
             try {
                 resData = await Promise.all([
                     getBrandsDao.getHasSubscribeBrandsCount(openid),
-                    getBrandsDao.getNewAddBrands(data, lastLoginSubscribeTime),
-                    getBrandsDao.getSubscribeFeedsUpdateNum(data, openid, lastLoginIndexTime)
+                    getBrandsDao.getNewAddBrands(data, lastLoginSubscribeTime)
                 ]);
             } catch (error) {
                 console.log(error);
@@ -75,7 +84,8 @@ route.post('/index/load', (req: express.Request, res: express.Response, next: ex
             }
             // 新增卡片数
             data.add_brands_num = resData[1].length === 0 ? 0 : resData[1].length;
-            if(resData[1].length !== 0) {
+            console.log(data.add_brands_num, '新增卡片数..........');
+            if(data.add_brands_num !== 0) {
                 data.add_brands_res = resData[1].slice(0, 6);
             } else{
                 try {
@@ -89,8 +99,15 @@ route.post('/index/load', (req: express.Request, res: express.Response, next: ex
                 }
             }
 
-            // //插入一条日志
-            await userLog.insertLog(openid, 0);
+            //
+            try {
+                if (data.brands_num !== 0 && data.new_user !== 1)
+                    data.new_feed_res = await getBrandsDao.getSubscribeFeedsUpdateNum(data, openid, lastLoginIndexTime);
+            } catch (error) {
+                console.log(error);
+                ret = RetCode.ERR_SERVER_EXCEPTION;
+                msg = RetMsg.ERR_SERVER_EXCEPTION;
+            }
             console.log("index reload success!!");
         } while (false)
 

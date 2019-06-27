@@ -59,7 +59,7 @@ class App {
       app.use(new Privilege().handler);
 
       // 关键代码， 设置web文件路由
-      app.use(express.static(path.join(__dirname, "/public/dist"), {
+      app.use(express.static(path.join(__dirname, "/public"), {
           maxAge: "3600000",
           index: "index.html"
         }));

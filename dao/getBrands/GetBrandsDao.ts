@@ -132,23 +132,43 @@ export class GetBrandsDao{
      * @return Array 数据
      */
     async getSubscribeFeedsUpdateNum(data: any, openid: string, lastTime: any) {
-        let whereStr = ''
-        if(data.new_user === 0 && lastTime !== null) {
-            whereStr += ' and A.create_time >= "' + lastTime.toString() + '" ';
-        }
+        let result = { count: 0, brands: [] };
+
+        // 获取更新feed的数量
         let sql = `
         select count(*) as count from ${GetBrandsDao.TABLE_NAME_FEEDS} A
         left join ${GetBrandsDao.TABLE_NAME} B
         on A.brands_id = B.brands_id
-        where B.openid = ? and B.status = 1 ${whereStr} ;
+        where B.openid = ? and B.status = 1 and A.create_time >= "${lastTime}"
+        order by A.create_time desc
         `;
         sql = mysql.format(sql, [openid]);
-        console.info("getHasSubscribeFeeds user from db sql:", sql);
+        console.info("getHasSubscribeFeeds获取更新的feed总量 user from db sql:", sql);
 
-        
+        // 获取更新feed对应的brands数量
+        let sql1 = `
+            select D.name as name from (
+                select  A.brands_id as brands_id  from ${GetBrandsDao.TABLE_NAME_FEEDS} A
+                left join ${GetBrandsDao.TABLE_NAME} B
+                on A.brands_id = B.brands_id
+                where B.openid = ? and B.status = 1 and A.create_time >= "${lastTime}"
+                order by A.create_time desc
+            ) as C
+            left join ${GetBrandsDao.TABLE_NAME_BRANDS} D
+            on C.brands_id = D.id
+            group by C.brands_id limit 0, 3;
+                `;
+        sql1 = mysql.format(sql1, [openid]);
+        console.info("getHasSubscribeFeedsBrands 获取更新feed对应的brand名字 user from db sql:", sql1);
         try {
-            let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
-            return rows[0].count;
+            let res_row = await Promise.all([
+                ms.mysql["subscribe_to_new_thing"].execSql(sql),
+                ms.mysql["subscribe_to_new_thing"].execSql(sql1)
+            ]);
+
+            result.count = res_row[0][0].count;
+            result.brands = res_row[1].slice(0, 3);
+            return result;
         } catch (error) {
             console.log(sql , "error: ", error);
             throw new Error(error);

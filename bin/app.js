@@ -48,7 +48,7 @@ var App = /** @class */ (function () {
         //权限校验
         app.use(new Privilege_1.default().handler);
         // 关键代码， 设置web文件路由
-        app.use(express.static(path.join(__dirname, "/public/dist"), {
+        app.use(express.static(path.join(__dirname, "/public"), {
             maxAge: "3600000",
             index: "index.html"
         }));

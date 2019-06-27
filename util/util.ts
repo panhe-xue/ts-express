@@ -28,3 +28,9 @@ export function formatDate (date: Date) : string {
     second = minute < 10 ? ('0' + second) : second;
     return y + '-' + m + '-' + d+' '+h+':'+minute+':'+ second;
 };
+/**
+ * 生成一个任意范围的随机数
+ */
+export function getRandomNumber (beginN, endN) : number {
+    return Math.random()*(endN-beginN) + beginN;
+};

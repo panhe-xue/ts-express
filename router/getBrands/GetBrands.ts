@@ -60,6 +60,7 @@ route.post('/getNotSubscribeBrands', (req: express.Request, res: express.Respons
         let openid = req.body.openid;
         let pageBegin = req.body.pageBegin || 0;
         let pageNum = req.body.pageNum || 18;
+        let numBegin = +pageBegin * +pageNum
         let data = [];
         do {
             //参数校验
@@ -74,10 +75,10 @@ route.post('/getNotSubscribeBrands', (req: express.Request, res: express.Respons
             // 获取订阅brands数
             try {
                 // 写日志
-                await userLog.insertLog(openid, 1);
+                userLog.insertLog(openid, 1);
 
                 // 查找没有订阅的标签 从0--18
-                data = await getBrandsDao.getNotSubscribeBrands(openid, pageBegin, pageNum);
+                data = await getBrandsDao.getNotSubscribeBrands(openid, numBegin, pageNum);
             } catch (error) {
                 ret = RetCode.ERR_SERVER_EXCEPTION;
                 msg = RetMsg.ERR_SERVER_EXCEPTION;
