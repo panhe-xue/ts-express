@@ -1,7 +1,7 @@
 import * as express from "express";
 import {RetCode, RetMsg} from "../../util/RetStatus";
 import LoginDao from "../../dao/login/LoginDao";
-import UserSubscribe from "../../dao/User/user_subscribe";
+import UserSubscribe from "../../dao/user/user_subscribe";
 import { httpGet } from "../../util/request";
 import globalData from '../../lib/globalData';
 export  const route = express.Router();
