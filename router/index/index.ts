@@ -56,7 +56,7 @@ route.post('/index/load', (req: express.Request, res: express.Response, next: ex
                 data.new_user = 1;
             } else { //老用户
                 data.new_user = 0;
-                lastLoginSubscribeTime = result.subscribeTime;
+                lastLoginSubscribeTime = (result.length !== 0 && result.subscribeTime) || null;
                 lastLoginIndexTime = result.indexTime;
             }
 

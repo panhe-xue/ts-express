@@ -99,7 +99,7 @@ exports.route.post('/index/load', function (req, res, next) {
                     }
                     else { //老用户
                         data.new_user = 0;
-                        lastLoginSubscribeTime = result_1.subscribeTime;
+                        lastLoginSubscribeTime = (result_1.length !== 0 && result_1.subscribeTime) || null;
                         lastLoginIndexTime = result_1.indexTime;
                     }
                     resData = void 0;
