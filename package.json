@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "supervisor main.js",
-    "serve": "node ./bin/main.js"
+    "build": "tsc",
+    "serve": "pm2 start ./bin/main.js"
   },
   "author": "",
   "license": "ISC",
