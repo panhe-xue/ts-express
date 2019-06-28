@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "supervisor main.js",
     "build": "tsc",
-    "serve": "pm2 start ./bin/main.js"
+    "serve:dev": "pm2 start ./ecosystem.config.js --env env",
+    "serve:pro": "pm2 start ./ecosystem.config.js --env production"
   },
   "author": "",
   "license": "ISC",
