@@ -116,7 +116,7 @@ exports.route.post('/login', function (req, res, next) {
                         status: ret,
                         msg: msg,
                         subMsg: subMsg,
-                        openid: data.openid
+                        openid: data.openid || ''
                     };
                     //返回操作
                     res.json(result);

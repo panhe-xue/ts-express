@@ -64,7 +64,7 @@ route.post('/login', (req: express.Request, res: express.Response, next: express
             status: ret,
             msg   : msg,
             subMsg: subMsg,
-            openid  : data.openid
+            openid  : data.openid || ''
         }
         //返回操作
         res.json(result);
