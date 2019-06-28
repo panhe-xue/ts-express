@@ -37,7 +37,8 @@ class NewUser{
                 return true
             } else {
                 let rows1 = await ms.mysql["subscribe_to_new_thing"].execSql(mysql.format(sql1, [ openid ]));
-                return { subscribeTime : formatDate(rows1[0].login_time), indexTime : formatDate(rows[0].login_time)}
+                return { subscribeTime : (rows1[0].length !== 0 ? formatDate(rows1[0].login_time) : []),
+                    indexTime : (rows[0].length !== 0 ? formatDate(rows[0].login_time) : [])}
             }
         } catch (error) {
             console.log(sql , "error: ", error);

@@ -70,7 +70,8 @@ var NewUser = /** @class */ (function () {
                     case 3: return [4 /*yield*/, ms_1.default.mysql["subscribe_to_new_thing"].execSql(mysql.format(sql1, [openid]))];
                     case 4:
                         rows1 = _a.sent();
-                        return [2 /*return*/, { subscribeTime: util_1.formatDate(rows1[0].login_time), indexTime: util_1.formatDate(rows[0].login_time) }];
+                        return [2 /*return*/, { subscribeTime: (rows1[0].length !== 0 ? util_1.formatDate(rows1[0].login_time) : []),
+                                indexTime: (rows[0].length !== 0 ? util_1.formatDate(rows[0].login_time) : []) }];
                     case 5: return [3 /*break*/, 7];
                     case 6:
                         error_1 = _a.sent();
