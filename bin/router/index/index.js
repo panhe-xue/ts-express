@@ -41,6 +41,7 @@ var RetStatus_1 = require("../../util/RetStatus");
 var new_user_1 = require("../../dao/user/new_user");
 var GetBrandsDao_1 = require("../../dao/getBrands/GetBrandsDao");
 var user_log_1 = require("../../dao/user/user_log");
+var util_1 = require("../../util/util");
 exports.route = express.Router();
 var newUser = new new_user_1.default();
 var getBrandsDao = new GetBrandsDao_1.default();
@@ -99,8 +100,8 @@ exports.route.post('/index/load', function (req, res, next) {
                     }
                     else { //老用户
                         data.new_user = 0;
-                        lastLoginSubscribeTime = (result_1.length !== 0 && result_1.subscribeTime) || null;
-                        lastLoginIndexTime = result_1.indexTime;
+                        lastLoginSubscribeTime = (result_1.subscribeTime.length !== 0 && util_1.formatDate(result_1.subscribeTime[0].login_time)) || null;
+                        lastLoginIndexTime = (result_1.indexTime.length !== 0 && util_1.formatDate(result_1.indexTime[0].login_time)) || null;
                     }
                     resData = void 0;
                     _d.label = 6;
@@ -120,8 +121,9 @@ exports.route.post('/index/load', function (req, res, next) {
                     msg = RetStatus_1.RetMsg.ERR_SERVER_EXCEPTION;
                     return [3 /*break*/, 9];
                 case 9:
+                    console.log('到这里了.....', resData[0]);
                     // 订阅新品数
-                    data.brands_num = resData[0];
+                    data.brands_num = resData[0][0].count || 0;
                     temp = {
                         count: 0,
                         data: null

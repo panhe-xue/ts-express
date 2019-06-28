@@ -29,7 +29,8 @@ export class GetBrandsDao{
 
         try {
             let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
-            return rows[0].count;
+            console.log(rows, '测试...............')
+            return rows;
         } catch (error) {
             console.log(sql , "error: ", error);
             throw new Error(error);

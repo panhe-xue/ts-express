@@ -62,7 +62,8 @@ var GetBrandsDao = /** @class */ (function () {
                         return [4 /*yield*/, ms_1.default.mysql["subscribe_to_new_thing"].execSql(sql)];
                     case 2:
                         rows = _a.sent();
-                        return [2 /*return*/, rows[0].count];
+                        console.log(rows, '测试...............');
+                        return [2 /*return*/, rows];
                     case 3:
                         error_1 = _a.sent();
                         console.log(sql, "error: ", error_1);

@@ -4,6 +4,7 @@ import {RetCode, RetMsg} from "../../util/RetStatus";
 import  NewUser from "../../dao/user/new_user";
 import  GetBrandsDao from "../../dao/getBrands/GetBrandsDao";
 import  UserLog from "../../dao/user/user_log";
+import {formatDate } from "../../util/util"
 export  const route = express.Router();
 
 const newUser = new NewUser();
@@ -56,8 +57,8 @@ route.post('/index/load', (req: express.Request, res: express.Response, next: ex
                 data.new_user = 1;
             } else { //老用户
                 data.new_user = 0;
-                lastLoginSubscribeTime = (result.length !== 0 && result.subscribeTime) || null;
-                lastLoginIndexTime = result.indexTime;
+                lastLoginSubscribeTime = (result.subscribeTime.length !== 0 && formatDate(result.subscribeTime[0].login_time)) || null;
+                lastLoginIndexTime = (result.indexTime.length !== 0 && formatDate(result.indexTime[0].login_time)) || null;
             }
 
             // 统计订阅新品总数
@@ -74,9 +75,9 @@ route.post('/index/load', (req: express.Request, res: express.Response, next: ex
                 ret = RetCode.ERR_SERVER_EXCEPTION;
                 msg = RetMsg.ERR_SERVER_EXCEPTION;
             }
-
+            console.log('到这里了.....', resData[0]);
             // 订阅新品数
-            data.brands_num = resData[0];
+            data.brands_num = resData[0][0].count || 0;
 
             let temp = {
                 count: 0,

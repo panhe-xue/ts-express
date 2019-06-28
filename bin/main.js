@@ -65,7 +65,7 @@ var Main = /** @class */ (function () {
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
-                        optionsArray = process.env.NODE_ENV === 'development' ? DataBaseOptions_1.default.dev : DataBaseOptions_1.default.pro;
+                        optionsArray = (process.env.NODE_ENV || 'development') === 'development' ? DataBaseOptions_1.default.dev : DataBaseOptions_1.default.pro;
                         console.log("mysql options，数据库配置文件:", optionsArray);
                         i = 0;
                         _c.label = 1;

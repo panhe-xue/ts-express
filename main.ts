@@ -25,7 +25,7 @@ class Main {
      * 初始化数据库
      */
     async initDbs(emitter) {
-        let optionsArray = process.env.NODE_ENV === 'development' ?  DataBaseOptions.dev : DataBaseOptions.pro;
+        let optionsArray = (process.env.NODE_ENV || 'development') === 'development' ?  DataBaseOptions.dev : DataBaseOptions.pro;
         console.log("mysql options，数据库配置文件:", optionsArray);
         for(let i = 0; i < optionsArray.length; i++) {
             let options = optionsArray[i];
