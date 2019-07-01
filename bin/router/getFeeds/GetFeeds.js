@@ -41,6 +41,7 @@ var RetStatus_1 = require("../../util/RetStatus");
 var getFeedsDao_1 = require("../../dao/getFeeds/getFeedsDao");
 exports.route = express.Router();
 var user_log_1 = require("../../dao/user/user_log");
+var ms_1 = require("../../util/ms");
 //日志打印
 var userLog = new user_log_1.default();
 var getFeedsDao = new getFeedsDao_1.GetFeedsDao();
@@ -67,7 +68,7 @@ exports.route.post('/getHasSubscribeFeeds', function (req, res, next) {
                         subMsg = '缺少openid';
                         return [3 /*break*/, 7];
                     }
-                    console.log("checkData success!!");
+                    ms_1.default.log.info("checkData success!!");
                     _a.label = 2;
                 case 2:
                     _a.trys.push([2, 4, , 5]);
@@ -82,7 +83,7 @@ exports.route.post('/getHasSubscribeFeeds', function (req, res, next) {
                     subMsg = error_1.message;
                     return [3 /*break*/, 7];
                 case 5:
-                    console.log("get User list FromDB success!!");
+                    ms_1.default.log.info("get User list FromDB success!!");
                     _a.label = 6;
                 case 6:
                     if (false) return [3 /*break*/, 1];
@@ -122,7 +123,7 @@ exports.route.post('/userLove', function (req, res, next) {
                         subMsg = '缺少openid或者feed_id';
                         return [3 /*break*/, 9];
                     }
-                    console.log("checkData success!!");
+                    ms_1.default.log.info("checkData success!!");
                     _a.label = 2;
                 case 2:
                     _a.trys.push([2, 6, , 7]);
@@ -142,7 +143,7 @@ exports.route.post('/userLove', function (req, res, next) {
                     subMsg = error_2.message;
                     return [3 /*break*/, 9];
                 case 7:
-                    console.log("get User list FromDB success!!");
+                    ms_1.default.log.info("get User list FromDB success!!");
                     _a.label = 8;
                 case 8:
                     if (false) return [3 /*break*/, 1];
@@ -182,7 +183,7 @@ exports.route.post('/userCancelLove', function (req, res, next) {
                         subMsg = '缺少openid或者feed_id';
                         return [3 /*break*/, 9];
                     }
-                    console.log("checkData success!!");
+                    ms_1.default.log.info("checkData success!!");
                     _a.label = 2;
                 case 2:
                     _a.trys.push([2, 6, , 7]);
@@ -202,7 +203,7 @@ exports.route.post('/userCancelLove', function (req, res, next) {
                     subMsg = error_3.message;
                     return [3 /*break*/, 9];
                 case 7:
-                    console.log("get User list FromDB success!!");
+                    ms_1.default.log.info("get User list FromDB success!!");
                     _a.label = 8;
                 case 8:
                     if (false) return [3 /*break*/, 1];
@@ -232,7 +233,7 @@ exports.route.post('/userView', function (req, res, next) {
                     msg = RetStatus_1.RetMsg.SUC_OK;
                     openid = req.body.openid;
                     feed_id = req.body.feed_id;
-                    console.log(typeof feed_id, feed_id, '参数.........');
+                    ms_1.default.log.info(typeof feed_id, feed_id, '参数.........');
                     data = {};
                     _a.label = 1;
                 case 1:
@@ -243,7 +244,7 @@ exports.route.post('/userView', function (req, res, next) {
                         subMsg = '缺少openid或者feed_id';
                         return [3 /*break*/, 7];
                     }
-                    console.log("checkData success!!");
+                    ms_1.default.log.info("checkData success!!");
                     _a.label = 2;
                 case 2:
                     _a.trys.push([2, 4, , 5]);
@@ -258,7 +259,7 @@ exports.route.post('/userView', function (req, res, next) {
                     subMsg = error_4.message;
                     return [3 /*break*/, 7];
                 case 5:
-                    console.log("get User list FromDB success!!");
+                    ms_1.default.log.info("get User list FromDB success!!");
                     _a.label = 6;
                 case 6:
                     if (false) return [3 /*break*/, 1];

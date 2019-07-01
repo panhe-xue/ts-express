@@ -21,13 +21,13 @@ class UserSubscribe{
         let sql = `insert into ${UserSubscribe.TABLE_NAME} (openid, brands_id, status, create_time) value (?, ?, 1, now())`;
         sql = mysql.format(sql, [openid, brands_id]);
 
-        console.info("insertLog logs from db sql:", sql);
+        ms.log.info("insertLog logs from db sql:", sql);
 
         try {
             let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
             return rows;
         } catch (error) {
-            console.log(sql , "error: ", error);
+            ms.log.error(sql , "error: ", error);
             throw new Error(error);
         }
     }

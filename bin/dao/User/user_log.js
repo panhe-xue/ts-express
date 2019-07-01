@@ -56,7 +56,7 @@ var UserLog = /** @class */ (function () {
                         result = [];
                         sql = "insert into " + UserLog.TABLE_NAME + " (openid, type, login_time) value (?, ?, now())";
                         sql = mysql.format(sql, [openid, type]);
-                        console.info("insertLog logs from db sql:", sql);
+                        ms_1.default.log.info("insertLog logs from db sql:", sql);
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
@@ -66,7 +66,7 @@ var UserLog = /** @class */ (function () {
                         return [2 /*return*/, rows];
                     case 3:
                         error_1 = _a.sent();
-                        console.log(sql, "error: ", error_1);
+                        ms_1.default.log.error(sql, "error: ", error_1);
                         throw new Error(error_1);
                     case 4: return [2 /*return*/];
                 }

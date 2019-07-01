@@ -39,7 +39,6 @@ var ms_1 = require("./util/ms");
 var DB_1 = require("./db/DB");
 var DataBaseOptions_1 = require("./db/DataBaseOptions");
 var app_1 = require("./app");
-var ms = ms_1.default;
 var Main = /** @class */ (function () {
     function Main() {
     }
@@ -48,9 +47,9 @@ var Main = /** @class */ (function () {
      */
     Main.prototype.begin = function () {
         var self = this;
-        console.log('server starting.......................');
+        ms_1.default.log.info('server starting.......................');
         //事件发射器
-        var initEmitter = new ms.events.EventEmitter();
+        var initEmitter = new ms_1.default.events.EventEmitter();
         initEmitter
             .once("begin", self.initDbs)
             .once("initServer", self.initServer)
@@ -66,13 +65,13 @@ var Main = /** @class */ (function () {
                 switch (_c.label) {
                     case 0:
                         optionsArray = (process.env.NODE_ENV || 'development') === 'development' ? DataBaseOptions_1.default.dev : DataBaseOptions_1.default.pro;
-                        console.log("mysql options，数据库配置文件:", optionsArray);
+                        ms_1.default.log.info("mysql options，数据库配置文件:", optionsArray);
                         i = 0;
                         _c.label = 1;
                     case 1:
                         if (!(i < optionsArray.length)) return [3 /*break*/, 4];
                         options = optionsArray[i];
-                        _a = ms.mysql;
+                        _a = ms_1.default.mysql;
                         _b = options.database;
                         return [4 /*yield*/, new DB_1.default(options)];
                     case 2:
@@ -82,7 +81,7 @@ var Main = /** @class */ (function () {
                         i++;
                         return [3 /*break*/, 1];
                     case 4:
-                        console.log("init database end!!!!");
+                        ms_1.default.log.info("init database end!!!!");
                         emitter.emit("initServer");
                         return [2 /*return*/];
                 }

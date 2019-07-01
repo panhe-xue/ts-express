@@ -2,6 +2,7 @@ import * as express from "express";
 
 import {RetCode, RetMsg} from "../../util/RetStatus";
 import SetBrandsDao  from "../../dao/getBrands/SetBrandsDao";
+import ms from "../../util/ms";
 export  const route = express.Router();
 
 const setBrandsDao = new SetBrandsDao();
@@ -22,7 +23,7 @@ route.post('/setNewSubscribeBrands', (req: express.Request, res: express.Respons
                 subMsg = '缺少openid或者brands_id';
                 break;
             }
-            console.log("checkData success!!");
+            ms.log.info("checkData success!!");
 
             // 获取订阅brands数
             try {
@@ -39,7 +40,7 @@ route.post('/setNewSubscribeBrands', (req: express.Request, res: express.Respons
                 break;
             }
 
-            console.log("setNewSubscribeBrands 设置新标签品牌 success!!");
+            ms.log.info("setNewSubscribeBrands 设置新标签品牌 success!!");
         } while (false)
 
         let result = {
@@ -68,7 +69,7 @@ route.post('/delThisBrands', (req: express.Request, res: express.Response, next:
                 subMsg = '缺少openid或者brands_id';
                 break;
             }
-            console.log("checkData success!!");
+            ms.log.info("checkData success!!");
 
             // 取消订阅brands
             try {
@@ -80,7 +81,7 @@ route.post('/delThisBrands', (req: express.Request, res: express.Response, next:
                 break;
             }
 
-            console.log("setNewSubscribeBrands 设置新标签品牌 success!!");
+            ms.log.info("setNewSubscribeBrands 设置新标签品牌 success!!");
         } while (false)
 
         let result = {

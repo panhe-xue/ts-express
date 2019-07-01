@@ -5,6 +5,7 @@ import { GetFeedsDao } from "../../dao/getFeeds/getFeedsDao";
 export  const route = express.Router();
 import  UserLog from "../../dao/user/user_log";
 import { isFalseExZero } from "../../util/util";
+import ms from "../../util/ms";
 
 //日志打印
 const userLog = new UserLog();
@@ -29,7 +30,7 @@ route.post('/getHasSubscribeFeeds', (req: express.Request, res: express.Response
                 subMsg = '缺少openid';
                 break;
             }
-            console.log("checkData success!!");
+            ms.log.info("checkData success!!");
 
             // 获取订阅feeds数
             try {
@@ -41,7 +42,7 @@ route.post('/getHasSubscribeFeeds', (req: express.Request, res: express.Response
                 break;
             }
 
-            console.log("get User list FromDB success!!");
+            ms.log.info("get User list FromDB success!!");
         } while (false)
 
         let result = {
@@ -72,7 +73,7 @@ route.post('/userLove', (req: express.Request, res: express.Response, next: expr
                 subMsg = '缺少openid或者feed_id';
                 break;
             }
-            console.log("checkData success!!");
+            ms.log.info("checkData success!!");
 
             // 获取订阅feeds数
             try {
@@ -87,7 +88,7 @@ route.post('/userLove', (req: express.Request, res: express.Response, next: expr
                 break;
             }
 
-            console.log("get User list FromDB success!!");
+            ms.log.info("get User list FromDB success!!");
         } while (false)
 
         let result = {
@@ -117,7 +118,7 @@ route.post('/userCancelLove', (req: express.Request, res: express.Response, next
                 subMsg = '缺少openid或者feed_id';
                 break;
             }
-            console.log("checkData success!!");
+            ms.log.info("checkData success!!");
 
             // 获取订阅feeds数
             try {
@@ -132,7 +133,7 @@ route.post('/userCancelLove', (req: express.Request, res: express.Response, next
                 break;
             }
 
-            console.log("get User list FromDB success!!");
+            ms.log.info("get User list FromDB success!!");
         } while (false)
 
         let result = {
@@ -154,7 +155,7 @@ route.post('/userView', (req: express.Request, res: express.Response, next: expr
         let subMsg: string;
         let openid = req.body.openid;
         let feed_id:Array<number> = req.body.feed_id;
-        console.log(typeof feed_id, feed_id, '参数.........');
+        ms.log.info(typeof feed_id, feed_id, '参数.........');
         let data = {};
         do {
             //参数校验
@@ -164,7 +165,7 @@ route.post('/userView', (req: express.Request, res: express.Response, next: expr
                 subMsg = '缺少openid或者feed_id';
                 break;
             }
-            console.log("checkData success!!");
+            ms.log.info("checkData success!!");
 
             // 获取订阅feeds数
             try {
@@ -176,7 +177,7 @@ route.post('/userView', (req: express.Request, res: express.Response, next: expr
                 break;
             }
 
-            console.log("get User list FromDB success!!");
+            ms.log.info("get User list FromDB success!!");
         } while (false)
 
         let result = {

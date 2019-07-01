@@ -68,7 +68,7 @@ var LoginDao = /** @class */ (function () {
                         result = [];
                         sql = "select * from " + LoginDao.TABLE_NAME + " where openid = ?";
                         sql = mysql.format(sql, [openid]);
-                        console.info("get user from db sql:", sql);
+                        ms_1.default.log.info("get user from db sql:", sql);
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
@@ -78,7 +78,7 @@ var LoginDao = /** @class */ (function () {
                         return [2 /*return*/, rows];
                     case 3:
                         error_1 = _a.sent();
-                        console.log(sql, "error: ", error_1);
+                        ms_1.default.log.error(sql, "error: ", error_1);
                         throw new Error(error_1);
                     case 4: return [2 /*return*/];
                 }
@@ -98,7 +98,7 @@ var LoginDao = /** @class */ (function () {
                         result = [];
                         sql = "insert into " + LoginDao.TABLE_NAME + " (openid, create_time) values (?, now());";
                         sql = mysql.format(sql, [openid]);
-                        console.info("insert openid from db sql:", sql);
+                        ms_1.default.log.info("insert openid from db sql:", sql);
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
@@ -108,7 +108,7 @@ var LoginDao = /** @class */ (function () {
                         return [2 /*return*/, rows];
                     case 3:
                         error_2 = _a.sent();
-                        console.log(sql, "error: ", error_2);
+                        ms_1.default.log.error(sql, "error: ", error_2);
                         throw new Error(error_2);
                     case 4: return [2 /*return*/];
                 }

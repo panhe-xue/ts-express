@@ -1,18 +1,17 @@
 "use strict";
 
-import MS from "./util/ms";
+import ms from "./util/ms";
 import InitDB from "./db/DB";
 import DataBaseOptions from "./db/DataBaseOptions";
 import App from "./app";
 
-let ms = MS;
 class Main {
     /**
      * 程序的开始
      */
     begin() {
         let self = this;
-        console.log('server starting.......................');
+        ms.log.info('server starting.......................');
 
         //事件发射器
         let initEmitter = new ms.events.EventEmitter();
@@ -26,13 +25,13 @@ class Main {
      */
     async initDbs(emitter) {
         let optionsArray = (process.env.NODE_ENV || 'development') === 'development' ?  DataBaseOptions.dev : DataBaseOptions.pro;
-        console.log("mysql options，数据库配置文件:", optionsArray);
+        ms.log.info("mysql options，数据库配置文件:", optionsArray);
         for(let i = 0; i < optionsArray.length; i++) {
             let options = optionsArray[i];
             ms.mysql[options.database] = await new InitDB(options);
         }
 
-        console.log("init database end!!!!");
+        ms.log.info("init database end!!!!");
         emitter.emit("initServer");
     }
     /**

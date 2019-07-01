@@ -56,7 +56,7 @@ var GetBrandsDao = /** @class */ (function () {
                     case 0:
                         sql = "\n        select * from " + GetBrandsDao.TABLE_NAME + "\n        where status = 0 and openid = ? and brands_id = ?";
                         sql = mysql.format(sql, [openid, brand_id]);
-                        console.info("getNotSubscribeBrands 获取所有brands数 from db sql:", sql);
+                        ms_1.default.log.info("getNotSubscribeBrands 获取所有brands数 from db sql:", sql);
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
@@ -66,7 +66,7 @@ var GetBrandsDao = /** @class */ (function () {
                         return [2 /*return*/, rows];
                     case 3:
                         error_1 = _a.sent();
-                        console.log(sql, "error: ", error_1);
+                        ms_1.default.log.error(sql, "error: ", error_1);
                         throw new Error(error_1);
                     case 4: return [2 /*return*/];
                 }
@@ -86,7 +86,7 @@ var GetBrandsDao = /** @class */ (function () {
                     case 0:
                         sql = "\n        insert into " + GetBrandsDao.TABLE_NAME + " (openid, brands_id, status, create_time) values (?, ?, 1, now())";
                         sql = mysql.format(sql, [openid, brand_id]);
-                        console.info("insertThisBrands 插入该用户订阅品牌数据 from db sql:", sql);
+                        ms_1.default.log.info("insertThisBrands 插入该用户订阅品牌数据 from db sql:", sql);
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
@@ -96,7 +96,7 @@ var GetBrandsDao = /** @class */ (function () {
                         return [2 /*return*/, rows];
                     case 3:
                         error_2 = _a.sent();
-                        console.log(sql, "error: ", error_2);
+                        ms_1.default.log.error(sql, "error: ", error_2);
                         throw new Error(error_2);
                     case 4: return [2 /*return*/];
                 }
@@ -116,7 +116,7 @@ var GetBrandsDao = /** @class */ (function () {
                     case 0:
                         sql = "\n        update " + GetBrandsDao.TABLE_NAME + "\n        set status = ?\n        where  openid = ? and brands_id = ?";
                         sql = mysql.format(sql, [status, openid, brand_id]);
-                        console.info("updateThisBrands 更新该用户订阅品牌数据为订阅 from db sql:", sql);
+                        ms_1.default.log.info("updateThisBrands 更新该用户订阅品牌数据为订阅 from db sql:", sql);
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
@@ -126,7 +126,7 @@ var GetBrandsDao = /** @class */ (function () {
                         return [2 /*return*/, rows];
                     case 3:
                         error_3 = _a.sent();
-                        console.log(sql, "error: ", error_3);
+                        ms_1.default.log.error(sql, "error: ", error_3);
                         throw new Error(error_3);
                     case 4: return [2 /*return*/];
                 }

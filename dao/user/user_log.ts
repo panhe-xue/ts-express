@@ -20,13 +20,13 @@ class UserLog{
 
         let sql = `insert into ${UserLog.TABLE_NAME} (openid, type, login_time) value (?, ?, now())`;
         sql = mysql.format(sql, [openid, type]);
-        console.info("insertLog logs from db sql:", sql);
+        ms.log.info("insertLog logs from db sql:", sql);
 
         try {
             let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
             return rows;
         } catch (error) {
-            console.log(sql , "error: ", error);
+            ms.log.error(sql , "error: ", error);
             throw new Error(error);
         }
     }

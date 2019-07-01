@@ -39,6 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var RetStatus_1 = require("../../util/RetStatus");
 var SetBrandsDao_1 = require("../../dao/getBrands/SetBrandsDao");
+var ms_1 = require("../../util/ms");
 exports.route = express.Router();
 var setBrandsDao = new SetBrandsDao_1.default();
 // 订阅接口
@@ -61,7 +62,7 @@ exports.route.post('/setNewSubscribeBrands', function (req, res, next) {
                         subMsg = '缺少openid或者brands_id';
                         return [3 /*break*/, 11];
                     }
-                    console.log("checkData success!!");
+                    ms_1.default.log.info("checkData success!!");
                     _a.label = 2;
                 case 2:
                     _a.trys.push([2, 8, , 9]);
@@ -85,7 +86,7 @@ exports.route.post('/setNewSubscribeBrands', function (req, res, next) {
                     subMsg = error_1.message;
                     return [3 /*break*/, 11];
                 case 9:
-                    console.log("setNewSubscribeBrands 设置新标签品牌 success!!");
+                    ms_1.default.log.info("setNewSubscribeBrands 设置新标签品牌 success!!");
                     _a.label = 10;
                 case 10:
                     if (false) return [3 /*break*/, 1];
@@ -123,7 +124,7 @@ exports.route.post('/delThisBrands', function (req, res, next) {
                         subMsg = '缺少openid或者brands_id';
                         return [3 /*break*/, 7];
                     }
-                    console.log("checkData success!!");
+                    ms_1.default.log.info("checkData success!!");
                     _a.label = 2;
                 case 2:
                     _a.trys.push([2, 4, , 5]);
@@ -138,7 +139,7 @@ exports.route.post('/delThisBrands', function (req, res, next) {
                     subMsg = error_2.message;
                     return [3 /*break*/, 7];
                 case 5:
-                    console.log("setNewSubscribeBrands 设置新标签品牌 success!!");
+                    ms_1.default.log.info("setNewSubscribeBrands 设置新标签品牌 success!!");
                     _a.label = 6;
                 case 6:
                     if (false) return [3 /*break*/, 1];

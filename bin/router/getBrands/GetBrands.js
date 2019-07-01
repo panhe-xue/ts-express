@@ -42,6 +42,7 @@ var GetBrandsDao_1 = require("../../dao/getBrands/GetBrandsDao");
 exports.route = express.Router();
 var user_log_1 = require("../../dao/user/user_log");
 var util_1 = require("../../util/util");
+var ms_1 = require("../../util/ms");
 //日志打印
 var userLog = new user_log_1.default();
 var getBrandsDao = new GetBrandsDao_1.GetBrandsDao();
@@ -64,7 +65,7 @@ exports.route.post('/getHasSubscribeBrands', function (req, res, next) {
                         subMsg = '缺少openid';
                         return [3 /*break*/, 7];
                     }
-                    console.log("checkData success!!");
+                    ms_1.default.log.info("checkData success!!");
                     _a.label = 2;
                 case 2:
                     _a.trys.push([2, 4, , 5]);
@@ -80,7 +81,7 @@ exports.route.post('/getHasSubscribeBrands', function (req, res, next) {
                     subMsg = error_1.message;
                     return [3 /*break*/, 7];
                 case 5:
-                    console.log("get User list FromDB success!!");
+                    ms_1.default.log.info("get User list FromDB success!!");
                     _a.label = 6;
                 case 6:
                     if (false) return [3 /*break*/, 1];
@@ -121,7 +122,7 @@ exports.route.post('/getNotSubscribeBrands', function (req, res, next) {
                         subMsg = '缺少openid或者pageBegin或者pageNum';
                         return [3 /*break*/, 7];
                     }
-                    console.log("checkData success!!");
+                    ms_1.default.log.info("checkData success!!");
                     _a.label = 2;
                 case 2:
                     _a.trys.push([2, 4, , 5]);
@@ -139,7 +140,7 @@ exports.route.post('/getNotSubscribeBrands', function (req, res, next) {
                     subMsg = error_2.message;
                     return [3 /*break*/, 7];
                 case 5:
-                    console.log("getNotSubscribeBrands 获取没有订阅数目 success!!");
+                    ms_1.default.log.info("getNotSubscribeBrands 获取没有订阅数目 success!!");
                     _a.label = 6;
                 case 6:
                     if (false) return [3 /*break*/, 1];

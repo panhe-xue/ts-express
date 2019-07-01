@@ -4,7 +4,8 @@ import {RetCode, RetMsg} from "../../util/RetStatus";
 import  NewUser from "../../dao/user/new_user";
 import  GetBrandsDao from "../../dao/getBrands/GetBrandsDao";
 import  UserLog from "../../dao/user/user_log";
-import {formatDate } from "../../util/util"
+import { formatDate } from "../../util/util"
+import ms from "../../util/ms";
 export  const route = express.Router();
 
 const newUser = new NewUser();
@@ -13,6 +14,7 @@ const userLog = new UserLog();
 
 route.post('/index/load', (req: express.Request, res: express.Response, next: express.NextFunction) => {
     (async () => {
+        ms.log.info("1.....输出到pm2没有呢????????????????????????????");
         try {
             let ret:number = RetCode.SUC_OK;
         let msg: string = RetMsg.SUC_OK;
@@ -40,7 +42,7 @@ route.post('/index/load', (req: express.Request, res: express.Response, next: ex
             try {
                 userLog.insertLog(openid, 0);
             } catch (error) {
-                console.log(error);
+                ms.log.error(error);
                 ret = RetCode.ERR_SERVER_EXCEPTION;
                 msg = RetMsg.ERR_SERVER_EXCEPTION;
             }
@@ -49,7 +51,7 @@ route.post('/index/load', (req: express.Request, res: express.Response, next: ex
             try {
                 result = await newUser.is_new_user(openid);
             } catch (error) {
-                console.log(error);
+                ms.log.error(error);
                 ret = RetCode.ERR_SERVER_EXCEPTION;
                 msg = RetMsg.ERR_SERVER_EXCEPTION;
             }
@@ -72,7 +74,7 @@ route.post('/index/load', (req: express.Request, res: express.Response, next: ex
                     getBrandsDao.getNewAddBrands(data, lastLoginSubscribeTime)
                 ]);
             } catch (error) {
-                console.log(error);
+                ms.log.error(error);
                 ret = RetCode.ERR_SERVER_EXCEPTION;
                 msg = RetMsg.ERR_SERVER_EXCEPTION;
                 break;
@@ -96,7 +98,7 @@ route.post('/index/load', (req: express.Request, res: express.Response, next: ex
                     temp.data = await getBrandsDao.getNotSubscribeBrands(openid, 0, 3);
                     data.add_brands_res = temp;
                 } catch (error) {
-                    console.log(error);
+                    ms.log.error(error);
                     ret = RetCode.ERR_SERVER_EXCEPTION;
                     msg = RetMsg.ERR_SERVER_EXCEPTION;
                 }
@@ -107,11 +109,11 @@ route.post('/index/load', (req: express.Request, res: express.Response, next: ex
                 if (data.brands_num !== 0 && data.new_user !== 1)
                     data.new_feed_res = await getBrandsDao.getSubscribeFeedsUpdateNum(data, openid, lastLoginIndexTime);
             } catch (error) {
-                console.log(error);
+                ms.log.error(error);
                 ret = RetCode.ERR_SERVER_EXCEPTION;
                 msg = RetMsg.ERR_SERVER_EXCEPTION;
             }
-            console.log("index reload success!!");
+            ms.log.info("index reload success!!");
         } while (false)
 
         let result = {
@@ -123,7 +125,8 @@ route.post('/index/load', (req: express.Request, res: express.Response, next: ex
         //返回操作
         res.json(result);
         } catch (error) {
-            console.log(error, '...');
+            ms.log.error(error, '...');
+            ms.log.error(error);
             res.json({error: error.message, status: 500})
         }
     })()

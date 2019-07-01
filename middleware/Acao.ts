@@ -33,7 +33,6 @@ class ACAO implements IMiddleware {
     } else {
       origin && res.header("Timing-Allow-Origin", origin);
     }
-    
   }
 }
 

@@ -1,1 +1,1 @@
-{"version":3,"file":"globalData.js","sourceRoot":"","sources":["../../lib/globalData.ts"],"names":[],"mappings":";;AAAA,kBAAe;IACX,OAAO,EAAE;QACL,KAAK,EAAE,oBAAoB;QAC3B,SAAS,EAAE,kCAAkC,CAAC,WAAW;KAC5D;IACD,eAAe,EAAE,8CAA8C,CAAC,SAAS;CAC5E,CAAA;AACD,wLAAwL"}
+{"version":3,"file":"globalData.js","sourceRoot":"","sources":["../../lib/globalData.ts"],"names":[],"mappings":";;AAAA,kBAAe;IACX,OAAO,EAAE;QACL,KAAK,EAAE,oBAAoB;QAC3B,SAAS,EAAE,kCAAkC,CAAC,WAAW;KAC5D;IACD,eAAe,EAAE,8CAA8C,CAAC,SAAS;CAC5E,CAAA"}

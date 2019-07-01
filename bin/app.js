@@ -20,7 +20,6 @@ var connectRedis = require("connect-redis");
 var log4js = require('./config/log');
 var logger = log4js.getLogger();
 var RedisStore = connectRedis(session);
-var ms = ms_1.default;
 var App = /** @class */ (function () {
     function App() {
         this.init();
@@ -82,21 +81,21 @@ var App = /** @class */ (function () {
             });
         });
         if (module.parent) {
-            console.log("Nodejs server start arguments " + process.env.IP + ":" + process.env.PORT);
+            ms_1.default.log.info("Nodejs server start arguments " + process.env.IP + ":" + process.env.PORT);
             // 关键代码， 设置本地监听域名和端口号
             app.set("host", process.env.IP || "localhost");
             app.set("port", process.env.PORT || 8000);
             // 关键代码， 启动服务
             var server_1 = app.listen(app.get("port"), app.get("host"), function () {
                 var address = server_1.address();
-                console.log("Express server listening on port:" + app.get("port"));
+                ms_1.default.log.info("Express server listening on port:" + app.get("port"));
             });
         }
         process.on("uncaughtException", function (err) {
-            console.log("uncaughtException: " + err.stack);
+            ms_1.default.log.info("uncaughtException: " + err.stack);
         });
         process.on('unhandledRejection', function (err) {
-            console.log('promise unhandledRejection:', err);
+            ms_1.default.log.info('promise unhandledRejection:', err);
             process.exit(1);
         });
     };

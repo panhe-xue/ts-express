@@ -56,7 +56,7 @@ var GetFeedsDao = /** @class */ (function () {
                     case 0:
                         sql = "\n            select a1.*, if(b1.id, 1, 0) as loved from\n                (\n                select A.*, C.logo as logo from " + GetFeedsDao.TABLE_NAME + " A\n                left join " + GetFeedsDao.TABLE_NAME_USER_BRANDS + " B\n                on A.brands_id = B.brands_id\n                left join " + GetFeedsDao.TABLE_NAME_BRANDS + " C\n                on A.brands_id = C.id\n                where B.openid = ? and B.status = 1 order by A.create_time desc limit ?, ?\n                ) as a1\n                left join\n                ( SELECT * FROM " + GetFeedsDao.TABLE_NAME_USER_LOVE + " WHERE openid = ?) AS b1\n                ON a1.id = b1.feed_id\n        ";
                         sql = mysql.format(sql, [openid, +pageBegin, +pageNum, openid]);
-                        console.info("getHasSubscribeFeeds user from db sql:", sql);
+                        ms_1.default.log.info("getHasSubscribeFeeds user from db sql:", sql);
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
@@ -66,7 +66,7 @@ var GetFeedsDao = /** @class */ (function () {
                         return [2 /*return*/, rows];
                     case 3:
                         error_1 = _a.sent();
-                        console.log(sql, "error: ", error_1);
+                        ms_1.default.log.error(sql, "error: ", error_1);
                         throw new Error(error_1);
                     case 4: return [2 /*return*/];
                 }
@@ -86,7 +86,7 @@ var GetFeedsDao = /** @class */ (function () {
                         ty = type === 0 ? '-' : '+';
                         sql = "\n            update " + GetFeedsDao.TABLE_NAME + " set love_num = love_num " + ty + " 1\n            where id = ?\n        ";
                         sql = mysql.format(sql, [feed_id]);
-                        console.info("userLove商品喜欢数增加 user from db sql:", sql);
+                        ms_1.default.log.info("userLove商品喜欢数增加 user from db sql:", sql);
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
@@ -96,7 +96,7 @@ var GetFeedsDao = /** @class */ (function () {
                         return [2 /*return*/, rows];
                     case 3:
                         error_2 = _a.sent();
-                        console.log(sql, "error: ", error_2);
+                        ms_1.default.log.error(sql, "error: ", error_2);
                         throw new Error(error_2);
                     case 4: return [2 /*return*/];
                 }
@@ -115,7 +115,7 @@ var GetFeedsDao = /** @class */ (function () {
                     case 0:
                         sql = "\n            insert into " + GetFeedsDao.TABLE_NAME_USER_LOVE + " (openid, feed_id, create_time) values (?, ?, now())\n        ";
                         sql = mysql.format(sql, [openid, feed_id]);
-                        console.info("adduserLove插入喜欢表 user from db sql:", sql);
+                        ms_1.default.log.info("adduserLove插入喜欢表 user from db sql:", sql);
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
@@ -125,7 +125,7 @@ var GetFeedsDao = /** @class */ (function () {
                         return [2 /*return*/, rows];
                     case 3:
                         error_3 = _a.sent();
-                        console.log(sql, "error: ", error_3);
+                        ms_1.default.log.error(sql, "error: ", error_3);
                         throw new Error(error_3);
                     case 4: return [2 /*return*/];
                 }
@@ -144,7 +144,7 @@ var GetFeedsDao = /** @class */ (function () {
                     case 0:
                         sql = "\n            delete from " + GetFeedsDao.TABLE_NAME_USER_LOVE + " where\n            openid = ? and feed_id = ?\n        ";
                         sql = mysql.format(sql, [openid, feed_id]);
-                        console.info("deluserLove商品用户取消 user from db sql:", sql);
+                        ms_1.default.log.info("deluserLove商品用户取消 user from db sql:", sql);
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
@@ -154,7 +154,7 @@ var GetFeedsDao = /** @class */ (function () {
                         return [2 /*return*/, rows];
                     case 3:
                         error_4 = _a.sent();
-                        console.log(sql, "error: ", error_4);
+                        ms_1.default.log.error(sql, "error: ", error_4);
                         throw new Error(error_4);
                     case 4: return [2 /*return*/];
                 }
@@ -175,7 +175,7 @@ var GetFeedsDao = /** @class */ (function () {
                         ids = feed_id.join(',');
                         sql = "\n            update " + GetFeedsDao.TABLE_NAME + " set view_num = view_num + " + randomNum + "\n            where id in (" + ids + ")\n        ";
                         sql = mysql.format(sql, [feed_id]);
-                        console.info("userLove商品喜欢数增加 user from db sql:", sql);
+                        ms_1.default.log.info("userLove商品喜欢数增加 user from db sql:", sql);
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
@@ -185,7 +185,7 @@ var GetFeedsDao = /** @class */ (function () {
                         return [2 /*return*/, rows];
                     case 3:
                         error_5 = _a.sent();
-                        console.log(sql, "error: ", error_5);
+                        ms_1.default.log.error(sql, "error: ", error_5);
                         throw new Error(error_5);
                     case 4: return [2 /*return*/];
                 }

@@ -57,7 +57,7 @@ var NewUser = /** @class */ (function () {
                         sql = "\n        select *  from " + NewUser.TABLE_NAME_LOG + "\n        where openid = ? and type = 0 order by login_time desc;\n        ";
                         sql1 = "\n        select *  from " + NewUser.TABLE_NAME_LOG + "\n        where openid = ? and type = 1 order by login_time desc;\n        ";
                         sql = mysql.format(sql, [openid]);
-                        console.info("is_new_user logs from db sql:", sql);
+                        ms_1.default.log.info("is_new_user logs from db sql:", sql);
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 6, , 7]);
@@ -74,7 +74,7 @@ var NewUser = /** @class */ (function () {
                     case 5: return [3 /*break*/, 7];
                     case 6:
                         error_1 = _a.sent();
-                        console.log(sql, "error: ", error_1);
+                        ms_1.default.log.error(sql, "error: ", error_1);
                         throw new Error(error_1);
                     case 7: return [2 /*return*/];
                 }

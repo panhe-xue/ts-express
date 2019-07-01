@@ -29,7 +29,7 @@ class NewUser{
         where openid = ? and type = 1 order by login_time desc;
         `;
         sql = mysql.format(sql, [openid]);
-        console.info("is_new_user logs from db sql:", sql);
+        ms.log.info("is_new_user logs from db sql:", sql);
 
         try {
             let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
@@ -41,7 +41,7 @@ class NewUser{
                     indexTime : rows}
             }
         } catch (error) {
-            console.log(sql , "error: ", error);
+            ms.log.error(sql , "error: ", error);
             throw new Error(error);
         }
     }

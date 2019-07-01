@@ -16,14 +16,13 @@ import Routes from "./router/route";
 import * as path from "path";
 import * as express from "express";
 import * as FileUpload from "express-fileupload";
-import MS from "./util/ms";
+import ms from "./util/ms";
 import * as connectRedis from "connect-redis";
 
 var log4js = require('./config/log');
 const logger = log4js.getLogger();
 
 let RedisStore = connectRedis(session);
-let ms = MS;
 
 class App {
   constructor () {
@@ -97,7 +96,7 @@ class App {
       });
 
       if (module.parent) {
-        console.log(`Nodejs server start arguments ${process.env.IP}:${process.env.PORT}`);
+        ms.log.info(`Nodejs server start arguments ${process.env.IP}:${process.env.PORT}`);
         // 关键代码， 设置本地监听域名和端口号
         app.set("host", process.env.IP || "localhost");
         app.set("port", process.env.PORT || 8000);
@@ -108,16 +107,16 @@ class App {
           app.get("host"),
           () => {
             var address = server.address();
-            console.log(`Express server listening on port:${app.get("port")}`);
+            ms.log.info(`Express server listening on port:${app.get("port")}`);
           }
         );
       }
 
       process.on("uncaughtException", function(err) {
-        console.log("uncaughtException: " + err.stack);
+        ms.log.info("uncaughtException: " + err.stack);
       });
       process.on('unhandledRejection', function(err) {
-        console.log('promise unhandledRejection:', err);
+        ms.log.info('promise unhandledRejection:', err);
         process.exit(1);
       })
   }

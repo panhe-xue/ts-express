@@ -42,6 +42,7 @@ var new_user_1 = require("../../dao/user/new_user");
 var GetBrandsDao_1 = require("../../dao/getBrands/GetBrandsDao");
 var user_log_1 = require("../../dao/user/user_log");
 var util_1 = require("../../util/util");
+var ms_1 = require("../../util/ms");
 exports.route = express.Router();
 var newUser = new new_user_1.default();
 var getBrandsDao = new GetBrandsDao_1.default();
@@ -52,7 +53,10 @@ exports.route.post('/index/load', function (req, res, next) {
         return __generator(this, function (_d) {
             switch (_d.label) {
                 case 0:
-                    _d.trys.push([0, 21, , 22]);
+                    ms_1.default.log.info("1.....输出到pm2没有呢????????????????????????????");
+                    _d.label = 1;
+                case 1:
+                    _d.trys.push([1, 22, , 23]);
                     ret = RetStatus_1.RetCode.SUC_OK;
                     msg = RetStatus_1.RetMsg.SUC_OK;
                     subMsg = void 0;
@@ -66,39 +70,39 @@ exports.route.post('/index/load', function (req, res, next) {
                     lastLoginSubscribeTime = void 0;
                     lastLoginIndexTime = void 0;
                     openid = req.body.openid;
-                    _d.label = 1;
-                case 1:
+                    _d.label = 2;
+                case 2:
                     //参数校验
                     if (!openid) {
                         ret = RetStatus_1.RetCode.ERR_CLIENT_PARAMS_ERR;
                         msg = RetStatus_1.RetMsg.ERR_CLIENT_PARAMS_ERR;
                         subMsg = '缺少openid';
-                        return [3 /*break*/, 20];
+                        return [3 /*break*/, 21];
                     }
                     // 插入一条日志
                     try {
                         userLog.insertLog(openid, 0);
                     }
                     catch (error) {
-                        console.log(error);
+                        ms_1.default.log.error(error);
                         ret = RetStatus_1.RetCode.ERR_SERVER_EXCEPTION;
                         msg = RetStatus_1.RetMsg.ERR_SERVER_EXCEPTION;
                     }
                     result_1 = void 0;
-                    _d.label = 2;
-                case 2:
-                    _d.trys.push([2, 4, , 5]);
-                    return [4 /*yield*/, newUser.is_new_user(openid)];
+                    _d.label = 3;
                 case 3:
-                    result_1 = _d.sent();
-                    return [3 /*break*/, 5];
+                    _d.trys.push([3, 5, , 6]);
+                    return [4 /*yield*/, newUser.is_new_user(openid)];
                 case 4:
+                    result_1 = _d.sent();
+                    return [3 /*break*/, 6];
+                case 5:
                     error_1 = _d.sent();
-                    console.log(error_1);
+                    ms_1.default.log.error(error_1);
                     ret = RetStatus_1.RetCode.ERR_SERVER_EXCEPTION;
                     msg = RetStatus_1.RetMsg.ERR_SERVER_EXCEPTION;
-                    return [3 /*break*/, 5];
-                case 5:
+                    return [3 /*break*/, 6];
+                case 6:
                     if (result_1 === true) { // 新用户
                         data.new_user = 1;
                     }
@@ -108,23 +112,23 @@ exports.route.post('/index/load', function (req, res, next) {
                         lastLoginIndexTime = (result_1.indexTime.length !== 0 && util_1.formatDate(result_1.indexTime[0].login_time)) || null;
                     }
                     resData = void 0;
-                    _d.label = 6;
-                case 6:
-                    _d.trys.push([6, 8, , 9]);
+                    _d.label = 7;
+                case 7:
+                    _d.trys.push([7, 9, , 10]);
                     return [4 /*yield*/, Promise.all([
                             getBrandsDao.getHasSubscribeBrandsCount(openid),
                             getBrandsDao.getNewAddBrands(data, lastLoginSubscribeTime)
                         ])];
-                case 7:
-                    resData = _d.sent();
-                    return [3 /*break*/, 9];
                 case 8:
+                    resData = _d.sent();
+                    return [3 /*break*/, 10];
+                case 9:
                     error_2 = _d.sent();
-                    console.log(error_2);
+                    ms_1.default.log.error(error_2);
                     ret = RetStatus_1.RetCode.ERR_SERVER_EXCEPTION;
                     msg = RetStatus_1.RetMsg.ERR_SERVER_EXCEPTION;
-                    return [3 /*break*/, 20];
-                case 9:
+                    return [3 /*break*/, 21];
+                case 10:
                     // 订阅新品数
                     data.brands_num = resData[0][0].count || 0;
                     temp = {
@@ -133,49 +137,49 @@ exports.route.post('/index/load', function (req, res, next) {
                     };
                     // 新增卡片数
                     data.add_brands_num = resData[1].length === 0 ? 0 : resData[1].length;
-                    if (!(data.add_brands_num !== 0)) return [3 /*break*/, 10];
+                    if (!(data.add_brands_num !== 0)) return [3 /*break*/, 11];
                     data.add_brands_res = resData[1].slice(0, 6);
-                    return [3 /*break*/, 14];
-                case 10:
-                    _d.trys.push([10, 13, , 14]);
+                    return [3 /*break*/, 15];
+                case 11:
+                    _d.trys.push([11, 14, , 15]);
                     _a = temp;
                     return [4 /*yield*/, getBrandsDao.getNotSubscribeBrandsCount(openid)];
-                case 11:
+                case 12:
                     _a.count = _d.sent();
                     _b = temp;
                     return [4 /*yield*/, getBrandsDao.getNotSubscribeBrands(openid, 0, 3)];
-                case 12:
+                case 13:
                     _b.data = _d.sent();
                     data.add_brands_res = temp;
-                    return [3 /*break*/, 14];
-                case 13:
+                    return [3 /*break*/, 15];
+                case 14:
                     error_3 = _d.sent();
-                    console.log(error_3);
+                    ms_1.default.log.error(error_3);
                     ret = RetStatus_1.RetCode.ERR_SERVER_EXCEPTION;
                     msg = RetStatus_1.RetMsg.ERR_SERVER_EXCEPTION;
-                    return [3 /*break*/, 14];
-                case 14:
-                    _d.trys.push([14, 17, , 18]);
-                    if (!(data.brands_num !== 0 && data.new_user !== 1)) return [3 /*break*/, 16];
+                    return [3 /*break*/, 15];
+                case 15:
+                    _d.trys.push([15, 18, , 19]);
+                    if (!(data.brands_num !== 0 && data.new_user !== 1)) return [3 /*break*/, 17];
                     _c = data;
                     return [4 /*yield*/, getBrandsDao.getSubscribeFeedsUpdateNum(data, openid, lastLoginIndexTime)];
-                case 15:
+                case 16:
                     _c.new_feed_res = _d.sent();
-                    _d.label = 16;
-                case 16: return [3 /*break*/, 18];
-                case 17:
+                    _d.label = 17;
+                case 17: return [3 /*break*/, 19];
+                case 18:
                     error_4 = _d.sent();
-                    console.log(error_4);
+                    ms_1.default.log.error(error_4);
                     ret = RetStatus_1.RetCode.ERR_SERVER_EXCEPTION;
                     msg = RetStatus_1.RetMsg.ERR_SERVER_EXCEPTION;
-                    return [3 /*break*/, 18];
-                case 18:
-                    console.log("index reload success!!");
-                    _d.label = 19;
+                    return [3 /*break*/, 19];
                 case 19:
-                    if (false) return [3 /*break*/, 1];
+                    ms_1.default.log.info("index reload success!!");
                     _d.label = 20;
                 case 20:
+                    if (false) return [3 /*break*/, 2];
+                    _d.label = 21;
+                case 21:
                     result = {
                         status: ret,
                         msg: msg,
@@ -184,13 +188,14 @@ exports.route.post('/index/load', function (req, res, next) {
                     };
                     //返回操作
                     res.json(result);
-                    return [3 /*break*/, 22];
-                case 21:
+                    return [3 /*break*/, 23];
+                case 22:
                     error_5 = _d.sent();
-                    console.log(error_5, '...');
+                    ms_1.default.log.error(error_5, '...');
+                    ms_1.default.log.error(error_5);
                     res.json({ error: error_5.message, status: 500 });
-                    return [3 /*break*/, 22];
-                case 22: return [2 /*return*/];
+                    return [3 /*break*/, 23];
+                case 23: return [2 /*return*/];
             }
         });
     }); })();

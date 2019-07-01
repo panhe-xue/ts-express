@@ -5,6 +5,7 @@ import { GetBrandsDao } from "../../dao/getBrands/GetBrandsDao";
 export  const route = express.Router();
 import  UserLog from "../../dao/user/user_log";
 import { isFalseExZero } from "../../util/util";
+import ms from "../../util/ms";
 
 //日志打印
 const userLog = new UserLog();
@@ -24,7 +25,7 @@ route.post('/getHasSubscribeBrands', (req: express.Request, res: express.Respons
                 subMsg = '缺少openid';
                 break;
             }
-            console.log("checkData success!!");
+            ms.log.info("checkData success!!");
 
             // 获取订阅brands数
             try {
@@ -37,7 +38,7 @@ route.post('/getHasSubscribeBrands', (req: express.Request, res: express.Respons
                 break;
             }
 
-            console.log("get User list FromDB success!!");
+            ms.log.info("get User list FromDB success!!");
         } while (false)
 
         let result = {
@@ -69,7 +70,7 @@ route.post('/getNotSubscribeBrands', (req: express.Request, res: express.Respons
                 subMsg = '缺少openid或者pageBegin或者pageNum';
                 break;
             }
-            console.log("checkData success!!");
+            ms.log.info("checkData success!!");
 
             // 获取订阅brands数
             try {
@@ -85,7 +86,7 @@ route.post('/getNotSubscribeBrands', (req: express.Request, res: express.Respons
                 break;
             }
 
-            console.log("getNotSubscribeBrands 获取没有订阅数目 success!!");
+            ms.log.info("getNotSubscribeBrands 获取没有订阅数目 success!!");
         } while (false)
 
         let result = {

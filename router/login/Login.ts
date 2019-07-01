@@ -6,6 +6,7 @@ import { httpGet } from "../../util/request";
 import globalData from '../../lib/globalData';
 export  const route = express.Router();
 const LoginInstance = new LoginDao();
+import ms from "../../util/ms";
 
 // 用户订阅
 const userSubscribe = new UserSubscribe();
@@ -17,7 +18,7 @@ route.post('/login', (req: express.Request, res: express.Response, next: express
         let subMsg: string = RetMsg.SUC_OK;
         let data;
         let code = req.body.code;
-        console.log('user login request args.........:', code)
+        ms.log.info('user login request args.........:', code)
         do {
             if(!LoginInstance.checkData(code)) {
                 ret = RetCode.ERR_CLIENT_PARAMS_ERR;

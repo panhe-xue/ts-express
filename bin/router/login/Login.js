@@ -44,6 +44,7 @@ var request_1 = require("../../util/request");
 var globalData_1 = require("../../lib/globalData");
 exports.route = express.Router();
 var LoginInstance = new LoginDao_1.default();
+var ms_1 = require("../../util/ms");
 // 用户订阅
 var userSubscribe = new user_subscribe_1.default();
 exports.route.post('/login', function (req, res, next) {
@@ -56,7 +57,7 @@ exports.route.post('/login', function (req, res, next) {
                     msg = RetStatus_1.RetMsg.SUC_OK;
                     subMsg = RetStatus_1.RetMsg.SUC_OK;
                     code = req.body.code;
-                    console.log('user login request args.........:', code);
+                    ms_1.default.log.info('user login request args.........:', code);
                     _a.label = 1;
                 case 1:
                     if (!LoginInstance.checkData(code)) {

@@ -32,13 +32,13 @@ class LoginDao{
 
         let sql = `select * from ${LoginDao.TABLE_NAME} where openid = ?`;
         sql = mysql.format(sql, [openid]);
-        console.info("get user from db sql:", sql);
+        ms.log.info("get user from db sql:", sql);
 
         try {
             let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
             return rows;
         } catch (error) {
-            console.log(sql , "error: ", error);
+            ms.log.error(sql , "error: ", error);
             throw new Error(error);
         }
     }
@@ -51,13 +51,13 @@ class LoginDao{
 
         let sql = `insert into ${LoginDao.TABLE_NAME} (openid, create_time) values (?, now());`;
         sql = mysql.format(sql, [openid]);
-        console.info("insert openid from db sql:", sql);
+        ms.log.info("insert openid from db sql:", sql);
 
         try {
             let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
             return rows;
         } catch (error) {
-            console.log(sql , "error: ", error);
+            ms.log.error(sql , "error: ", error);
             throw new Error(error);
         }
     }

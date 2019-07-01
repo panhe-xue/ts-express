@@ -25,14 +25,13 @@ export class GetBrandsDao{
         where A.openid = ? and A.status = 1 order by A.create_time desc;
         `;
         sql = mysql.format(sql, [openid]);
-        console.info("getHasSubscribeBrandsCount user from db sql:", sql);
+        ms.log.info("getHasSubscribeBrandsCount user from db sql:", sql);
 
         try {
             let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
-            console.log(rows, '测试...............')
             return rows;
         } catch (error) {
-            console.log(sql , "error: ", error);
+            ms.log.info(sql , "error: ", error);
             throw new Error(error);
         }
     }
@@ -48,13 +47,13 @@ export class GetBrandsDao{
         on A.brands_id = B.id
         where A.openid = ? and A.status = 1 order by A.create_time desc;`;
         sql = mysql.format(sql, [ openid ]);
-        console.info("getHasSubscribeBrands 获取已经订阅brands数 from db sql:", sql);
+        ms.log.info("getHasSubscribeBrands 获取已经订阅brands数 from db sql:", sql);
 
         try {
             let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
             return rows;
         } catch (error) {
-            console.log(sql , "error: ", error);
+            ms.log.error(sql , "error: ", error);
             throw new Error(error);
         }
     }
@@ -71,13 +70,13 @@ export class GetBrandsDao{
         )
         order by create_time desc limit ?, ?;`;
         sql = mysql.format(sql, [openid, +pageBegin, +pageNum]);
-        console.info("getNotSubscribeBrands 获取没有订阅的brands详情数据 from db sql:", sql);
+        ms.log.info("getNotSubscribeBrands 获取没有订阅的brands详情数据 from db sql:", sql);
 
         try {
             let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
             return rows;
         } catch (error) {
-            console.log(sql , "error: ", error);
+            ms.log.error(sql , "error: ", error);
             throw new Error(error);
         }
     }
@@ -94,13 +93,13 @@ export class GetBrandsDao{
         )
         order by create_time desc;`;
         sql = mysql.format(sql, [openid]);
-        console.info("getNotSubscribeBrands 获取没有订阅的brands总数 from db sql:", sql);
+        ms.log.info("getNotSubscribeBrands 获取没有订阅的brands总数 from db sql:", sql);
 
         try {
             let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
             return rows[0].count;
         } catch (error) {
-            console.log(sql , "error: ", error);
+            ms.log.error(sql , "error: ", error);
             throw new Error(error);
         }
     }
@@ -118,13 +117,13 @@ export class GetBrandsDao{
             select * from ${GetBrandsDao.TABLE_NAME_BRANDS} where 1=1 ${whereStr}
             order by create_time desc;
         `;
-        console.info("getNewAddBrands 获取新增标签数据 from db sql:", sql);
+        ms.log.info("getNewAddBrands 获取新增标签数据 from db sql:", sql);
 
         try {
             let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
             return rows;
         } catch (error) {
-            console.log(sql , "error: ", error);
+            ms.log.error(sql , "error: ", error);
             throw new Error(error);
         }
     }
@@ -144,7 +143,7 @@ export class GetBrandsDao{
         order by A.create_time desc
         `;
         sql = mysql.format(sql, [openid]);
-        console.info("getHasSubscribeFeeds获取更新的feed总量 user from db sql:", sql);
+        ms.log.info("getHasSubscribeFeeds获取更新的feed总量 user from db sql:", sql);
 
         // 获取更新feed对应的brands数量
         let sql1 = `
@@ -160,7 +159,7 @@ export class GetBrandsDao{
             group by C.brands_id limit 0, 3;
                 `;
         sql1 = mysql.format(sql1, [openid]);
-        console.info("getHasSubscribeFeedsBrands 获取更新feed对应的brand名字 user from db sql:", sql1);
+        ms.log.info("getHasSubscribeFeedsBrands 获取更新feed对应的brand名字 user from db sql:", sql1);
         try {
             let res_row = await Promise.all([
                 ms.mysql["subscribe_to_new_thing"].execSql(sql),
@@ -171,7 +170,7 @@ export class GetBrandsDao{
             result.brands = res_row[1].slice(0, 3);
             return result;
         } catch (error) {
-            console.log(sql , "error: ", error);
+            ms.log.error(sql , "error: ", error);
             throw new Error(error);
         }
     }

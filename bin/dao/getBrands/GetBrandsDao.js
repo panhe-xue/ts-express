@@ -55,18 +55,17 @@ var GetBrandsDao = /** @class */ (function () {
                     case 0:
                         sql = "\n        select count(*) as count from " + GetBrandsDao.TABLE_NAME + " A\n        left join " + GetBrandsDao.TABLE_NAME_BRANDS + " B\n        on A.brands_id = B.id\n        where A.openid = ? and A.status = 1 order by A.create_time desc;\n        ";
                         sql = mysql.format(sql, [openid]);
-                        console.info("getHasSubscribeBrandsCount user from db sql:", sql);
+                        ms_1.default.log.info("getHasSubscribeBrandsCount user from db sql:", sql);
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
                         return [4 /*yield*/, ms_1.default.mysql["subscribe_to_new_thing"].execSql(sql)];
                     case 2:
                         rows = _a.sent();
-                        console.log(rows, '测试...............');
                         return [2 /*return*/, rows];
                     case 3:
                         error_1 = _a.sent();
-                        console.log(sql, "error: ", error_1);
+                        ms_1.default.log.info(sql, "error: ", error_1);
                         throw new Error(error_1);
                     case 4: return [2 /*return*/];
                 }
@@ -85,7 +84,7 @@ var GetBrandsDao = /** @class */ (function () {
                     case 0:
                         sql = "\n        select B.* from " + GetBrandsDao.TABLE_NAME + " A\n        left join " + GetBrandsDao.TABLE_NAME_BRANDS + " B\n        on A.brands_id = B.id\n        where A.openid = ? and A.status = 1 order by A.create_time desc;";
                         sql = mysql.format(sql, [openid]);
-                        console.info("getHasSubscribeBrands 获取已经订阅brands数 from db sql:", sql);
+                        ms_1.default.log.info("getHasSubscribeBrands 获取已经订阅brands数 from db sql:", sql);
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
@@ -95,7 +94,7 @@ var GetBrandsDao = /** @class */ (function () {
                         return [2 /*return*/, rows];
                     case 3:
                         error_2 = _a.sent();
-                        console.log(sql, "error: ", error_2);
+                        ms_1.default.log.error(sql, "error: ", error_2);
                         throw new Error(error_2);
                     case 4: return [2 /*return*/];
                 }
@@ -115,7 +114,7 @@ var GetBrandsDao = /** @class */ (function () {
                     case 0:
                         sql = "\n        select * from " + GetBrandsDao.TABLE_NAME_BRANDS + "\n        where status = 1 and id not in (\n            select brands_id as id from " + GetBrandsDao.TABLE_NAME + " where openid = ? and status = 1\n        )\n        order by create_time desc limit ?, ?;";
                         sql = mysql.format(sql, [openid, +pageBegin, +pageNum]);
-                        console.info("getNotSubscribeBrands 获取没有订阅的brands详情数据 from db sql:", sql);
+                        ms_1.default.log.info("getNotSubscribeBrands 获取没有订阅的brands详情数据 from db sql:", sql);
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
@@ -125,7 +124,7 @@ var GetBrandsDao = /** @class */ (function () {
                         return [2 /*return*/, rows];
                     case 3:
                         error_3 = _a.sent();
-                        console.log(sql, "error: ", error_3);
+                        ms_1.default.log.error(sql, "error: ", error_3);
                         throw new Error(error_3);
                     case 4: return [2 /*return*/];
                 }
@@ -145,7 +144,7 @@ var GetBrandsDao = /** @class */ (function () {
                     case 0:
                         sql = "\n        select count(*) as count from " + GetBrandsDao.TABLE_NAME_BRANDS + "\n        where status = 1 and id not in (\n            select brands_id as id from " + GetBrandsDao.TABLE_NAME + " where openid = ? and status = 1\n        )\n        order by create_time desc;";
                         sql = mysql.format(sql, [openid]);
-                        console.info("getNotSubscribeBrands 获取没有订阅的brands总数 from db sql:", sql);
+                        ms_1.default.log.info("getNotSubscribeBrands 获取没有订阅的brands总数 from db sql:", sql);
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
@@ -155,7 +154,7 @@ var GetBrandsDao = /** @class */ (function () {
                         return [2 /*return*/, rows[0].count];
                     case 3:
                         error_4 = _a.sent();
-                        console.log(sql, "error: ", error_4);
+                        ms_1.default.log.error(sql, "error: ", error_4);
                         throw new Error(error_4);
                     case 4: return [2 /*return*/];
                 }
@@ -178,7 +177,7 @@ var GetBrandsDao = /** @class */ (function () {
                             whereStr += ' and create_time >= "' + lastTime.toString() + '" ';
                         }
                         sql = "\n            select * from " + GetBrandsDao.TABLE_NAME_BRANDS + " where 1=1 " + whereStr + "\n            order by create_time desc;\n        ";
-                        console.info("getNewAddBrands 获取新增标签数据 from db sql:", sql);
+                        ms_1.default.log.info("getNewAddBrands 获取新增标签数据 from db sql:", sql);
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
@@ -188,7 +187,7 @@ var GetBrandsDao = /** @class */ (function () {
                         return [2 /*return*/, rows];
                     case 3:
                         error_5 = _a.sent();
-                        console.log(sql, "error: ", error_5);
+                        ms_1.default.log.error(sql, "error: ", error_5);
                         throw new Error(error_5);
                     case 4: return [2 /*return*/];
                 }
@@ -208,10 +207,10 @@ var GetBrandsDao = /** @class */ (function () {
                         result = { count: 0, brands: [] };
                         sql = "\n        select count(*) as count from " + GetBrandsDao.TABLE_NAME_FEEDS + " A\n        left join " + GetBrandsDao.TABLE_NAME + " B\n        on A.brands_id = B.brands_id\n        where B.openid = ? and B.status = 1 and A.create_time >= \"" + lastTime + "\"\n        order by A.create_time desc\n        ";
                         sql = mysql.format(sql, [openid]);
-                        console.info("getHasSubscribeFeeds获取更新的feed总量 user from db sql:", sql);
+                        ms_1.default.log.info("getHasSubscribeFeeds获取更新的feed总量 user from db sql:", sql);
                         sql1 = "\n            select D.name as name from (\n                select  A.brands_id as brands_id  from " + GetBrandsDao.TABLE_NAME_FEEDS + " A\n                left join " + GetBrandsDao.TABLE_NAME + " B\n                on A.brands_id = B.brands_id\n                where B.openid = ? and B.status = 1 and A.create_time >= \"" + lastTime + "\"\n                order by A.create_time desc\n            ) as C\n            left join " + GetBrandsDao.TABLE_NAME_BRANDS + " D\n            on C.brands_id = D.id\n            group by C.brands_id limit 0, 3;\n                ";
                         sql1 = mysql.format(sql1, [openid]);
-                        console.info("getHasSubscribeFeedsBrands 获取更新feed对应的brand名字 user from db sql:", sql1);
+                        ms_1.default.log.info("getHasSubscribeFeedsBrands 获取更新feed对应的brand名字 user from db sql:", sql1);
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
@@ -226,7 +225,7 @@ var GetBrandsDao = /** @class */ (function () {
                         return [2 /*return*/, result];
                     case 3:
                         error_6 = _a.sent();
-                        console.log(sql, "error: ", error_6);
+                        ms_1.default.log.error(sql, "error: ", error_6);
                         throw new Error(error_6);
                     case 4: return [2 /*return*/];
                 }

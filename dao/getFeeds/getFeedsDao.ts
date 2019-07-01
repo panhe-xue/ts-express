@@ -35,13 +35,13 @@ export class GetFeedsDao{
                 ON a1.id = b1.feed_id
         `;
         sql = mysql.format(sql, [openid, +pageBegin, +pageNum, openid]);
-        console.info("getHasSubscribeFeeds user from db sql:", sql);
+        ms.log.info("getHasSubscribeFeeds user from db sql:", sql);
 
         try {
             let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
             return rows;
         } catch (error) {
-            console.log(sql , "error: ", error);
+            ms.log.error(sql , "error: ", error);
             throw new Error(error);
         }
     }
@@ -56,13 +56,13 @@ export class GetFeedsDao{
             where id = ?
         `;
         sql = mysql.format(sql, [feed_id]);
-        console.info("userLove商品喜欢数增加 user from db sql:", sql);
+        ms.log.info("userLove商品喜欢数增加 user from db sql:", sql);
 
         try {
             let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
             return rows;
         } catch (error) {
-            console.log(sql , "error: ", error);
+            ms.log.error(sql , "error: ", error);
             throw new Error(error);
         }
     }
@@ -75,13 +75,13 @@ export class GetFeedsDao{
             insert into ${GetFeedsDao.TABLE_NAME_USER_LOVE} (openid, feed_id, create_time) values (?, ?, now())
         `;
         sql = mysql.format(sql, [openid, feed_id]);
-        console.info("adduserLove插入喜欢表 user from db sql:", sql);
+        ms.log.info("adduserLove插入喜欢表 user from db sql:", sql);
 
         try {
             let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
             return rows;
         } catch (error) {
-            console.log(sql , "error: ", error);
+            ms.log.error(sql , "error: ", error);
             throw new Error(error);
         }
     }
@@ -95,13 +95,13 @@ export class GetFeedsDao{
             openid = ? and feed_id = ?
         `;
         sql = mysql.format(sql, [openid, feed_id]);
-        console.info("deluserLove商品用户取消 user from db sql:", sql);
+        ms.log.info("deluserLove商品用户取消 user from db sql:", sql);
 
         try {
             let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
             return rows;
         } catch (error) {
-            console.log(sql , "error: ", error);
+            ms.log.error(sql , "error: ", error);
             throw new Error(error);
         }
     }
@@ -117,13 +117,13 @@ export class GetFeedsDao{
             where id in (${ids})
         `;
         sql = mysql.format(sql, [feed_id]);
-        console.info("userLove商品喜欢数增加 user from db sql:", sql);
+        ms.log.info("userLove商品喜欢数增加 user from db sql:", sql);
 
         try {
             let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
             return rows;
         } catch (error) {
-            console.log(sql , "error: ", error);
+            ms.log.error(sql , "error: ", error);
             throw new Error(error);
         }
     }
