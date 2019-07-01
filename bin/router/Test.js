@@ -8,6 +8,6 @@ exports.route.get('/test', function (req, res, next) {
         ip: ip,
         cmd: 'test'
     });
-    next();
+    
 });
 //# sourceMappingURL=Test.js.map

@@ -47,7 +47,7 @@
 //         }
 //         //返回操作
 //         res.json(result);
-//         next();
+//         
 //     })()
 // });
 //# sourceMappingURL=List.js.map

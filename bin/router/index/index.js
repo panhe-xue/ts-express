@@ -48,12 +48,14 @@ var getBrandsDao = new GetBrandsDao_1.default();
 var userLog = new user_log_1.default();
 exports.route.post('/index/load', function (req, res, next) {
     (function () { return __awaiter(_this, void 0, void 0, function () {
-        var ret, msg, subMsg, data, lastLoginSubscribeTime, lastLoginIndexTime, openid, result_1, error_1, resData, error_2, temp, _a, _b, error_3, _c, error_4, result;
+        var ret, msg, subMsg, data, lastLoginSubscribeTime, lastLoginIndexTime, openid, result_1, error_1, resData, error_2, temp, _a, _b, error_3, _c, error_4, result, error_5;
         return __generator(this, function (_d) {
             switch (_d.label) {
                 case 0:
+                    _d.trys.push([0, 21, , 22]);
                     ret = RetStatus_1.RetCode.SUC_OK;
                     msg = RetStatus_1.RetMsg.SUC_OK;
+                    subMsg = void 0;
                     data = {
                         new_user: 0,
                         brands_num: 1,
@@ -61,6 +63,8 @@ exports.route.post('/index/load', function (req, res, next) {
                         add_brands_res: null,
                         new_feed_res: null // 新增feed结果--新用户和订阅数为0时没有数据
                     };
+                    lastLoginSubscribeTime = void 0;
+                    lastLoginIndexTime = void 0;
                     openid = req.body.openid;
                     _d.label = 1;
                 case 1:
@@ -119,9 +123,8 @@ exports.route.post('/index/load', function (req, res, next) {
                     console.log(error_2);
                     ret = RetStatus_1.RetCode.ERR_SERVER_EXCEPTION;
                     msg = RetStatus_1.RetMsg.ERR_SERVER_EXCEPTION;
-                    return [3 /*break*/, 9];
+                    return [3 /*break*/, 20];
                 case 9:
-                    console.log('到这里了.....', resData[0]);
                     // 订阅新品数
                     data.brands_num = resData[0][0].count || 0;
                     temp = {
@@ -130,7 +133,6 @@ exports.route.post('/index/load', function (req, res, next) {
                     };
                     // 新增卡片数
                     data.add_brands_num = resData[1].length === 0 ? 0 : resData[1].length;
-                    console.log(data.add_brands_num, '新增卡片数..........');
                     if (!(data.add_brands_num !== 0)) return [3 /*break*/, 10];
                     data.add_brands_res = resData[1].slice(0, 6);
                     return [3 /*break*/, 14];
@@ -182,8 +184,13 @@ exports.route.post('/index/load', function (req, res, next) {
                     };
                     //返回操作
                     res.json(result);
-                    next();
-                    return [2 /*return*/];
+                    return [3 /*break*/, 22];
+                case 21:
+                    error_5 = _d.sent();
+                    console.log(error_5, '...');
+                    res.json({ error: error_5.message, status: 500 });
+                    return [3 /*break*/, 22];
+                case 22: return [2 /*return*/];
             }
         });
     }); })();

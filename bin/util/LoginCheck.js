@@ -10,7 +10,7 @@ var LoginCheck = /** @class */ (function () {
         var uri = req.url;
         //处理登陆情况
         if (ms_1.default.loginIgnore || cookie || uri == "/login") { //不处理登陆
-            next();
+            
         }
         else { //处理登陆
             res.json({

@@ -92,7 +92,7 @@ exports.route.post('/useradmin/:doType', function (req, res, next) {
                     };
                     //返回操作
                     res.json(result);
-                    next();
+                    
                     return [2 /*return*/];
             }
         });
@@ -138,7 +138,7 @@ exports.route.post('/useradminUpload/addByFile', function (req, res, next) {
                     };
                     //返回操作
                     res.json(result);
-                    next();
+                    
                     return [2 /*return*/];
             }
         });

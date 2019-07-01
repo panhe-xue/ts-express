@@ -89,7 +89,7 @@ exports.route.get('/organization/delete', function (req, res, next) {
                     };
                     //返回操作
                     res.json(result);
-                    next();
+                    
                     return [2 /*return*/];
             }
         });

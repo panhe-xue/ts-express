@@ -13,7 +13,8 @@ const userLog = new UserLog();
 
 route.post('/index/load', (req: express.Request, res: express.Response, next: express.NextFunction) => {
     (async () => {
-        let ret:number = RetCode.SUC_OK;
+        try {
+            let ret:number = RetCode.SUC_OK;
         let msg: string = RetMsg.SUC_OK;
         let subMsg: string;
         let data = {
@@ -74,8 +75,9 @@ route.post('/index/load', (req: express.Request, res: express.Response, next: ex
                 console.log(error);
                 ret = RetCode.ERR_SERVER_EXCEPTION;
                 msg = RetMsg.ERR_SERVER_EXCEPTION;
+                break;
             }
-            console.log('到这里了.....', resData[0]);
+
             // 订阅新品数
             data.brands_num = resData[0][0].count || 0;
 
@@ -85,7 +87,7 @@ route.post('/index/load', (req: express.Request, res: express.Response, next: ex
             }
             // 新增卡片数
             data.add_brands_num = resData[1].length === 0 ? 0 : resData[1].length;
-            console.log(data.add_brands_num, '新增卡片数..........');
+
             if(data.add_brands_num !== 0) {
                 data.add_brands_res = resData[1].slice(0, 6);
             } else{
@@ -120,7 +122,10 @@ route.post('/index/load', (req: express.Request, res: express.Response, next: ex
         }
         //返回操作
         res.json(result);
-        next();
+        } catch (error) {
+            console.log(error, '...');
+            res.json({error: error.message, status: 500})
+        }
     })()
 });
 

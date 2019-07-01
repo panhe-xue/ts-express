@@ -114,7 +114,7 @@ exports.route.post('/useradmin/userlist', function (req, res, next) {
                     };
                     //返回操作
                     res.json(result);
-                    next();
+                    
                     return [2 /*return*/];
             }
         });
@@ -169,7 +169,7 @@ exports.route.get('/useradmin/delete', function (req, res, next) {
                     };
                     //返回操作
                     res.json(result);
-                    next();
+                    
                     return [2 /*return*/];
             }
         });

@@ -96,7 +96,6 @@ exports.route.post('/getHasSubscribeFeeds', function (req, res, next) {
                     };
                     //返回操作
                     res.json(result);
-                    next();
                     return [2 /*return*/];
             }
         });
@@ -157,7 +156,6 @@ exports.route.post('/userLove', function (req, res, next) {
                     };
                     //返回操作
                     res.json(result);
-                    next();
                     return [2 /*return*/];
             }
         });
@@ -218,7 +216,6 @@ exports.route.post('/userCancelLove', function (req, res, next) {
                     };
                     //返回操作
                     res.json(result);
-                    next();
                     return [2 /*return*/];
             }
         });
@@ -275,7 +272,6 @@ exports.route.post('/userView', function (req, res, next) {
                     };
                     //返回操作
                     res.json(result);
-                    next();
                     return [2 /*return*/];
             }
         });

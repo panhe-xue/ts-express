@@ -86,7 +86,7 @@ exports.route.post('/policeDutyChange/:doType', function (req, res, next) {
                     };
                     //返回操作
                     res.json(result);
-                    next();
+                    
                     return [2 /*return*/];
             }
         });
@@ -132,7 +132,7 @@ exports.route.post('/organization/addByFile', function (req, res, next) {
                     };
                     //返回操作
                     res.json(result);
-                    next();
+                    
                     return [2 /*return*/];
             }
         });

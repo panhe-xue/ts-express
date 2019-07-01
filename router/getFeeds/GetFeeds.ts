@@ -52,7 +52,6 @@ route.post('/getHasSubscribeFeeds', (req: express.Request, res: express.Response
         }
         //返回操作
         res.json(result);
-        next();
     })()
 });
 
@@ -99,7 +98,6 @@ route.post('/userLove', (req: express.Request, res: express.Response, next: expr
         }
         //返回操作
         res.json(result);
-        next();
     })()
 });
 // 取消喜欢接口
@@ -145,7 +143,6 @@ route.post('/userCancelLove', (req: express.Request, res: express.Response, next
         }
         //返回操作
         res.json(result);
-        next();
     })()
 });
 
@@ -190,6 +187,5 @@ route.post('/userView', (req: express.Request, res: express.Response, next: expr
         }
         //返回操作
         res.json(result);
-        next();
     })()
 });

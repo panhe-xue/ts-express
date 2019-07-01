@@ -49,7 +49,6 @@ route.post('/setNewSubscribeBrands', (req: express.Request, res: express.Respons
         }
         //返回操作
         res.json(result);
-        next();
     })()
 });
 
@@ -91,6 +90,5 @@ route.post('/delThisBrands', (req: express.Request, res: express.Response, next:
         }
         //返回操作
         res.json(result);
-        next();
     })()
 });

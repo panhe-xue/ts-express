@@ -5,7 +5,7 @@ var Privilege = /** @class */ (function () {
     }
     Privilege.prototype.handler = function (req, res, next) {
         var cookie = req.cookies.isLogin;
-        next();
+        
         /* var userId = req.session.userId || "";
         let uri = req.url;
         

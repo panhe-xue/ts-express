@@ -68,6 +68,5 @@ route.post('/login', (req: express.Request, res: express.Response, next: express
         }
         //返回操作
         res.json(result);
-        next();
     })()
 });

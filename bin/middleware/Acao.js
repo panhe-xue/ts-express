@@ -32,7 +32,6 @@ var ACAO = /** @class */ (function () {
         else {
             origin && res.header("Timing-Allow-Origin", origin);
         }
-        next();
     };
     return ACAO;
 }());
