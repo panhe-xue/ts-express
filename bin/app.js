@@ -35,15 +35,15 @@ var App = /** @class */ (function () {
         app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
         app.use(cookieParser());
         // session 内存
-        app.use(session({
-            secret: 'new-things',
-            resave: true,
-            saveUninitialized: false,
-            store: new RedisStore({
-                host: '127.0.0.1',
-                port: 6379
-            })
-        }));
+        // app.use(session({
+        //   secret: 'new-things',
+        //   resave: true,
+        //   saveUninitialized: false,
+        //   store: new RedisStore({
+        //     host: '127.0.0.1',
+        //     port: 6379
+        //   })
+        // }));
         app.use(FileUpload());
         //app.use(ms.express.methodOverride());
         //app.use(favicon(path.join(__dirname, "./public/images/favicon.ico")));
@@ -76,7 +76,7 @@ var App = /** @class */ (function () {
             // render the error page
             res.status(err.status || 500);
             res.json({
-                error: err,
+                error: res.locals.message,
                 status: err.status || 500
             });
         });

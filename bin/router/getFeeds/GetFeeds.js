@@ -278,4 +278,67 @@ exports.route.post('/userView', function (req, res, next) {
         });
     }); })();
 });
+// 获取feedItem
+exports.route.post('/getFeedItem', function (req, res, next) {
+    (function () { return __awaiter(_this, void 0, void 0, function () {
+        var ret, msg, subMsg, openid, feed_id, data, res_1, result, error_5;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 5, , 6]);
+                    ret = RetStatus_1.RetCode.SUC_OK;
+                    msg = RetStatus_1.RetMsg.SUC_OK;
+                    subMsg = void 0;
+                    openid = req.body.openid;
+                    feed_id = req.body.feed_id;
+                    ms_1.default.log.info("getFeedItem arg:", feed_id);
+                    data = void 0;
+                    _a.label = 1;
+                case 1:
+                    //参数校验
+                    if (!feed_id || !openid) {
+                        ret = RetStatus_1.RetCode.ERR_CLIENT_PARAMS_ERR;
+                        msg = RetStatus_1.RetMsg.ERR_CLIENT_PARAMS_ERR;
+                        subMsg = '缺少feed_id或者openid';
+                        return [3 /*break*/, 4];
+                    }
+                    ms_1.default.log.info("checkData success!!");
+                    return [4 /*yield*/, Promise.all([getFeedsDao.getFeedItem(openid, feed_id), getFeedsDao.getFeedItemRotation(feed_id)])];
+                case 2:
+                    res_1 = _a.sent();
+                    if (res_1[0].length >= 1) {
+                        data = res_1[0][0];
+                    }
+                    else {
+                        ret = RetStatus_1.RetCode.ERR_SERVER_EXCEPTION;
+                        msg = RetStatus_1.RetMsg.ERR_SERVER_EXCEPTION;
+                        subMsg = '没有对应的feed';
+                        return [3 /*break*/, 4];
+                    }
+                    data.rotations = res_1[1];
+                    ms_1.default.log.info("get User list FromDB success!!");
+                    _a.label = 3;
+                case 3:
+                    if (false) return [3 /*break*/, 1];
+                    _a.label = 4;
+                case 4:
+                    result = {
+                        status: ret,
+                        msg: msg,
+                        subMsg: subMsg,
+                        data: data
+                    };
+                    //返回操作
+                    res.json(result);
+                    return [3 /*break*/, 6];
+                case 5:
+                    error_5 = _a.sent();
+                    ms_1.default.log.error("get Feed Item error:", error_5.message);
+                    next(error_5);
+                    return [3 /*break*/, 6];
+                case 6: return [2 /*return*/];
+            }
+        });
+    }); })();
+});
 //# sourceMappingURL=GetFeeds.js.map

@@ -12,6 +12,7 @@ export class GetFeedsDao{
     static TABLE_NAME_USER_BRANDS = "user_brands";
     static TABLE_NAME_BRANDS = "brands";
     static TABLE_NAME_USER_LOVE = "user_love";
+    static TABLE_NAME_ROTATION_CHART = "feeds_rotation_chart";
 
     constructor() {
     }
@@ -118,6 +119,68 @@ export class GetFeedsDao{
         `;
         sql = mysql.format(sql, [feed_id]);
         ms.log.info("userLove商品喜欢数增加 user from db sql:", sql);
+
+        try {
+            let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
+            return rows;
+        } catch (error) {
+            ms.log.error(sql , "error: ", error);
+            throw new Error(error);
+        }
+    }
+    /**
+     * 获取单个feed数据
+     * @return Array 数据
+     */
+    async getFeedItem(openid: string, feed_id: number) {
+        let sql = `
+        select a1.*, if(b1.id, 1, 0) as loved from
+        (
+        select
+            A.id as id,
+            A.name  as feed_name,
+            A.title as feed_title,
+            A.desc as feed_desc,
+            A.view_num as feed_view_num,
+            A.love_num as feed_love_num,
+            A.innovations as feed_innovations,
+            A.feed_intrd as feed_intrd,
+            date_format(A.create_time, "%Y-%m-%d") as create_time,
+            B.name        as brand_name,
+            B.title       as brand_title,
+            B.desc        as brand_desc,
+            B.logo        as brand_logo
+        from ${GetFeedsDao.TABLE_NAME} A
+        left join ${GetFeedsDao.TABLE_NAME_BRANDS} B
+        on A.brands_id = B.id
+        where B.status = 1 and A.status = 1 and A.id = ?
+        ) as a1
+        left join
+        ( SELECT * FROM ${GetFeedsDao.TABLE_NAME_USER_LOVE} WHERE openid = ? and feed_id = ?) AS b1
+        ON a1.id = b1.feed_id
+        `;
+        sql = mysql.format(sql, [feed_id, openid, feed_id]);
+        ms.log.info("getFeedItem获取单个feed的数据 from db sql:", sql);
+
+        try {
+            let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
+            return rows;
+        } catch (error) {
+            ms.log.error(sql , "error: ", error);
+            throw new Error(error);
+        }
+    }
+    /**
+     * 获取单个feed的轮播图
+     * @return Array 数据
+     */
+    async getFeedItemRotation(feed_id: number) {
+        let sql = `
+        select * from ${GetFeedsDao.TABLE_NAME_ROTATION_CHART}
+        where feed_id = ? order by create_time desc limit 10;
+        `;
+        sql = mysql.format(sql, [feed_id]);
+        ms.log.info("getFeedItemRotation获取单个feed的轮播图 from db sql:", sql);
 
         try {
             let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);

@@ -190,3 +190,53 @@ route.post('/userView', (req: express.Request, res: express.Response, next: expr
         res.json(result);
     })()
 });
+
+// 获取feedItem
+route.post('/getFeedItem', (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    (async () => {
+        try {
+            let ret:number = RetCode.SUC_OK;
+            let msg: string = RetMsg.SUC_OK;
+            let subMsg: string;
+            let openid: string = req.body.openid;
+            let feed_id: number = req.body.feed_id;
+            ms.log.info("getFeedItem arg:",feed_id);
+            let data;
+            do {
+                //参数校验
+                if(!feed_id || !openid) {
+                    ret = RetCode.ERR_CLIENT_PARAMS_ERR;
+                    msg = RetMsg.ERR_CLIENT_PARAMS_ERR;
+                    subMsg = '缺少feed_id或者openid';
+                    break;
+                }
+                ms.log.info("checkData success!!");
+
+                // 获取订阅feeds数
+                let res = await Promise.all([getFeedsDao.getFeedItem(openid, feed_id), getFeedsDao.getFeedItemRotation(feed_id)]);
+                if (res[0].length >= 1) {
+                    data = res[0][0]
+                } else {
+                    ret = RetCode.ERR_SERVER_EXCEPTION;
+                    msg = RetMsg.ERR_SERVER_EXCEPTION;
+                    subMsg = '没有对应的feed';
+                    break;
+                }
+                data.rotations = res[1];
+                ms.log.info("get User list FromDB success!!");
+            } while (false)
+
+            let result = {
+                status: ret,
+                msg   : msg,
+                subMsg: subMsg,
+                data  : data
+            }
+            //返回操作
+            res.json(result);
+        } catch (error) {
+            ms.log.error("get Feed Item error:", error.message);
+            next(error);
+        }
+    })()
+});

@@ -193,12 +193,71 @@ var GetFeedsDao = /** @class */ (function () {
         });
     };
     /**
+     * 获取单个feed数据
+     * @return Array 数据
+     */
+    GetFeedsDao.prototype.getFeedItem = function (openid, feed_id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var sql, rows, error_6;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        sql = "\n        select a1.*, if(b1.id, 1, 0) as loved from\n        (\n        select\n            A.id as id,\n            A.name  as feed_name,\n            A.title as feed_title,\n            A.desc as feed_desc,\n            A.view_num as feed_view_num,\n            A.love_num as feed_love_num,\n            A.innovations as feed_innovations,\n            A.feed_intrd as feed_intrd,\n            date_format(A.create_time, \"%Y-%m-%d\") as create_time,\n            B.name        as brand_name,\n            B.title       as brand_title,\n            B.desc        as brand_desc,\n            B.logo        as brand_logo\n        from " + GetFeedsDao.TABLE_NAME + " A\n        left join " + GetFeedsDao.TABLE_NAME_BRANDS + " B\n        on A.brands_id = B.id\n        where B.status = 1 and A.status = 1 and A.id = ?\n        ) as a1\n        left join\n        ( SELECT * FROM " + GetFeedsDao.TABLE_NAME_USER_LOVE + " WHERE openid = ? and feed_id = ?) AS b1\n        ON a1.id = b1.feed_id\n        ";
+                        sql = mysql.format(sql, [feed_id, openid, feed_id]);
+                        ms_1.default.log.info("getFeedItem获取单个feed的数据 from db sql:", sql);
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, ms_1.default.mysql["subscribe_to_new_thing"].execSql(sql)];
+                    case 2:
+                        rows = _a.sent();
+                        return [2 /*return*/, rows];
+                    case 3:
+                        error_6 = _a.sent();
+                        ms_1.default.log.error(sql, "error: ", error_6);
+                        throw new Error(error_6);
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * 获取单个feed的轮播图
+     * @return Array 数据
+     */
+    GetFeedsDao.prototype.getFeedItemRotation = function (feed_id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var sql, rows, error_7;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        sql = "\n        select * from " + GetFeedsDao.TABLE_NAME_ROTATION_CHART + "\n        where feed_id = ? order by create_time desc limit 10;\n        ";
+                        sql = mysql.format(sql, [feed_id]);
+                        ms_1.default.log.info("getFeedItemRotation获取单个feed的轮播图 from db sql:", sql);
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, ms_1.default.mysql["subscribe_to_new_thing"].execSql(sql)];
+                    case 2:
+                        rows = _a.sent();
+                        return [2 /*return*/, rows];
+                    case 3:
+                        error_7 = _a.sent();
+                        ms_1.default.log.error(sql, "error: ", error_7);
+                        throw new Error(error_7);
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
      * 表名
      */
     GetFeedsDao.TABLE_NAME = "feeds";
     GetFeedsDao.TABLE_NAME_USER_BRANDS = "user_brands";
     GetFeedsDao.TABLE_NAME_BRANDS = "brands";
     GetFeedsDao.TABLE_NAME_USER_LOVE = "user_love";
+    GetFeedsDao.TABLE_NAME_ROTATION_CHART = "feeds_rotation_chart";
     return GetFeedsDao;
 }());
 exports.GetFeedsDao = GetFeedsDao;
