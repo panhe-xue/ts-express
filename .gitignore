@@ -3,3 +3,5 @@ uploads
 logs
 *.log
 package-lock.json
+bin
+bin/*
