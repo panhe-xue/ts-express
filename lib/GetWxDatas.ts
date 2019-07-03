@@ -36,7 +36,7 @@ export async function getWxaCode(wxacodePath: string, path: string, width?: numb
         url: GlobalData.wxacodeUrl + "?access_token=" + access_token,
         data: {
             path: path,
-            width: width || 430,
+            width: width || 280,
             auto_color: auto_color || false,
             line_color: line_color ||{ r: 0, g: 0, b: 0 },
             is_hyaline: is_hyaline || false
