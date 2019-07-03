@@ -190,6 +190,47 @@ export class GetFeedsDao{
             throw new Error(error);
         }
     }
+    /**
+     * 获取feeditem的小程序码
+     * @return Array 数据
+     */
+    async getFeedItemWxaCode(feed_id: number) {
+        let sql = `
+        select wxacode from ${GetFeedsDao.TABLE_NAME}
+        where id = ?;
+        `;
+        sql = mysql.format(sql, [feed_id]);
+        ms.log.info("getFeedItemWxaCode获取单个feed的小程序码 from db sql:", sql);
+
+        try {
+            let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
+            return rows;
+        } catch (error) {
+            ms.log.error(sql , "error: ", error);
+            throw new Error(error);
+        }
+    }
+    /**
+     * 插入小程序码路径到数据库
+     * @return Array 数据
+     */
+    async insertWxaCodePath(feed_id: number, path: string) {
+        let sql = `
+        update ${GetFeedsDao.TABLE_NAME}
+        set wxacode = ?
+        where id = ?;
+        `;
+        sql = mysql.format(sql, [path, feed_id]);
+        ms.log.info("getFeedItemWxaCode获取单个feed的小程序码 from db sql:", sql);
+
+        try {
+            let rows = await ms.mysql["subscribe_to_new_thing"].execSql(sql);
+            return rows;
+        } catch (error) {
+            ms.log.error(sql , "error: ", error);
+            throw new Error(error);
+        }
+    }
 }
 
 export default GetFeedsDao;

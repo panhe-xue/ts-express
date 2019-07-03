@@ -3,6 +3,7 @@ import * as express from "express";
 import * as http from "http";
 import * as fs from "fs";
 import log from "./logger";
+import * as path from "path";
 
 export default {
   mysql      : {},
@@ -11,5 +12,6 @@ export default {
   http       : http,
   fs         : fs,
   loginIgnore: true, //设置是否忽略校验登陆
-  log: log
+  log: log,
+  path: path
 };

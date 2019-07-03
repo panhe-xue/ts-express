@@ -3,12 +3,9 @@ import * as express from "express";
 import {RetCode, RetMsg} from "../../util/RetStatus";
 import { GetFeedsDao } from "../../dao/getFeeds/getFeedsDao";
 export  const route = express.Router();
-import  UserLog from "../../dao/user/user_log";
 import { isFalseExZero } from "../../util/util";
 import ms from "../../util/ms";
 
-//日志打印
-const userLog = new UserLog();
 const getFeedsDao = new GetFeedsDao();
 
 // 我订阅的新品
@@ -223,7 +220,7 @@ route.post('/getFeedItem', (req: express.Request, res: express.Response, next: e
                     break;
                 }
                 data.rotations = res[1];
-                ms.log.info("get User list FromDB success!!");
+                ms.log.info("get getFeedItem FromDB success!!");
             } while (false)
 
             let result = {

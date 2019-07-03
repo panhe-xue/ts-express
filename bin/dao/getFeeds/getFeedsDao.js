@@ -251,6 +251,64 @@ var GetFeedsDao = /** @class */ (function () {
         });
     };
     /**
+     * 获取feeditem的小程序码
+     * @return Array 数据
+     */
+    GetFeedsDao.prototype.getFeedItemWxaCode = function (feed_id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var sql, rows, error_8;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        sql = "\n        select wxacode from " + GetFeedsDao.TABLE_NAME + "\n        where id = ?;\n        ";
+                        sql = mysql.format(sql, [feed_id]);
+                        ms_1.default.log.info("getFeedItemWxaCode获取单个feed的小程序码 from db sql:", sql);
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, ms_1.default.mysql["subscribe_to_new_thing"].execSql(sql)];
+                    case 2:
+                        rows = _a.sent();
+                        return [2 /*return*/, rows];
+                    case 3:
+                        error_8 = _a.sent();
+                        ms_1.default.log.error(sql, "error: ", error_8);
+                        throw new Error(error_8);
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * 插入小程序码路径到数据库
+     * @return Array 数据
+     */
+    GetFeedsDao.prototype.insertWxaCodePath = function (feed_id, path) {
+        return __awaiter(this, void 0, void 0, function () {
+            var sql, rows, error_9;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        sql = "\n        update " + GetFeedsDao.TABLE_NAME + "\n        set wxacode = ?\n        where id = ?;\n        ";
+                        sql = mysql.format(sql, [path, feed_id]);
+                        ms_1.default.log.info("getFeedItemWxaCode获取单个feed的小程序码 from db sql:", sql);
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, ms_1.default.mysql["subscribe_to_new_thing"].execSql(sql)];
+                    case 2:
+                        rows = _a.sent();
+                        return [2 /*return*/, rows];
+                    case 3:
+                        error_9 = _a.sent();
+                        ms_1.default.log.error(sql, "error: ", error_9);
+                        throw new Error(error_9);
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
      * 表名
      */
     GetFeedsDao.TABLE_NAME = "feeds";

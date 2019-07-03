@@ -3,7 +3,7 @@ import {RetCode, RetMsg} from "../../util/RetStatus";
 import LoginDao from "../../dao/login/LoginDao";
 import UserSubscribe from "../../dao/user/user_subscribe";
 import { httpGet } from "../../util/request";
-import globalData from '../../lib/globalData';
+import globalData from '../../config/globalData';
 export  const route = express.Router();
 const LoginInstance = new LoginDao();
 import ms from "../../util/ms";

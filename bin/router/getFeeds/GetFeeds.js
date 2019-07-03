@@ -40,10 +40,7 @@ var express = require("express");
 var RetStatus_1 = require("../../util/RetStatus");
 var getFeedsDao_1 = require("../../dao/getFeeds/getFeedsDao");
 exports.route = express.Router();
-var user_log_1 = require("../../dao/user/user_log");
 var ms_1 = require("../../util/ms");
-//日志打印
-var userLog = new user_log_1.default();
 var getFeedsDao = new getFeedsDao_1.GetFeedsDao();
 // 我订阅的新品
 exports.route.post('/getHasSubscribeFeeds', function (req, res, next) {
@@ -316,7 +313,7 @@ exports.route.post('/getFeedItem', function (req, res, next) {
                         return [3 /*break*/, 4];
                     }
                     data.rotations = res_1[1];
-                    ms_1.default.log.info("get User list FromDB success!!");
+                    ms_1.default.log.info("get getFeedItem FromDB success!!");
                     _a.label = 3;
                 case 3:
                     if (false) return [3 /*break*/, 1];

@@ -5,6 +5,7 @@ var express = require("express");
 var http = require("http");
 var fs = require("fs");
 var logger_1 = require("./logger");
+var path = require("path");
 exports.default = {
     mysql: {},
     events: events,
@@ -12,6 +13,7 @@ exports.default = {
     http: http,
     fs: fs,
     loginIgnore: true,
-    log: logger_1.default
+    log: logger_1.default,
+    path: path
 };
 //# sourceMappingURL=ms.js.map

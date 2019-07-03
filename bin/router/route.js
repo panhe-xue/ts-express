@@ -8,6 +8,7 @@ var GetBrands = require("./getBrands/GetBrands");
 var SetBrands = require("./getBrands/SetBrands");
 var Index = require("./index/index");
 var GetFeeds = require("./getFeeds/GetFeeds");
+var GetWxData = require("./getWxData/GetWxData");
 //路由引入文件
 // import * as policeDutyChangeList from "./policeDutyChange/List";
 var Routes = /** @class */ (function () {
@@ -24,6 +25,7 @@ var Routes = /** @class */ (function () {
         this.app.use(SetBrands.route);
         this.app.use(Index.route);
         this.app.use(GetFeeds.route);
+        this.app.use(GetWxData.route);
     };
     return Routes;
 }());
