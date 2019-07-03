@@ -42,7 +42,7 @@ route.post('/getWxaCode', (req: express.Request, res: express.Response, next: ex
                 let basePathObj = process.env.NODE_ENV === "development" ? globalData.dev : globalData.prod;
 
                 let wxacodePath = ms.path.join(basePathObj.wxacodePath , "feedid" + feed_id + ".jpeg");
-                let dataBasePath = ms.path.join(basePathObj.databasePath , "feedid" + feed_id + ".jpeg");
+                let dataBasePath = basePathObj.databasePath + "feedid" + feed_id + ".jpeg";
                 ms.log.info("生成的路径参数", wxacodePath, dataBasePath);
 
                 // 获取图片并保存 插入数据库
