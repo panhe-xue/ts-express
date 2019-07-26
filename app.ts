@@ -67,10 +67,10 @@ class App {
       app.use(new Privilege().handler);
 
       // 关键代码， 设置web文件路由
-      (process.env.NODE_ENV === 'development') && app.use(express.static(path.join(__dirname, "/../../otherNotCode/"), {
+      app.use(express.static(path.join(__dirname, "/../../otherNotCode/"), {
           maxAge: "3600000",
           index: "index.html"
-        }));
+      }));
 
       /**业务路由 */
         new Routes(app);
