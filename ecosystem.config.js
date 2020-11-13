@@ -8,6 +8,7 @@ module.exports = {
     autorestart: true,
     watch: true,
     max_memory_restart: '1G',
+    port: '3000',
     env: {
       NODE_ENV: 'development'
     },
