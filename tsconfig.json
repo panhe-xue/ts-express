@@ -6,7 +6,9 @@
     "sourceMap": true,
     "outDir": "bin/",
     "moduleResolution": "classic",
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+		"allowSyntheticDefaultImports": true
   },
   "exclude": [
     "node_modules",
